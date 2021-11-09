@@ -13,12 +13,9 @@ Camera::Camera(int x, int y, int z){
     front = glm::vec3(0.0f, 0.0f, -1.0f);
     up = glm::vec3(0.0f, 1.0f,  0.0f);
     proj = glm::perspective(45.0f, (float)OpenGLEngine::WINDOW_WIDTH / OpenGLEngine::WINDOW_HEIGHT, 0.1f, 1000.0f);
-    view = glm::lookAt(position, position + front, up);
     
-    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    direction.y = sin(glm::radians(pitch));
-    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    
+    recalculateCameraView();
+    recalculateCameraDirection();
 }
 
 Camera::~Camera(){
@@ -35,9 +32,7 @@ void Camera::UpdateDirection(){
     if(pitch > 89.0f) pitch = 89.0f;
     if(pitch < -89.0f) pitch = -89.0f;
     
-    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    direction.y = sin(glm::radians(pitch));
-    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    recalculateCameraDirection();
     front = glm::normalize(direction);
 }
 
@@ -58,8 +53,24 @@ void Camera::UpdatePosition(){
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_D)){
         position += movementSpeed * glm::normalize(glm::cross(front, up));
     }
+    if (OpenGLEngine::KeyIsPressed(GLFW_KEY_SPACE)){
+        position += movementSpeed * glm::normalize(up);
+    }
+    if (OpenGLEngine::KeyIsPressed(GLFW_KEY_LEFT_SHIFT)){
+        position += movementSpeed * glm::normalize(-up);
+    }
     
     if (directionHasChanged || oldPosition != position){
-        view = glm::lookAt(position, position + front, up);
+        recalculateCameraView();
     }
+}
+
+void Camera::recalculateCameraDirection(){
+    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    direction.y = sin(glm::radians(pitch));
+    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+}
+
+void Camera::recalculateCameraView(){
+    view = glm::lookAt(position, position + front, up);
 }

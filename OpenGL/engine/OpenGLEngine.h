@@ -18,6 +18,7 @@ private:
     
     static bool debugMode;
     static bool isFirstFrame;
+    static bool mousePositionUpdatedThisFrame; 
     
     static float deltaTime;
     static float lastFrame;
@@ -26,9 +27,7 @@ private:
     static float lastFrameMousePositionY;
     static float mouseOffsetX;
     static float mouseOffsetY;
-
-    static void initWindow();
-    static void mouseHandler(GLFWwindow* window, double xpos, double ypos);
+    static float mouseSensitivity;
     
 public:
     static const int WINDOW_WIDTH = 960;
@@ -36,7 +35,7 @@ public:
 
     static void Init();
     static void Clear();
-    static void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader);
+    static void Draw(const VertexArray* va, const IndexBuffer* ib, const Shader* shader);
     static void SwapBuffers();
     static void PollEvents();
     static void UpdateTime(); 
@@ -55,4 +54,9 @@ public:
     
     static float GetMouseOffsetX() { return mouseOffsetX; };
     static float GetMouseOffsetY() { return mouseOffsetY; };
+
+private:
+    static void initWindow();
+    static void mouseHandler(GLFWwindow* window, double xpos, double ypos);
+    
 };

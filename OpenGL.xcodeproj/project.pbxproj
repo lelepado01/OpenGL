@@ -14,11 +14,12 @@
 		B617D9782734273B004FE945 /* imgui_impl_glfw_gl3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D95E2734273A004FE945 /* imgui_impl_glfw_gl3.cpp */; };
 		B617D9792734273B004FE945 /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9602734273A004FE945 /* imgui_demo.cpp */; };
 		B617D97A2734273B004FE945 /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9612734273A004FE945 /* imgui_draw.cpp */; };
-		B617D97B2734273B004FE945 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9642734273A004FE945 /* stb_image.cpp */; };
 		B617D97C2734273B004FE945 /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9652734273A004FE945 /* VertexBuffer.cpp */; };
 		B617D97D2734273B004FE945 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9692734273B004FE945 /* Texture.cpp */; };
 		B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D96A2734273B004FE945 /* OpenGLEngine.cpp */; };
 		B617D97F2734273B004FE945 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9732734273B004FE945 /* Shader.cpp */; };
+		B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9642734273A004FE945 /* stb_image.cpp */; };
+		B675CE33273739730010C4AB /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B675CE31273739730010C4AB /* Mesh.cpp */; };
 		B6907B0926F93ED200875FEF /* libvulkan.1.2.189.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6907B0726F93ED200875FEF /* libvulkan.1.2.189.dylib */; };
 		B6907B0A26F93ED200875FEF /* libvulkan.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6907B0826F93ED200875FEF /* libvulkan.1.dylib */; };
 		B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */; };
@@ -73,8 +74,13 @@
 		B617D9722734273B004FE945 /* Vertex.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vertex.shader; sourceTree = "<group>"; };
 		B617D9732734273B004FE945 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		B617D98127342FFD004FE945 /* Fragment.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fragment.shader; sourceTree = "<group>"; };
+		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
+		B61FAB3F27369A7800D6DD56 /* common.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = common.shader; sourceTree = "<group>"; };
+		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
+		B675CE31273739730010C4AB /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		B675CE32273739730010C4AB /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		B6907B0726F93ED200875FEF /* libvulkan.1.2.189.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.2.189.dylib; path = ../../../../VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.2.189.dylib; sourceTree = "<group>"; };
 		B6907B0826F93ED200875FEF /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
 		B6BFF5D226F8EDC6002ECA4B /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +169,7 @@
 			children = (
 				B617D9722734273B004FE945 /* Vertex.shader */,
 				B617D98127342FFD004FE945 /* Fragment.shader */,
+				B61FAB3F27369A7800D6DD56 /* common.shader */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -209,6 +216,24 @@
 			path = engine;
 			sourceTree = "<group>";
 		};
+		B61FAB3D2736993B00D6DD56 /* materials */ = {
+			isa = PBXGroup;
+			children = (
+				B61FAB3E2736994A00D6DD56 /* Material.h */,
+			);
+			path = materials;
+			sourceTree = "<group>";
+		};
+		B63A996D273723E100CA007E /* mesh */ = {
+			isa = PBXGroup;
+			children = (
+				B63A99712737240000CA007E /* Vertex.h */,
+				B675CE31273739730010C4AB /* Mesh.cpp */,
+				B675CE32273739730010C4AB /* Mesh.h */,
+			);
+			path = mesh;
+			sourceTree = "<group>";
+		};
 		B6BFF5C926F8EDC6002ECA4B = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +254,8 @@
 		B6BFF5D426F8EDC6002ECA4B /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				B63A996D273723E100CA007E /* mesh */,
+				B61FAB3D2736993B00D6DD56 /* materials */,
 				B6FDF28A2735A26500DEBCB9 /* camera */,
 				B617D98427343083004FE945 /* engine */,
 				B617D9832734306E004FE945 /* textures */,
@@ -322,15 +349,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */,
 				B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */,
 				B617D9752734273B004FE945 /* main.cpp in Sources */,
-				B617D97B2734273B004FE945 /* stb_image.cpp in Sources */,
 				B617D97A2734273B004FE945 /* imgui_draw.cpp in Sources */,
 				B617D9772734273B004FE945 /* imgui.cpp in Sources */,
 				B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */,
 				B617D9792734273B004FE945 /* imgui_demo.cpp in Sources */,
 				B617D97D2734273B004FE945 /* Texture.cpp in Sources */,
 				B617D97C2734273B004FE945 /* VertexBuffer.cpp in Sources */,
+				B675CE33273739730010C4AB /* Mesh.cpp in Sources */,
 				B617D9742734273B004FE945 /* VertexArray.cpp in Sources */,
 				B617D9782734273B004FE945 /* imgui_impl_glfw_gl3.cpp in Sources */,
 				B617D97F2734273B004FE945 /* Shader.cpp in Sources */,
@@ -456,6 +484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_COMMA = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = OpenGL/OpenGL.entitlements;
@@ -484,6 +513,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_COMMA = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = OpenGL/OpenGL.entitlements;

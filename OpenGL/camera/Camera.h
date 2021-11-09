@@ -42,6 +42,11 @@ public:
     
     glm::mat4* GetProjection() { return &proj; };
     glm::mat4* GetView() { return &view; };
+    glm::vec3 GetPosition() { return position; };
+    
+private:
+    void recalculateCameraDirection();
+    void recalculateCameraView(); 
 };
 
 #endif /* Camera_hpp */
