@@ -8,24 +8,22 @@
 #include "Mesh.h"
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices) {
-    this->vertices = vertices;
-    this->indices = indices;
-    
-    setupMesh();
-}
-
-Mesh::~Mesh(){
-    
-}
-
-void Mesh::setupMesh(){
     vertexArray = new VertexArray();
-    vertexBuffer = new VertexBuffer(this->vertices.data(), this->vertices.size() * sizeof(Vertex));
-    indexBuffer = new IndexBuffer(this->indices.data(), this->indices.size());
+    vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
+    indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
     
     VertexBufferLayout layout;
     layout.AddFloat(3);
     layout.AddFloat(3);
 
     vertexArray->AddBuffer(*vertexBuffer, layout);
+}
+
+Mesh::~Mesh(){
+    
+}
+
+void Mesh::UpdateMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices){
+    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+    indexBuffer->Update(indices.data(), (unsigned int)indices.size());
 }

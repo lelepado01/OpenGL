@@ -30,8 +30,8 @@ private:
     static float mouseSensitivity;
     
 public:
-    static const int WINDOW_WIDTH = 960;
-    static const int WINDOW_HEIGHT = 540;
+    static const int WINDOW_WIDTH = 1560;
+    static const int WINDOW_HEIGHT = 960;
 
     static void Init();
     static void Clear();

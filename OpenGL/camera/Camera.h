@@ -23,8 +23,10 @@ private:
     float yaw = 0;
     float roll = 0;
     
-    bool directionHasChanged = false; 
+    bool directionHasChanged = false;
+    bool hasMoved = false;
     
+    glm::vec3 lastFramePosition;
     glm::vec3 position;
     glm::vec3 front;
     glm::vec3 up;
@@ -43,6 +45,8 @@ public:
     glm::mat4* GetProjection() { return &proj; };
     glm::mat4* GetView() { return &view; };
     glm::vec3 GetPosition() { return position; };
+    
+    bool HasMoved() { return hasMoved; };
     
 private:
     void recalculateCameraDirection();

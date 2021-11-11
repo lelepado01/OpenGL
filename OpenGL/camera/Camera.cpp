@@ -60,7 +60,9 @@ void Camera::UpdatePosition(){
         position += movementSpeed * glm::normalize(-up);
     }
     
-    if (directionHasChanged || oldPosition != position){
+    hasMoved = oldPosition != position;
+    
+    if (directionHasChanged || hasMoved){
         recalculateCameraView();
     }
 }

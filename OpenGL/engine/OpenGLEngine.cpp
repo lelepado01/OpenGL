@@ -20,11 +20,11 @@ void OpenGLEngine::Init(){
     
     GLCall( glEnable(GL_BLEND) );
     GLCall( glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA) );
-    GLCall( glEnable(GL_DEPTH_TEST));
-    GLCall( glDepthFunc(GL_LESS));
+    GLCall( glEnable(GL_DEPTH_TEST) );
+    GLCall( glDepthFunc(GL_LESS) );
+    GLCall( glEnable(GL_CULL_FACE) );
     
     GLCall( glfwSetCursorPosCallback(window, mouseHandler) );
-
 }
 
 void OpenGLEngine::initWindow() {

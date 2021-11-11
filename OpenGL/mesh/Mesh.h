@@ -20,9 +20,6 @@
 
 class Mesh {
 private:
-    std::vector<Vertex> vertices;
-    std::vector<unsigned int> indices;
-    
     VertexArray* vertexArray;
     VertexBuffer* vertexBuffer;
     IndexBuffer* indexBuffer;
@@ -31,11 +28,10 @@ public:
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
     ~Mesh();
     
-    VertexArray* GetVertexArray() { return vertexArray; };
-    IndexBuffer* GetIndexBuffer() { return indexBuffer; };
+    void UpdateMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
     
-private:
-    void setupMesh();
+    VertexArray* GetVertexArray() { return vertexArray; };
+    IndexBuffer* GetIndexBuffer() { return indexBuffer; };    
 };
 
 #endif /* Mesh_h */

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B60A8008273C2930002DBAEA /* Chunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60A8006273C2930002DBAEA /* Chunk.cpp */; };
 		B617D9742734273B004FE945 /* VertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D94F2734273A004FE945 /* VertexArray.cpp */; };
 		B617D9752734273B004FE945 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9512734273A004FE945 /* main.cpp */; };
 		B617D9762734273B004FE945 /* IndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9532734273A004FE945 /* IndexBuffer.cpp */; };
@@ -18,6 +19,7 @@
 		B617D97D2734273B004FE945 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9692734273B004FE945 /* Texture.cpp */; };
 		B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D96A2734273B004FE945 /* OpenGLEngine.cpp */; };
 		B617D97F2734273B004FE945 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9732734273B004FE945 /* Shader.cpp */; };
+		B6218A9C273A7AE000564709 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6218A9A273A7AE000564709 /* MeshBuilder.cpp */; };
 		B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9642734273A004FE945 /* stb_image.cpp */; };
 		B675CE33273739730010C4AB /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B675CE31273739730010C4AB /* Mesh.cpp */; };
 		B6907B0926F93ED200875FEF /* libvulkan.1.2.189.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6907B0726F93ED200875FEF /* libvulkan.1.2.189.dylib */; };
@@ -41,6 +43,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B60A8004273C27DF002DBAEA /* FastNoiseLite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastNoiseLite.h; sourceTree = "<group>"; };
+		B60A8006273C2930002DBAEA /* Chunk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chunk.cpp; sourceTree = "<group>"; };
+		B60A8007273C2930002DBAEA /* Chunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chunk.h; sourceTree = "<group>"; };
 		B617D94E2734273A004FE945 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		B617D94F2734273A004FE945 /* VertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexArray.cpp; sourceTree = "<group>"; };
 		B617D9502734273A004FE945 /* VertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexBuffer.h; sourceTree = "<group>"; };
@@ -76,6 +81,8 @@
 		B617D98127342FFD004FE945 /* Fragment.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fragment.shader; sourceTree = "<group>"; };
 		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		B61FAB3F27369A7800D6DD56 /* common.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = common.shader; sourceTree = "<group>"; };
+		B6218A9A273A7AE000564709 /* MeshBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshBuilder.cpp; sourceTree = "<group>"; };
+		B6218A9B273A7AE000564709 /* MeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshBuilder.h; sourceTree = "<group>"; };
 		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
@@ -109,9 +116,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B60A8005273C27E3002DBAEA /* fast_noise */ = {
+			isa = PBXGroup;
+			children = (
+				B60A8004273C27DF002DBAEA /* FastNoiseLite.h */,
+			);
+			path = fast_noise;
+			sourceTree = "<group>";
+		};
 		B617D9542734273A004FE945 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B60A8005273C27E3002DBAEA /* fast_noise */,
 				B617D9552734273A004FE945 /* imgui */,
 				B617D9622734273A004FE945 /* stb_image */,
 			);
@@ -230,6 +246,10 @@
 				B63A99712737240000CA007E /* Vertex.h */,
 				B675CE31273739730010C4AB /* Mesh.cpp */,
 				B675CE32273739730010C4AB /* Mesh.h */,
+				B6218A9A273A7AE000564709 /* MeshBuilder.cpp */,
+				B6218A9B273A7AE000564709 /* MeshBuilder.h */,
+				B60A8006273C2930002DBAEA /* Chunk.cpp */,
+				B60A8007273C2930002DBAEA /* Chunk.h */,
 			);
 			path = mesh;
 			sourceTree = "<group>";
@@ -352,7 +372,9 @@
 				B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */,
 				B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */,
 				B617D9752734273B004FE945 /* main.cpp in Sources */,
+				B60A8008273C2930002DBAEA /* Chunk.cpp in Sources */,
 				B617D97A2734273B004FE945 /* imgui_draw.cpp in Sources */,
+				B6218A9C273A7AE000564709 /* MeshBuilder.cpp in Sources */,
 				B617D9772734273B004FE945 /* imgui.cpp in Sources */,
 				B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */,
 				B617D9792734273B004FE945 /* imgui_demo.cpp in Sources */,
