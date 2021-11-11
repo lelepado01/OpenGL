@@ -20,11 +20,15 @@ MeshBuilder::~MeshBuilder(){
 void MeshBuilder::UpdateMesh(glm::vec3 cameraPosition){
     chunks = std::vector<Chunk>();
     
+    glm::vec3 cameraChunkPosition = getCameraChunkPosition(cameraPosition);
+    
     int start = floor(float(chunkNumber) / 2) - chunkNumber;
     int end = floor(float(chunkNumber) / 2) +1;
     for (int x = start; x < end; x++) {
-        for (int y = start; y < end; y++) {
-            Chunk c(x, y, getChunkLOD(cameraPosition, x, y));
+        for (int z = start; z < end; z++) {
+            int xglobal = x + cameraChunkPosition.x;
+            int zglobal = z + cameraChunkPosition.z;
+            Chunk c(xglobal, zglobal, getChunkLOD(cameraPosition, xglobal, zglobal));
             chunks.push_back(c);
         }
     }
@@ -120,4 +124,8 @@ int MeshBuilder::getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ){
                                         0.0f,
                                         offZ * Chunk::ChunkSize + Chunk::ChunkSize/2);
     return glm::distance(chunkPosition, cameraPosition) > 10 ? 1 : 2;
+}
+
+glm::vec3 MeshBuilder::getCameraChunkPosition(glm::vec3 cameraPosition){
+    return glm::vec3(floor(cameraPosition.x / Chunk::ChunkSize), 0, floor(cameraPosition.z / Chunk::ChunkSize));
 }

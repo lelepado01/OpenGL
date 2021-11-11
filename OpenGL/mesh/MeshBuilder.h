@@ -21,11 +21,10 @@
 class MeshBuilder {
 private:
     std::vector<Vertex> vertices = std::vector<Vertex>();
-//    std::vector<Vertex> gridVertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
         
     const int sphereRadius = 30;
-    const int chunkNumber = 3; 
+    const int chunkNumber = 10; 
     
     std::vector<Chunk> chunks = std::vector<Chunk>(); 
     
@@ -45,6 +44,7 @@ private:
     float getGlobalOffset(glm::vec3 cameraPosition);
     
     int getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ);
+    glm::vec3 getCameraChunkPosition(glm::vec3 cameraPosition); 
 
 };
 
