@@ -18,7 +18,7 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices) {
 
     vertexArray->AddBuffer(*vertexBuffer, layout);
     
-    verticesNumber = vertices.size();
+    verticesNumber = (int)vertices.size();
 }
 
 Mesh::~Mesh(){
@@ -29,5 +29,5 @@ void Mesh::UpdateMesh(std::vector<Vertex> vertices, std::vector<unsigned int> in
     vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
     indexBuffer->Update(indices.data(), (unsigned int)indices.size());
     
-    verticesNumber = vertices.size();
+    verticesNumber = (int)vertices.size();
 }

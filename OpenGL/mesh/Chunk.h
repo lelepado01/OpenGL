@@ -21,7 +21,9 @@ private:
     std::vector<unsigned int> indices = std::vector<unsigned int>();
 
 public:
-    static const int ChunkSize = 10;
+    static const int VerticesPerSide = 4;
+    static const int DistanceBetweenVertices = 5;
+    static const int Size = VerticesPerSide * DistanceBetweenVertices;
 
     
 public:

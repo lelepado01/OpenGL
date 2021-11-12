@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 
 #include "Vertex.h"
 #include "Chunk.h"
@@ -24,8 +25,10 @@ private:
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
         
+    std::unordered_map<int, int> distanceLOD = std::unordered_map<int, int>();
+    
     const int sphereRadius = 30;
-    const int chunkNumber = 10; 
+    const int chunkNumber = 20; 
     
     std::vector<Chunk> chunks = std::vector<Chunk>(); 
     
@@ -45,6 +48,8 @@ private:
     float getGlobalOffset(glm::vec3 cameraPosition);
     
     int getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ);
+    int getLODFromDistance(int distance);
+    
     glm::vec3 getCameraChunkPosition(glm::vec3 cameraPosition);
     glm::vec3 getCameraLookDirection(glm::vec3 cameraDirection);
 
