@@ -14,6 +14,7 @@
 
 #include "Vertex.h"
 #include "Chunk.h"
+#include "../camera/Camera.h"
 
 #include "glm/gtx/norm.hpp"
 #include <glm/gtx/string_cast.hpp>
@@ -29,10 +30,10 @@ private:
     std::vector<Chunk> chunks = std::vector<Chunk>(); 
     
 public:
-    MeshBuilder(glm::vec3 cameraPosition);
+    MeshBuilder(Camera camera);
     ~MeshBuilder();
     
-    void UpdateMesh(glm::vec3 cameraPosition);
+    void UpdateMesh(Camera camera);
     
     std::vector<Vertex>* GetVertices();
     std::vector<unsigned int>* GetIndices();
@@ -44,7 +45,8 @@ private:
     float getGlobalOffset(glm::vec3 cameraPosition);
     
     int getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ);
-    glm::vec3 getCameraChunkPosition(glm::vec3 cameraPosition); 
+    glm::vec3 getCameraChunkPosition(glm::vec3 cameraPosition);
+    glm::vec3 getCameraLookDirection(glm::vec3 cameraDirection);
 
 };
 

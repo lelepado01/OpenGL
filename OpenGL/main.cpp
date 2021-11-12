@@ -21,7 +21,7 @@ int main( void ) {
 
     Camera camera(0, 0, 0);
         
-    MeshBuilder meshBuilder = MeshBuilder(camera.GetPosition());
+    MeshBuilder meshBuilder = MeshBuilder(camera);
     Mesh mesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
 
     Shader shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Vertex.shader",
@@ -65,8 +65,8 @@ int main( void ) {
         shader.SetUniform3f("u_Light.diffuse", light.diffuse.x, light.diffuse.y, light.diffuse.z);
         shader.SetUniform3f("u_Light.ambient", light.ambient.x, light.ambient.y, light.ambient.z);
 
-        if (camera.HasMoved()){
-            meshBuilder.UpdateMesh(camera.GetPosition());
+        if (camera.HasMoved() || camera.HasRotated()){
+            meshBuilder.UpdateMesh(camera);
             mesh.UpdateMesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
         }
         
@@ -75,6 +75,7 @@ int main( void ) {
         ImGui::SliderFloat3("Cube Color", &material.color.x, 0, 1);
         ImGui::SliderFloat3("Light Position", &light.position.x, -10, 10);
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
+        ImGui::Text("%.1d Vertices Displayed)", mesh.GetVerticesNumber());
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode()); 
                 
         OpenGLEngine::ImguiDraw();

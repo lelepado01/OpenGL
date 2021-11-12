@@ -28,5 +28,5 @@ void IndexBuffer::Update(const unsigned int *indices, unsigned int count){
     Bind();
     m_Count = count;
     m_Size = size; 
-    GLCall( glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, size, indices) );
+    GLCall( glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_DYNAMIC_DRAW) );
 }

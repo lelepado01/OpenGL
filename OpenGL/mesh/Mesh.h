@@ -24,6 +24,8 @@ private:
     VertexBuffer* vertexBuffer;
     IndexBuffer* indexBuffer;
     
+    int verticesNumber; 
+    
 public:
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
     ~Mesh();
@@ -31,7 +33,9 @@ public:
     void UpdateMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
     
     VertexArray* GetVertexArray() { return vertexArray; };
-    IndexBuffer* GetIndexBuffer() { return indexBuffer; };    
+    IndexBuffer* GetIndexBuffer() { return indexBuffer; };
+    
+    int GetVerticesNumber(){ return verticesNumber; }; 
 };
 
 #endif /* Mesh_h */

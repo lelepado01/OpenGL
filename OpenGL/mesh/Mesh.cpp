@@ -17,6 +17,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices) {
     layout.AddFloat(3);
 
     vertexArray->AddBuffer(*vertexBuffer, layout);
+    
+    verticesNumber = vertices.size();
 }
 
 Mesh::~Mesh(){
@@ -26,4 +28,6 @@ Mesh::~Mesh(){
 void Mesh::UpdateMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices){
     vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
     indexBuffer->Update(indices.data(), (unsigned int)indices.size());
+    
+    verticesNumber = vertices.size();
 }

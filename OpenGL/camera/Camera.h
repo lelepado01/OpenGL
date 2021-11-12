@@ -13,6 +13,7 @@
 #include "OpenGLEngine.h"
 
 #include "glm/glm.hpp"
+#include <glm/gtx/vector_angle.hpp>
 #include "glm/gtc/matrix_transform.hpp"
 
 class Camera {
@@ -45,12 +46,16 @@ public:
     glm::mat4* GetProjection() { return &proj; };
     glm::mat4* GetView() { return &view; };
     glm::vec3 GetPosition() { return position; };
-    
+    glm::vec3 GetDirection() { return direction; };
+
     bool HasMoved() { return hasMoved; };
+    bool HasRotated() { return directionHasChanged; };
     
+    bool PointIsVisibleFromCamera(int pointX, int pointY);
+
 private:
     void recalculateCameraDirection();
-    void recalculateCameraView(); 
+    void recalculateCameraView();
 };
 
 #endif /* Camera_hpp */

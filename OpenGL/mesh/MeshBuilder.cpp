@@ -7,9 +7,9 @@
 
 #include "MeshBuilder.h"
 
-MeshBuilder::MeshBuilder(glm::vec3 cameraPosition){
-    createGridMesh(cameraPosition);
-    UpdateMesh(cameraPosition);
+MeshBuilder::MeshBuilder(Camera camera){
+    createGridMesh(camera.GetPosition());
+    UpdateMesh(camera);
 }
 
 
@@ -17,19 +17,23 @@ MeshBuilder::~MeshBuilder(){
     
 }
 
-void MeshBuilder::UpdateMesh(glm::vec3 cameraPosition){
+void MeshBuilder::UpdateMesh(Camera camera){
     chunks = std::vector<Chunk>();
     
-    glm::vec3 cameraChunkPosition = getCameraChunkPosition(cameraPosition);
-    
-    int start = floor(float(chunkNumber) / 2) - chunkNumber;
-    int end = floor(float(chunkNumber) / 2) +1;
-    for (int x = start; x < end; x++) {
-        for (int z = start; z < end; z++) {
+    glm::vec3 cameraChunkPosition = getCameraChunkPosition(camera.GetPosition());
+
+    for (int x = -chunkNumber; x < chunkNumber; x++) {
+        for (int z = -chunkNumber; z < chunkNumber; z++) {
+            
             int xglobal = x + cameraChunkPosition.x;
             int zglobal = z + cameraChunkPosition.z;
-            Chunk c(xglobal, zglobal, getChunkLOD(cameraPosition, xglobal, zglobal));
-            chunks.push_back(c);
+            int chunkCenterX = xglobal * Chunk::ChunkSize + Chunk::ChunkSize / 2;
+            int chunkCenterZ = zglobal * Chunk::ChunkSize + Chunk::ChunkSize / 2;
+            
+            if (camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ)){
+                Chunk c(xglobal, zglobal, getChunkLOD(camera.GetPosition(), xglobal, zglobal));
+                chunks.push_back(c);
+            }
         }
     }
 }
@@ -95,8 +99,6 @@ std::vector<Vertex>* MeshBuilder::GetVertices() {
             vertices.push_back(vert[0][j]);
         }
     }
-
-    std::cout << vertices.size() << "\n"; 
     
     return &vertices;
 }
@@ -128,4 +130,13 @@ int MeshBuilder::getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ){
 
 glm::vec3 MeshBuilder::getCameraChunkPosition(glm::vec3 cameraPosition){
     return glm::vec3(floor(cameraPosition.x / Chunk::ChunkSize), 0, floor(cameraPosition.z / Chunk::ChunkSize));
+}
+
+glm::vec3 MeshBuilder::getCameraLookDirection(glm::vec3 cameraDirection){
+    glm::vec3 dir = glm::vec3();
+    if (cameraDirection.x >= 0) dir.x = 1;
+    if (cameraDirection.x < 0) dir.x = -1;
+    if (cameraDirection.z >= 0) dir.z = 1;
+    if (cameraDirection.z < 0) dir.z = -1;
+    return dir; 
 }
