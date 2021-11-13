@@ -39,6 +39,9 @@ void MeshBuilder::UpdateMesh(Camera camera){
             if (camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ)){
                 Chunk c(xglobal, zglobal, meshHeight, getChunkLOD(camera.GetPosition(), xglobal, zglobal));
                 chunks.push_back(c);
+            } else if (cameraIsCloseToChunk(camera.GetPosition(), chunkCenterX, chunkCenterZ)){
+                Chunk c(xglobal, zglobal, meshHeight, 1);
+                chunks.push_back(c);
             }
         }
     }
@@ -149,4 +152,11 @@ glm::vec3 MeshBuilder::getCameraChunkPosition(glm::vec3 cameraPosition){
     return glm::vec3(floor(cameraPosition.x / Chunk::Size),
                      0,
                      floor(cameraPosition.z / Chunk::Size));
+}
+
+bool MeshBuilder::cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY){
+    glm::vec2 camera2d = glm::vec2(cameraPosition.x, cameraPosition.z);
+    glm::vec2 chunk2d = glm::vec2(chunkX, chunkY);
+    
+    return abs(glm::distance(camera2d, chunk2d)) < 60;
 }

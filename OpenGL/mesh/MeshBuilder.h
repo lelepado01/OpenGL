@@ -55,7 +55,8 @@ private:
     
     glm::vec3 getCameraChunkPosition(glm::vec3 cameraPosition);
     glm::vec3 getCameraLookDirection(glm::vec3 cameraDirection);
-
+    
+    bool cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY); 
 };
 
 #endif /* MeshBuilder_h */
