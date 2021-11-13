@@ -15,6 +15,7 @@
 
 #include "Vertex.h"
 #include "Chunk.h"
+#include "MeshHeight.h"
 #include "../camera/Camera.h"
 
 #include "glm/gtx/norm.hpp"
@@ -30,11 +31,13 @@ private:
     const int sphereRadius = 30;
     const int chunkNumber = 20; 
     
-    std::vector<Chunk> chunks = std::vector<Chunk>(); 
-    
+    std::vector<Chunk> chunks = std::vector<Chunk>();
+        
 public:
     MeshBuilder(Camera camera);
     ~MeshBuilder();
+
+    MeshHeight meshHeight;
     
     void UpdateMesh(Camera camera);
     

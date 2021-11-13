@@ -9,6 +9,8 @@
 
 MeshBuilder::MeshBuilder(Camera camera){
     
+    meshHeight = MeshHeight(); 
+    
     distanceLOD[100] = 2;
     distanceLOD[40] = 4;
     
@@ -35,7 +37,7 @@ void MeshBuilder::UpdateMesh(Camera camera){
             int chunkCenterZ = zglobal * Chunk::Size + Chunk::Size / 2;
             
             if (camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ)){
-                Chunk c(xglobal, zglobal, getChunkLOD(camera.GetPosition(), xglobal, zglobal));
+                Chunk c(xglobal, zglobal, meshHeight, getChunkLOD(camera.GetPosition(), xglobal, zglobal));
                 chunks.push_back(c);
             }
         }
@@ -50,7 +52,7 @@ void MeshBuilder::createGridMesh(glm::vec3 cameraPosition){
     int end = floor(float(chunkNumber) / 2) +1;
     for (int x = start; x < end; x++) {
         for (int y = start; y < end; y++) {
-            Chunk c(x, y, getChunkLOD(cameraPosition, x, y));
+            Chunk c(x, y, meshHeight, getChunkLOD(cameraPosition, x, y));
             chunks.push_back(c);
         }
     }

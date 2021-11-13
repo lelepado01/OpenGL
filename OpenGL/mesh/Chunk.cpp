@@ -7,12 +7,9 @@
 
 #include "Chunk.h"
 
-Chunk::Chunk(int offsetX, int offSetZ, int LOD){
+Chunk::Chunk(int offsetX, int offSetZ, MeshHeight meshHeight, int LOD){
     vertices = std::vector<Vertex>();
     indices = std::vector<unsigned int>();
-    
-    FastNoiseLite noise = FastNoiseLite();
-    noise.SetFrequency(0.6f);
     
     for (float z = 0; z <= VerticesPerSide * LOD; z++) {
         for (float x = 0; x <= VerticesPerSide * LOD; x++) {
@@ -22,7 +19,9 @@ Chunk::Chunk(int offsetX, int offSetZ, int LOD){
             float globalX = x * DistanceBetweenVertices / LOD + offsetX * Chunk::Size;
             float globalZ = z * DistanceBetweenVertices / LOD + offSetZ * Chunk::Size;
             
-            v.position = glm::vec3(globalX, noise.GetNoise((globalX) * 0.2f, (globalZ) * 0.2f), globalZ);
+            v.position = glm::vec3(globalX,
+                                   meshHeight.GetHeight(globalX ,globalZ),
+                                   globalZ);
             v.normal = glm::vec3(1.f, 1.f, 1.f);
             
             vertices.push_back(v);
@@ -33,11 +32,11 @@ Chunk::Chunk(int offsetX, int offSetZ, int LOD){
     for (int z = 0; z < VerticesPerSide * LOD; z++) {
         for (int x = 0; x < VerticesPerSide * LOD; x++) {
             indices.push_back(vertexIndex);
-            indices.push_back(vertexIndex + VerticesPerSide*LOD + 1);
+            indices.push_back(vertexIndex + VerticesPerSide * LOD + 1);
             indices.push_back(vertexIndex + 1);
             indices.push_back(vertexIndex + 1);
-            indices.push_back(vertexIndex + VerticesPerSide*LOD + 1);
-            indices.push_back(vertexIndex + VerticesPerSide*LOD + 2);
+            indices.push_back(vertexIndex + VerticesPerSide * LOD + 1);
+            indices.push_back(vertexIndex + VerticesPerSide * LOD + 2);
             
             vertexIndex++;
         }

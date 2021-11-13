@@ -36,7 +36,7 @@ int main( void ) {
     material.shininess = 32.0f;
 
     Light light = {};
-    light.position = glm::vec3(10,10,10);
+    light.direction = glm::vec3(-0.2f, -1.0f, -0.3f);
     light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
@@ -60,7 +60,7 @@ int main( void ) {
         
         shader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
 
-        shader.SetUniform3f("u_Light.position", light.position.x, light.position.y, light.position.z);
+        shader.SetUniform3f("u_Light.direction", light.direction.x, light.direction.y, light.direction.z);
         shader.SetUniform3f("u_Light.specular", light.specular.x, light.specular.y, light.specular.z);
         shader.SetUniform3f("u_Light.diffuse", light.diffuse.x, light.diffuse.y, light.diffuse.z);
         shader.SetUniform3f("u_Light.ambient", light.ambient.x, light.ambient.y, light.ambient.z);
@@ -73,7 +73,13 @@ int main( void ) {
         OpenGLEngine::Draw(mesh.GetVertexArray(), mesh.GetIndexBuffer(), &shader);
         
         ImGui::SliderFloat3("Cube Color", &material.color.x, 0, 1);
-        ImGui::SliderFloat3("Light Position", &light.position.x, -10, 10);
+
+        ImGui::SliderFloat("Large Freq", &meshBuilder.meshHeight.LargeFrequency, 0, 1);
+        ImGui::SliderFloat("Small Freq", &meshBuilder.meshHeight.SmallFrequency, 0, 1);
+        ImGui::SliderFloat("Small Scale", &meshBuilder.meshHeight.SmallScale, 0, 1);
+        ImGui::SliderFloat("Large Scale", &meshBuilder.meshHeight.LargeScale, 0, 1);
+        ImGui::SliderFloat("Large Mult", &meshBuilder.meshHeight.LargeMultiplier, 1, 5);
+
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
         ImGui::Text("%.1d Vertices Displayed)", mesh.GetVerticesNumber());
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode()); 

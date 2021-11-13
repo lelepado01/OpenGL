@@ -9,7 +9,9 @@ struct Material {
 };
 
 struct Light {
-    vec3 position;
+    //vec3 position;
+    vec3 direction;
+    
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -24,11 +26,25 @@ in Light light;
 
 out vec4 color;
 
+vec3 getColorFromHeight(float height){
+    if (height < 0.5) {
+        return vec3(0,0,1);
+    } else if (height < 2 ) {
+        return vec3(1,1,0);
+    }  else if (height < 6 ) {
+        return vec3(0,1,0);
+    }  else if (height < 8 ) {
+        return vec3(0.5,0.5,0);
+    } else {
+        return vec3(1,1,1);
+    }
+}
+
 void main() {
 
     vec3 norm = normalize(objectNormal);
     
-    vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = normalize(-light.direction);
     
     vec3 viewDir = normalize(cameraPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
@@ -40,6 +56,6 @@ void main() {
 
     vec3 ambient = light.ambient * material.ambient;
     
-    vec3 result = (ambient + diffuse + specular) * material.color;
+    vec3 result = (ambient + diffuse + specular) * getColorFromHeight(fragPos.y);
     color = vec4(result, 1.0);
 }
