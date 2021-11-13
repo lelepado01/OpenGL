@@ -10,38 +10,66 @@
 Chunk::Chunk(int offsetX, int offSetZ, MeshHeight meshHeight, int LOD){
     vertices = std::vector<Vertex>();
     indices = std::vector<unsigned int>();
-    
+        
     for (float z = 0; z <= VerticesPerSide * LOD; z++) {
         for (float x = 0; x <= VerticesPerSide * LOD; x++) {
-            Vertex v = {};
-//            v.position = glm::vec3(x / (chunkSize/2) - 1, 0.0f, z / (chunkSize/2) - 1);
             
             float globalX = x * DistanceBetweenVertices / LOD + offsetX * Chunk::Size;
             float globalZ = z * DistanceBetweenVertices / LOD + offSetZ * Chunk::Size;
             
+            Vertex v = {};
             v.position = glm::vec3(globalX,
                                    meshHeight.GetHeight(globalX ,globalZ),
                                    globalZ);
-            v.normal = glm::vec3(1.f, 1.f, 1.f);
             
             vertices.push_back(v);
         }
     }
 
     int vertexIndex = 0;
-    for (int z = 0; z < VerticesPerSide * LOD; z++) {
-        for (int x = 0; x < VerticesPerSide * LOD; x++) {
-            indices.push_back(vertexIndex);
-            indices.push_back(vertexIndex + VerticesPerSide * LOD + 1);
-            indices.push_back(vertexIndex + 1);
-            indices.push_back(vertexIndex + 1);
-            indices.push_back(vertexIndex + VerticesPerSide * LOD + 1);
-            indices.push_back(vertexIndex + VerticesPerSide * LOD + 2);
-            
-            vertexIndex++;
+    for (int z = 0; z <= VerticesPerSide * LOD; z++) {
+        for (int x = 0; x <= VerticesPerSide * LOD; x++) {
+            if (x < VerticesPerSide * LOD && z < VerticesPerSide * LOD){
+                indices.push_back(vertexIndex);
+                indices.push_back(vertexIndex + VerticesPerSide * LOD + 1);
+                indices.push_back(vertexIndex + 1);
+                
+                indices.push_back(vertexIndex + 1);
+                indices.push_back(vertexIndex + VerticesPerSide * LOD + 1);
+                indices.push_back(vertexIndex + VerticesPerSide * LOD + 2);
+
+                vertexIndex++;
+            }
         }
         vertexIndex++;
+    }
+
+    calculateNormals();
+}
+
+void Chunk::calculateNormals(){
+    
+    for (int normalTriangleIndex = 0; normalTriangleIndex < indices.size(); normalTriangleIndex+=3) {
+        int vertexIndexA = indices.at(normalTriangleIndex);
+        int vertexIndexB = indices.at(normalTriangleIndex + 1);
+        int vertexIndexC = indices.at(normalTriangleIndex + 2);
+
+        glm::vec3 normal = computeVertexNormal(vertices.at(vertexIndexA).position,
+                                               vertices.at(vertexIndexB).position,
+                                               vertices.at(vertexIndexC).position);
+        
+        vertices[vertexIndexA].normal += normal;
+        vertices[vertexIndexB].normal += normal;
+        vertices[vertexIndexC].normal += normal;
+    }
+    
+    for (int i = 0; i < vertices.size(); i++) {
+        vertices[i].normal = glm::normalize(vertices[i].normal);
     }
 }
 
 Chunk::~Chunk(){}; 
+
+glm::vec3 Chunk::computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
+    return glm::cross(b-a, c-a);
+}

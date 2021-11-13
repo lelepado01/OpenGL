@@ -30,13 +30,13 @@ int main( void ) {
     
     Material material = {};
     material.color = glm::vec3(1,1,1);
-    material.ambient = glm::vec3(1.0f, 0.5f, 0.31f);
-    material.diffuse = glm::vec3(1.0f, 0.5f, 0.31f);
+    material.ambient = glm::vec3(0.5f, 0.5f, 0.5f);
+    material.diffuse = glm::vec3(0.8, 0.8f, 0.8f);
     material.specular = glm::vec3(0.5f, 0.5f, 0.5f);
-    material.shininess = 32.0f;
+    material.shininess = 0.2f;
 
     Light light = {};
-    light.direction = glm::vec3(-0.2f, -1.0f, -0.3f);
+    light.direction = glm::vec3(0.8f, -1.0f, 0.3f);
     light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
@@ -80,6 +80,16 @@ int main( void ) {
         ImGui::SliderFloat("Large Scale", &meshBuilder.meshHeight.LargeScale, 0, 1);
         ImGui::SliderFloat("Large Mult", &meshBuilder.meshHeight.LargeMultiplier, 1, 5);
 
+        ImGui::Separator();
+        
+        ImGui::SliderFloat("Light Shininess", &material.shininess, 0, 1);
+        ImGui::SliderFloat3("Light Ambient", &material.ambient[0], 0, 1);
+        ImGui::SliderFloat3("Light Specular", &material.specular[0], 0, 1);
+        ImGui::SliderFloat3("Light Diffuse", &material.diffuse[0], 0, 1);
+
+        
+        ImGui::Separator();
+        
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
         ImGui::Text("%.1d Vertices Displayed)", mesh.GetVerticesNumber());
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode()); 

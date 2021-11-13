@@ -150,12 +150,3 @@ glm::vec3 MeshBuilder::getCameraChunkPosition(glm::vec3 cameraPosition){
                      0,
                      floor(cameraPosition.z / Chunk::Size));
 }
-
-glm::vec3 MeshBuilder::getCameraLookDirection(glm::vec3 cameraDirection){
-    glm::vec3 dir = glm::vec3();
-    if (cameraDirection.x >= 0) dir.x = 1;
-    if (cameraDirection.x < 0) dir.x = -1;
-    if (cameraDirection.z >= 0) dir.z = 1;
-    if (cameraDirection.z < 0) dir.z = -1;
-    return dir; 
-}

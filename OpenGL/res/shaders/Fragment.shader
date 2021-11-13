@@ -1,4 +1,4 @@
-#version 330 core
+#version 410 core
 
 struct Material {
     vec3 color;
@@ -35,16 +35,24 @@ vec3 getColorFromHeight(float height){
         return vec3(0,1,0);
     }  else if (height < 8 ) {
         return vec3(0.5,0.5,0);
-    } else {
-        return vec3(1,1,1);
     }
+        
+    return vec3(1,1,1);
 }
+
+
+vec3 getFaceNormal(vec3 position) {
+    vec3 dx = vec3(dFdx(position.x), dFdx(position.y), dFdx(position.z));
+    vec3 dy = vec3(dFdy(position.x), dFdy(position.y), dFdy(position.z));
+    return normalize(cross(dy, dx));
+}
+
 
 void main() {
 
-    vec3 norm = normalize(objectNormal);
+    vec3 norm = mix(getFaceNormal(fragPos), normalize(objectNormal), 0.5f);
     
-    vec3 lightDir = normalize(-light.direction);
+    vec3 lightDir = normalize(fragPos - light.direction); //normalize(-light.direction);
     
     vec3 viewDir = normalize(cameraPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
