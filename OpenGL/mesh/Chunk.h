@@ -39,6 +39,9 @@ public:
     std::vector<Vertex>* GetVertices() { return &vertices; };
     std::vector<unsigned int>* GetIndices() { return &indices; };
 
+    static float GetChunkCenterFromIndex(int i){ return i * Chunk::Size + Chunk::Size/2; };
+    static int GetChunkIndexFromPosition(float pos){ return floor(pos / Chunk::Size); };
+    
 };
 
 #endif /* Chunk_h */

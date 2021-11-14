@@ -45,9 +45,8 @@ public:
     std::vector<unsigned int>* GetIndices();
 
 private:
-    void createGridMesh(glm::vec3 cameraPosition);
     void gridMeshToSphere(glm::vec3 cameraPosition);
-
+    float getChunkCenterFromIndex(int i); 
     float getGlobalOffset(glm::vec3 cameraPosition);
     
     int getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ);

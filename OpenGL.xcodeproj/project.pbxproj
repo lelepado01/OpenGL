@@ -22,8 +22,6 @@
 		B6218A9C273A7AE000564709 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6218A9A273A7AE000564709 /* MeshBuilder.cpp */; };
 		B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9642734273A004FE945 /* stb_image.cpp */; };
 		B675CE33273739730010C4AB /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B675CE31273739730010C4AB /* Mesh.cpp */; };
-		B6907B0926F93ED200875FEF /* libvulkan.1.2.189.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6907B0726F93ED200875FEF /* libvulkan.1.2.189.dylib */; };
-		B6907B0A26F93ED200875FEF /* libvulkan.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6907B0826F93ED200875FEF /* libvulkan.1.dylib */; };
 		B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */; };
 		B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */; };
 		B6BFF5E726F8EE22002ECA4B /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */; };
@@ -89,8 +87,6 @@
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
 		B675CE31273739730010C4AB /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
 		B675CE32273739730010C4AB /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
-		B6907B0726F93ED200875FEF /* libvulkan.1.2.189.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.2.189.dylib; path = ../../../../VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.2.189.dylib; sourceTree = "<group>"; };
-		B6907B0826F93ED200875FEF /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
 		B6BFF5D226F8EDC6002ECA4B /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B6BFF5E026F8EDF9002ECA4B /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.dylib; sourceTree = "<group>"; };
@@ -111,8 +107,6 @@
 				B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */,
 				B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */,
 				B6BFF5E726F8EE22002ECA4B /* libGLEW.2.2.0.dylib in Frameworks */,
-				B6907B0926F93ED200875FEF /* libvulkan.1.2.189.dylib in Frameworks */,
-				B6907B0A26F93ED200875FEF /* libvulkan.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,8 +291,6 @@
 		B6BFF5DD26F8EDD4002ECA4B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B6907B0726F93ED200875FEF /* libvulkan.1.2.189.dylib */,
-				B6907B0826F93ED200875FEF /* libvulkan.1.dylib */,
 				B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */,
 				B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */,
 				B6BFF5E426F8EE22002ECA4B /* libGLEW.dylib */,
@@ -530,7 +522,6 @@
 					"$(inherited)",
 					/usr/local/Cellar/glfw/3.3.4/lib,
 					/usr/local/Cellar/glew/2.2.0_1/lib,
-					"\"$(SRCROOT)/../../../../VulkanSDK/1.2.189.0/macOS/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
@@ -559,7 +550,6 @@
 					"$(inherited)",
 					/usr/local/Cellar/glfw/3.3.4/lib,
 					/usr/local/Cellar/glew/2.2.0_1/lib,
-					"\"$(SRCROOT)/../../../../VulkanSDK/1.2.189.0/macOS/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;

@@ -14,7 +14,6 @@ MeshBuilder::MeshBuilder(Camera camera){
     distanceLOD[100] = 2;
     distanceLOD[40] = 4;
     
-    createGridMesh(camera.GetPosition());
     UpdateMesh(camera);
 }
 
@@ -33,8 +32,8 @@ void MeshBuilder::UpdateMesh(Camera camera){
             
             int xglobal = x + cameraChunkPosition.x;
             int zglobal = z + cameraChunkPosition.z;
-            int chunkCenterX = xglobal * Chunk::Size + Chunk::Size / 2;
-            int chunkCenterZ = zglobal * Chunk::Size + Chunk::Size / 2;
+            int chunkCenterX = Chunk::GetChunkCenterFromIndex(xglobal);
+            int chunkCenterZ = Chunk::GetChunkCenterFromIndex(zglobal);
             
             if (camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ)){
                 Chunk c(xglobal, zglobal, meshHeight, getChunkLOD(camera.GetPosition(), xglobal, zglobal));
@@ -43,20 +42,6 @@ void MeshBuilder::UpdateMesh(Camera camera){
                 Chunk c(xglobal, zglobal, meshHeight, 1);
                 chunks.push_back(c);
             }
-        }
-    }
-}
-
-
-void MeshBuilder::createGridMesh(glm::vec3 cameraPosition){
-    chunks = std::vector<Chunk>();
-
-    int start = floor(float(chunkNumber) / 2) - chunkNumber;
-    int end = floor(float(chunkNumber) / 2) +1;
-    for (int x = start; x < end; x++) {
-        for (int y = start; y < end; y++) {
-            Chunk c(x, y, meshHeight, getChunkLOD(cameraPosition, x, y));
-            chunks.push_back(c);
         }
     }
 }
@@ -131,9 +116,7 @@ std::vector<unsigned int>* MeshBuilder::GetIndices(){
 
 
 int MeshBuilder::getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ){
-    glm::vec3 chunkPosition = glm::vec3(offX * Chunk::Size + Chunk::Size/2,
-                                        0.0f,
-                                        offZ * Chunk::Size + Chunk::Size/2);
+    glm::vec3 chunkPosition = glm::vec3(Chunk::GetChunkCenterFromIndex(offX), 0.0f, Chunk::GetChunkCenterFromIndex(offX));
 
     return getLODFromDistance(glm::distance(chunkPosition, cameraPosition));
 }
@@ -149,9 +132,7 @@ int MeshBuilder::getLODFromDistance(int distance){
 }
 
 glm::vec3 MeshBuilder::getCameraChunkPosition(glm::vec3 cameraPosition){
-    return glm::vec3(floor(cameraPosition.x / Chunk::Size),
-                     0,
-                     floor(cameraPosition.z / Chunk::Size));
+    return glm::vec3(Chunk::GetChunkIndexFromPosition(cameraPosition.x), 0, Chunk::GetChunkIndexFromPosition(cameraPosition.z));
 }
 
 bool MeshBuilder::cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY){

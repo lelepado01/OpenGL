@@ -71,6 +71,8 @@ void Camera::recalculateCameraDirection(){
     direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     direction.y = sin(glm::radians(pitch));
     direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    
+    recalculateVisibilityAngle();
 }
 
 void Camera::recalculateCameraView(){
@@ -93,5 +95,9 @@ bool Camera::PointIsVisibleFromCamera(int pointX, int pointY){
         deltaAngle = 360 - deltaAngle;
     }
     
-    return deltaAngle <= 50;
+    return deltaAngle <= visibilityAngle;
+}
+
+void Camera::recalculateVisibilityAngle(){
+    visibilityAngle = (1 - (direction.y + 1) / 2) * minVisibilityAngle + minVisibilityAngle;
 }

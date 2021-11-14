@@ -26,6 +26,9 @@ private:
     float yaw = 0;
     float roll = 0;
     
+    float visibilityAngle = 45;
+    const float minVisibilityAngle = 55; 
+    
     bool directionHasChanged = false;
     bool hasMoved = false;
     
@@ -58,6 +61,7 @@ public:
 private:
     void recalculateCameraDirection();
     void recalculateCameraView();
+    void recalculateVisibilityAngle(); 
 };
 
 #endif /* Camera_hpp */
