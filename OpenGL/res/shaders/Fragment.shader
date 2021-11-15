@@ -27,14 +27,18 @@ in Light light;
 out vec4 color;
 
 vec3 getColorFromHeight(float height){
-    if (height < 0.5) {
+    if (height < 0.4) {
         return vec3(0,0,1);
+    } else if (height < 1 ) {
+        return vec3(0.3,0.3,1);
     } else if (height < 2 ) {
-        return vec3(1,1,0);
-    }  else if (height < 6 ) {
+        return vec3(1,1,0.1);
+    }  else if (height < 5 ) {
         return vec3(0,1,0);
     }  else if (height < 8 ) {
-        return vec3(0.5,0.5,0);
+        return vec3(0.1,0.7,0.1);
+    }  else if (height < 10 ) {
+        return vec3(0.5,0.5,0.5);
     }
         
     return vec3(1,1,1);

@@ -22,8 +22,8 @@ public:
     float SmallScale = 0.2f;
     float SmallMultiplier = 1.5f;
     
-    float LargeFrequency = 0.1f;
-    float LargeMultiplier = 3.0f;
+    float LargeFrequency = 0.04f;
+    float LargeMultiplier = 2.5f;
     float LargeScale = 0.2f;
 
 public:

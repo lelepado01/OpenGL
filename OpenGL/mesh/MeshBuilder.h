@@ -25,13 +25,15 @@ class MeshBuilder {
 private:
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
-        
+    
+    std::vector<Chunk> chunks = std::vector<Chunk>();
+
     std::unordered_map<int, int> distanceLOD = std::unordered_map<int, int>();
     
     const int sphereRadius = 30;
-    const int chunkNumber = 20; 
+    const int chunkNumber = 10; 
     
-    std::vector<Chunk> chunks = std::vector<Chunk>();
+    glm::vec2 lastFrameCameraChunkPosition; 
         
 public:
     MeshBuilder(Camera camera);
@@ -52,10 +54,11 @@ private:
     int getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ);
     int getLODFromDistance(int distance);
     
-    glm::vec3 getCameraChunkPosition(glm::vec3 cameraPosition);
+    glm::vec2 getCameraChunkPosition(glm::vec3 cameraPosition);
     glm::vec3 getCameraLookDirection(glm::vec3 cameraDirection);
     
-    bool cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY); 
+    bool cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY);
+    bool chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ, MeshHeight meshHeight);
 };
 
 #endif /* MeshBuilder_h */

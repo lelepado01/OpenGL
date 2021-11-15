@@ -79,14 +79,6 @@ int main( void ) {
         ImGui::SliderFloat("Small Scale", &meshBuilder.meshHeight.SmallScale, 0, 1);
         ImGui::SliderFloat("Large Scale", &meshBuilder.meshHeight.LargeScale, 0, 1);
         ImGui::SliderFloat("Large Mult", &meshBuilder.meshHeight.LargeMultiplier, 1, 5);
-
-        ImGui::Separator();
-        
-        ImGui::SliderFloat("Light Shininess", &material.shininess, 0, 1);
-        ImGui::SliderFloat3("Light Ambient", &material.ambient[0], 0, 1);
-        ImGui::SliderFloat3("Light Specular", &material.specular[0], 0, 1);
-        ImGui::SliderFloat3("Light Diffuse", &material.diffuse[0], 0, 1);
-
         
         ImGui::Separator();
         

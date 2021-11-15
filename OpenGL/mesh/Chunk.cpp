@@ -73,3 +73,21 @@ Chunk::~Chunk(){};
 glm::vec3 Chunk::computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
     return glm::cross(b-a, c-a);
 }
+
+float Chunk::GetMaxHeight(int offsetX, int offSetZ, MeshHeight meshHeight){
+    float maxHeight = 0;
+    
+    for (float z = 0; z <= VerticesPerSide; z++) {
+        for (float x = 0; x <= VerticesPerSide; x++) {
+            
+            float globalX = x * DistanceBetweenVertices + offsetX * Chunk::Size;
+            float globalZ = z * DistanceBetweenVertices + offSetZ * Chunk::Size;
+            
+            float height = meshHeight.GetHeight(globalX ,globalZ);
+            
+            if (height > maxHeight) maxHeight = height;
+        }
+    }
+    
+    return maxHeight; 
+}

@@ -41,7 +41,7 @@ public:
 
     static float GetChunkCenterFromIndex(int i){ return i * Chunk::Size + Chunk::Size/2; };
     static int GetChunkIndexFromPosition(float pos){ return floor(pos / Chunk::Size); };
-    
+    static float GetMaxHeight(int offsetX, int offSetZ, MeshHeight meshHeight); 
 };
 
 #endif /* Chunk_h */
