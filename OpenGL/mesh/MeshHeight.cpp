@@ -25,5 +25,10 @@ float MeshHeight::GetHeight(float x, float y){
     
     float large = largeNoise.GetNoise(x * LargeScale, y * LargeScale) * LargeMultiplier;
     float small = smallNoise.GetNoise(x * SmallScale, y * SmallScale) * SmallMultiplier;
-    return large * large * large + small;
+    
+    float height = large * large * large + small;
+    
+    if (height < 0) height = 0;
+    
+    return height;
 }
