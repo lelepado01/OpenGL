@@ -8,10 +8,32 @@
 
 Shader::Shader(const std::string& vertexpath, const std::string& fragmentPath) : m_RendererID(0) {
     
+    m_VertexPath = vertexpath;
+    m_FragmentPath = fragmentPath;
+    
+    commonShaderSource = parseShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Common.shader");
+    
     std::string vertexSource = parseShader(vertexpath);
     std::string fragmentSource = parseShader(fragmentPath);
-
+    
     m_RendererID = createShader(vertexSource, fragmentSource);
+
+    GLCall( glUseProgram(m_RendererID) );
+}
+
+Shader::Shader(const std::string& vertexpath, const std::string& geometryPath, const std::string& fragmentPath) : m_RendererID(0) {
+    
+    m_VertexPath = vertexpath;
+    m_GeometryPath = geometryPath;
+    m_FragmentPath = fragmentPath;
+    
+    commonShaderSource = parseShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Common.shader");
+
+    std::string vertexSource = parseShader(vertexpath);
+    std::string geometrySource = parseShader(geometryPath);
+    std::string fragmentSource = parseShader(fragmentPath);
+
+    m_RendererID = createShader(vertexSource, geometrySource, fragmentSource);
 
     GLCall( glUseProgram(m_RendererID) );
 }
@@ -77,7 +99,14 @@ std::string Shader::parseShader(const std::string& filepath) {
     std::string line;
     std::stringstream ss;
 
+    int lineIndex = 0;
     while (getline(stream, line)) {
+        
+        if (lineIndex == 1 && commonShaderSource != ""){
+            ss << commonShaderSource << '\n';
+        }
+        lineIndex++;
+        
         ss << line << '\n';
     }
 
@@ -94,7 +123,7 @@ unsigned int Shader::compileShader(unsigned int type, const std::string& source)
     // Error handling
     int result;
     GLCall( glGetShaderiv(id, GL_COMPILE_STATUS, &result) );
-    std::cout << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader compile status: " << result << std::endl;
+    //std::cout << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader compile status: " << result << std::endl;
     
     if ( result == GL_FALSE ) {
         int length;
@@ -129,8 +158,40 @@ unsigned int Shader::createShader(const std::string& vertexShader, const std::st
 
     GLCall( glGetProgramiv(program, GL_LINK_STATUS, &program_linked) );
     std::cout << "Program link status: " << program_linked << std::endl;
-    if (program_linked != GL_TRUE)
-    {
+    if (program_linked != GL_TRUE) {
+        GLsizei log_length = 0;
+        GLchar message[1024];
+        GLCall( glGetProgramInfoLog(program, 1024, &log_length, message) );
+        std::cout << "Failed to link program" << std::endl;
+        std::cout << message << std::endl;
+    }
+
+    GLCall( glValidateProgram(program) );
+
+    GLCall( glDeleteShader(vs) );
+    GLCall( glDeleteShader(fs) );
+
+    return program;
+}
+
+unsigned int Shader::createShader(const std::string& vertexShader, const std::string& geometryShader, const std::string& fragmentShader) {
+    // create a shader program
+    unsigned int program = glCreateProgram();
+    unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
+    unsigned int gs = compileShader(GL_GEOMETRY_SHADER, geometryShader);
+    unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
+
+    GLCall( glAttachShader(program, vs) );
+    GLCall( glAttachShader(program, gs) );
+    GLCall( glAttachShader(program, fs) );
+
+    GLCall( glLinkProgram(program) );
+
+    GLint program_linked;
+
+    GLCall( glGetProgramiv(program, GL_LINK_STATUS, &program_linked) );
+    std::cout << "Program link status: " << program_linked << std::endl;
+    if (program_linked != GL_TRUE) {
         GLsizei log_length = 0;
         GLchar message[1024];
         GLCall( glGetProgramInfoLog(program, 1024, &log_length, message) );

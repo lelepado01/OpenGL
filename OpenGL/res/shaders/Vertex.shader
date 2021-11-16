@@ -1,22 +1,5 @@
 #version 410 core
 
-struct Material {
-    vec3 color;
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-    float shininess;
-};
-
-struct Light {
-    //vec3 position;
-    vec3 direction; 
-    
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-};
-
 layout(location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 
@@ -31,15 +14,33 @@ out vec3 fragPos;
 out vec3 cameraPos;
 
 out Material material;
-out Light light;
+out Light light; 
+
+out VS_OUT {
+    vec3 objectNormal;
+    vec3 fragPos;
+    vec3 cameraPos;
+
+    Material material;
+    Light light;
+} vs_out;
+
+//out Light light;
 
 void main() {
-    light = u_Light;
-    material = u_Material;
+    //light = u_Light;
+    vs_out.material = u_Material;
     
+    vs_out.objectNormal = normal;
+    vs_out.fragPos = position;
+    vs_out.cameraPos = u_cameraPos;
+    vs_out.light = u_Light;
+    
+    material = u_Material;
     objectNormal = normal;
     fragPos = position;
-    cameraPos = u_cameraPos; 
+    cameraPos = u_cameraPos;
+    light = u_Light;
  
     gl_Position = u_MVP * vec4(position, 1);
 }

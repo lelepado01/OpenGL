@@ -25,6 +25,7 @@ int main( void ) {
     Mesh mesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
 
     Shader shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Vertex.shader",
+                  //"/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Geometry.shader",
                   "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Fragment.shader");
     shader.Bind();
     
