@@ -37,7 +37,7 @@ int main( void ) {
     material.shininess = 0.2f;
 
     Light light = {};
-    light.direction = glm::vec3(0.8f, -1.0f, 0.3f);
+    light.direction = glm::vec3(0.8f, -1.0f, 0.8f);
     light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
@@ -73,7 +73,7 @@ int main( void ) {
         
         OpenGLEngine::Draw(mesh.GetVertexArray(), mesh.GetIndexBuffer(), &shader);
         
-        ImGui::SliderFloat3("Cube Color", &material.color.x, 0, 1);
+        ImGui::SliderFloat3("Light Angle", &light.direction.x, -0.5, 0.5);
 
         ImGui::SliderFloat("Large Freq", &meshBuilder.meshHeight.LargeFrequency, 0, 1);
         ImGui::SliderFloat("Small Freq", &meshBuilder.meshHeight.SmallFrequency, 0, 1);

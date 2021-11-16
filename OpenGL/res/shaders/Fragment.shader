@@ -39,11 +39,11 @@ void main() {
 
     vec3 norm = mix(getFaceNormal(fragPos), normalize(-objectNormal), 0.5f);
     
-    vec3 lightDir = normalize(light.direction);
+    vec3 lightDir = normalize(-light.direction);
     
     vec3 viewDir = normalize(cameraPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    float spec = pow(max(dot(lightDir, reflectDir), 0.0), material.shininess);
 
     float diff = max(dot(norm, lightDir), 0.0);
     
