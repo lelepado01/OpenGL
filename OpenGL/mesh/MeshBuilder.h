@@ -48,6 +48,7 @@ public:
 
 private:
     void gridMeshToSphere(glm::vec3 cameraPosition);
+    void constructInitialMesh(Camera camera); 
     
     float getChunkCenterFromIndex(int i); 
     float getGlobalOffset(glm::vec3 cameraPosition);
@@ -60,8 +61,8 @@ private:
     
     bool cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY);
     bool chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ, MeshHeight meshHeight);
-    bool chunkIsAlreadyBuilt(int x, int y);
-    bool chunkIsVisible(Camera camera, glm::vec2 globalPosition); 
+    bool chunkIsVisible(Camera camera, glm::vec2 globalPosition);
+    bool positionIsInListOfChunks(int x, int y);
     
     void removeChunksOutOfView(Camera camera);
 };

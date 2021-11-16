@@ -14,33 +14,22 @@ MeshBuilder::MeshBuilder(Camera camera){
     distanceLOD[30] = 2;
     distanceLOD[20] = 4;
     
+    constructInitialMesh(camera); 
     UpdateMesh(camera);
 }
 
 
-MeshBuilder::~MeshBuilder(){
-    
-}
+MeshBuilder::~MeshBuilder(){}
 
-void MeshBuilder::UpdateMesh(Camera camera){
+void MeshBuilder::constructInitialMesh(Camera camera){
     glm::vec2 cameraChunkPosition = getCameraChunkPosition(camera.GetPosition());
-    if ( cameraChunkPosition == lastFrameCameraChunkPosition && !camera.HasRotated()) {
-        return;
-    }
-    lastFrameCameraChunkPosition = cameraChunkPosition;
-    
-    // chunks = std::vector<Chunk>();
-    
-    removeChunksOutOfView(camera);
-    
+
     for (int x = -chunkNumber; x < chunkNumber; x++) {
         for (int z = -chunkNumber; z < chunkNumber; z++) {
             
             int xglobal = x + cameraChunkPosition.x;
             int zglobal = z + cameraChunkPosition.y;
-            
-            if (chunkIsAlreadyBuilt(xglobal, zglobal)) continue;
-            
+                        
             int chunkCenterX = Chunk::GetChunkCenterFromIndex(xglobal);
             int chunkCenterZ = Chunk::GetChunkCenterFromIndex(zglobal);
             
@@ -53,6 +42,40 @@ void MeshBuilder::UpdateMesh(Camera camera){
             }
         }
     }
+}
+
+void MeshBuilder::UpdateMesh(Camera camera){
+    glm::vec2 cameraChunkPosition = getCameraChunkPosition(camera.GetPosition());
+    if ( cameraChunkPosition == lastFrameCameraChunkPosition && !camera.HasRotated()) {
+        return;
+    }
+    lastFrameCameraChunkPosition = cameraChunkPosition;
+    
+    removeChunksOutOfView(camera);
+    
+    // TODO: do I have to iterate over all chunks? 
+    for (int x = -chunkNumber; x < chunkNumber; x++) {
+        for (int z = -chunkNumber; z < chunkNumber; z++) {
+
+            int xglobal = x + cameraChunkPosition.x;
+            int zglobal = z + cameraChunkPosition.y;
+
+            if (positionIsInListOfChunks(xglobal, zglobal)) continue;
+
+            int chunkCenterX = Chunk::GetChunkCenterFromIndex(xglobal);
+            int chunkCenterZ = Chunk::GetChunkCenterFromIndex(zglobal);
+
+            if (camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ) && chunkIsVisibleFromCamera(camera, xglobal, zglobal, meshHeight)){
+                Chunk c(xglobal, zglobal, meshHeight, getChunkLOD(camera.GetPosition(), xglobal, zglobal));
+                chunks.push_back(c);
+            } else if (cameraIsCloseToChunk(camera.GetPosition(), chunkCenterX, chunkCenterZ)){
+                Chunk c(xglobal, zglobal, meshHeight, 1);
+                chunks.push_back(c);
+            }
+        }
+    }
+    
+    
 }
 
 float MeshBuilder::getGlobalOffset(glm::vec3 cameraPosition){
@@ -159,7 +182,7 @@ bool MeshBuilder::chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSe
     
 }
 
-bool MeshBuilder::chunkIsAlreadyBuilt(int x, int y){
+bool MeshBuilder::positionIsInListOfChunks(int x, int y){
     for (int i = 0; i < chunks.size(); i++) {
         if (chunks.at(i).HasPosition(x, y)) return true;
     }
@@ -178,12 +201,16 @@ bool MeshBuilder::chunkIsVisible(Camera camera, glm::vec2 globalPosition){
 
 void MeshBuilder::removeChunksOutOfView(Camera camera){
     
-    for (int i = 0; i < chunks.size(); i++) {
-        glm::vec2 globalPosition = chunks.at(i).GetPosition(); 
+    int chunkIndex = 0;
+    for (Chunk chunk : chunks) {
+        
+        glm::vec2 globalPosition = chunk.GetPosition();
     
         if (!chunkIsVisible(camera, globalPosition)){
-            chunks.erase(chunks.begin() + i);
-            i--;
+            chunks.erase(chunks.begin() + chunkIndex);
+            continue;
         }
+        
+        chunkIndex++;
     }
 }
