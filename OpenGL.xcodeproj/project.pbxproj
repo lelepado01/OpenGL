@@ -79,9 +79,10 @@
 		B617D9732734273B004FE945 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		B617D98127342FFD004FE945 /* Fragment.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fragment.shader; sourceTree = "<group>"; };
 		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
-		B61FAB3F27369A7800D6DD56 /* common.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = common.shader; sourceTree = "<group>"; };
+		B61FAB3F27369A7800D6DD56 /* Common.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.shader; sourceTree = "<group>"; };
 		B6218A9A273A7AE000564709 /* MeshBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshBuilder.cpp; sourceTree = "<group>"; };
 		B6218A9B273A7AE000564709 /* MeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshBuilder.h; sourceTree = "<group>"; };
+		B623EA192743BC1F007A158C /* Geometry.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = Geometry.shader; sourceTree = "<group>"; };
 		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
@@ -181,8 +182,9 @@
 			isa = PBXGroup;
 			children = (
 				B617D9722734273B004FE945 /* Vertex.shader */,
+				B623EA192743BC1F007A158C /* Geometry.shader */,
 				B617D98127342FFD004FE945 /* Fragment.shader */,
-				B61FAB3F27369A7800D6DD56 /* common.shader */,
+				B61FAB3F27369A7800D6DD56 /* Common.shader */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
