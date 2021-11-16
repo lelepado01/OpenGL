@@ -16,17 +16,21 @@ out Material material;
 out Light light;
 
 layout (triangles) in;
-layout (points, max_vertices = 1) out;
+layout (triangle_strip, max_vertices = 3) out;
 
 void main() {
     
-    //gl_Position = gl_in[0].gl_Position;
-    //EmitVertex();
-    //EndPrimitive();
-    
-    objectNormal = gs_in[0].objectNormal;
-    fragPos = gs_in[0].fragPos;
-    cameraPos = gs_in[0].cameraPos;
-    material = gs_in[0].material;
-    light = gs_in[0].light; 
+    for(int i = 0; i < gl_in.length(); i++){
+        
+        gl_Position = gl_in[i].gl_Position;
+        
+        objectNormal = gs_in[i].objectNormal;
+        fragPos = gs_in[i].fragPos;
+        cameraPos = gs_in[i].cameraPos;
+        material = gs_in[i].material;
+        light = gs_in[i].light;
+        
+        EmitVertex();
+    }
+    EndPrimitive();
 }
