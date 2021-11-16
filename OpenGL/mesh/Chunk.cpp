@@ -8,6 +8,8 @@
 #include "Chunk.h"
 
 Chunk::Chunk(int offsetX, int offSetZ, MeshHeight meshHeight, int LOD){
+    globalOffsetX = offsetX;
+    globalOffsetY = offSetZ; 
     vertices = std::vector<Vertex>();
     indices = std::vector<unsigned int>();
         

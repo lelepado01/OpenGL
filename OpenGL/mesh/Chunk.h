@@ -21,6 +21,9 @@ class Chunk {
 private:
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
+    
+    int globalOffsetX;
+    int globalOffsetY; 
         
 public:
     static const int VerticesPerSide = 4;
@@ -38,10 +41,12 @@ public:
     
     std::vector<Vertex>* GetVertices() { return &vertices; };
     std::vector<unsigned int>* GetIndices() { return &indices; };
+    bool HasPosition(int x, int y) { return x == globalOffsetX && y == globalOffsetY; };
+    glm::vec2 GetPosition() { return glm::vec2(globalOffsetX, globalOffsetY); }; 
 
     static float GetChunkCenterFromIndex(int i){ return i * Chunk::Size + Chunk::Size/2; };
     static int GetChunkIndexFromPosition(float pos){ return floor(pos / Chunk::Size); };
-    static float GetMaxHeight(int offsetX, int offSetZ, MeshHeight meshHeight); 
+    static float GetMaxHeight(int offsetX, int offSetZ, MeshHeight meshHeight);
 };
 
 #endif /* Chunk_h */
