@@ -22,12 +22,17 @@ int main( void ) {
     Camera camera(0, 0, 0);
         
     MeshBuilder meshBuilder = MeshBuilder(camera);
-    Mesh mesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
+    Mesh closeMesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
+    Mesh farMesh(*meshBuilder.GetLowLODVertices(), *meshBuilder.GetLowLODIndices());
 
-    Shader shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Vertex.shader",
-                  "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Geometry.shader",
-                  "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Fragment.shader");
-    shader.Bind();
+    Shader closeShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.vs",
+                       "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.fs");
+    closeShader.Bind();
+    
+    Shader farShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/FarMesh.vs",
+                     "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/FarMesh.gs",
+                     "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/FarMesh.fs");
+    farShader.Bind();
     
     Material material = {};
     material.color = glm::vec3(1,1,1);
@@ -55,23 +60,27 @@ int main( void ) {
         
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 mvp = (*camera.GetProjection()) * (*camera.GetView()) * model;
-        shader.Bind();
-        shader.SetUniformMat4f("u_MVP", mvp);
-        shader.SetUniformMaterial("u_Material", material);
         
-        shader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-
-        shader.SetUniform3f("u_Light.direction", light.direction.x, light.direction.y, light.direction.z);
-        shader.SetUniform3f("u_Light.specular", light.specular.x, light.specular.y, light.specular.z);
-        shader.SetUniform3f("u_Light.diffuse", light.diffuse.x, light.diffuse.y, light.diffuse.z);
-        shader.SetUniform3f("u_Light.ambient", light.ambient.x, light.ambient.y, light.ambient.z);
+        closeShader.Bind();
+        closeShader.SetUniformMat4f("u_MVP", mvp);
+        closeShader.SetUniformMaterial("u_Material", material);
+        closeShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
+        closeShader.SetUniformLight("u_Light", light);
+        
+        closeShader.Bind();
+        closeShader.SetUniformMat4f("u_MVP", mvp);
+        closeShader.SetUniformMaterial("u_Material", material);
+        closeShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
+        closeShader.SetUniformLight("u_Light", light);
+        
 
         if (camera.HasMoved() || camera.HasRotated()){
             meshBuilder.UpdateMesh(camera);
-            mesh.UpdateMesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
+            closeMesh.UpdateMesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
         }
         
-        OpenGLEngine::Draw(mesh.GetVertexArray(), mesh.GetIndexBuffer(), &shader);
+        OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), &closeShader);
+        OpenGLEngine::Draw(closeMesh.GetVertexArray(), farMesh.GetIndexBuffer(), &farShader);
         
         ImGui::SliderFloat3("Light Angle", &light.direction.x, -0.5, 0.5);
 
@@ -84,7 +93,7 @@ int main( void ) {
         ImGui::Separator();
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
-        ImGui::Text("%.1d Vertices Displayed)", mesh.GetVerticesNumber());
+        ImGui::Text("%.1d Vertices Displayed)", closeMesh.GetVerticesNumber());
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode()); 
                 
         OpenGLEngine::ImguiDraw();

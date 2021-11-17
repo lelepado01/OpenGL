@@ -146,6 +146,13 @@ std::vector<unsigned int>* MeshBuilder::GetIndices(){
     return &indices;
 }
 
+std::vector<Vertex>* MeshBuilder::GetLowLODVertices(){
+    return sampleLowLODChunk.GetVertices();
+}
+
+std::vector<unsigned int>* MeshBuilder::GetLowLODIndices(){
+    return sampleLowLODChunk.GetIndices();
+}
 
 int MeshBuilder::getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ){
     glm::vec3 chunkPosition = glm::vec3(Chunk::GetChunkCenterFromIndex(offX), 0.0f, Chunk::GetChunkCenterFromIndex(offX));

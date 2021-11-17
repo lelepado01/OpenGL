@@ -7,6 +7,46 @@
 
 #include "Chunk.h"
 
+Chunk::Chunk(int offsetX, int offSetZ, int LOD){
+    globalOffsetX = offsetX;
+    globalOffsetY = offSetZ;
+    vertices = std::vector<Vertex>();
+    indices = std::vector<unsigned int>();
+        
+    for (float z = 0; z <= VerticesPerSide * LOD; z++) {
+        for (float x = 0; x <= VerticesPerSide * LOD; x++) {
+            
+            float globalX = x * DistanceBetweenVertices / LOD + offsetX * Chunk::Size;
+            float globalZ = z * DistanceBetweenVertices / LOD + offSetZ * Chunk::Size;
+            
+            Vertex v = {};
+            v.position = glm::vec3(globalX, 0, globalZ);
+            
+            vertices.push_back(v);
+        }
+    }
+
+    int vertexIndex = 0;
+    for (int z = 0; z <= VerticesPerSide * LOD; z++) {
+        for (int x = 0; x <= VerticesPerSide * LOD; x++) {
+            if (x < VerticesPerSide * LOD && z < VerticesPerSide * LOD){
+                indices.push_back(vertexIndex);
+                indices.push_back(vertexIndex + VerticesPerSide * LOD + 1);
+                indices.push_back(vertexIndex + 1);
+                
+                indices.push_back(vertexIndex + 1);
+                indices.push_back(vertexIndex + VerticesPerSide * LOD + 1);
+                indices.push_back(vertexIndex + VerticesPerSide * LOD + 2);
+
+                vertexIndex++;
+            }
+        }
+        vertexIndex++;
+    }
+
+}
+
+
 Chunk::Chunk(int offsetX, int offSetZ, MeshHeight meshHeight, int LOD){
     globalOffsetX = offsetX;
     globalOffsetY = offSetZ; 

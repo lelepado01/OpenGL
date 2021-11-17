@@ -37,6 +37,7 @@ private:
 
 public:
     Chunk(int offsetX, int offSetZ, MeshHeight meshHeight, int LOD);
+    Chunk(int offsetX, int offSetZ, int LOD);
     ~Chunk();
     
     std::vector<Vertex>* GetVertices() { return &vertices; };

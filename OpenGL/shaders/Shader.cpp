@@ -93,6 +93,13 @@ void Shader::SetUniformMaterial(const std::string &name, Material material){
     GLCall( glUniform1f(getUniformLocation(name + ".shininess"), material.shininess) );
 }
 
+void Shader::SetUniformLight(const std::string &name, Light light){
+    SetUniform3f(name + ".direction", light.direction.x, light.direction.y, light.direction.z);
+    SetUniform3f(name + ".specular", light.specular.x, light.specular.y, light.specular.z);
+    SetUniform3f(name + ".diffuse", light.diffuse.x, light.diffuse.y, light.diffuse.z);
+    SetUniform3f(name + ".ambient", light.ambient.x, light.ambient.y, light.ambient.z);
+}
+
 std::string Shader::parseShader(const std::string& filepath) {
 
     std::ifstream stream(filepath);

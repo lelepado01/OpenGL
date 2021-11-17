@@ -27,6 +27,7 @@ private:
     std::vector<unsigned int> indices = std::vector<unsigned int>();
     
     std::vector<Chunk> chunks = std::vector<Chunk>();
+    Chunk sampleLowLODChunk = Chunk(0,0,1);;
 
     std::unordered_map<int, int> distanceLOD = std::unordered_map<int, int>();
     
@@ -45,6 +46,9 @@ public:
     
     std::vector<Vertex>* GetVertices();
     std::vector<unsigned int>* GetIndices();
+    
+    std::vector<Vertex>* GetLowLODVertices();
+    std::vector<unsigned int>* GetLowLODIndices();
 
 private:
     void gridMeshToSphere(glm::vec3 cameraPosition);

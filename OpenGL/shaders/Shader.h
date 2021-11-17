@@ -31,6 +31,7 @@ public:
     void SetUniform4f(const std::string& name, float f0, float f1, float f2, float f3);
     void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
     void SetUniformMaterial(const std::string& name, Material material);
+    void SetUniformLight(const std::string& name, Light light); 
 
 private:
     int getUniformLocation(const std::string& name);
