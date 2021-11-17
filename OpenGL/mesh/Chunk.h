@@ -14,6 +14,7 @@
 
 #include "Vertex.h"
 #include "MeshHeight.h"
+#include "../settings/ChunkSettings.h"
 
 #include <glm/gtx/string_cast.hpp>
 
@@ -24,11 +25,6 @@ private:
     
     int globalOffsetX;
     int globalOffsetY; 
-        
-public:
-    static const int VerticesPerSide = 4;
-    static const int DistanceBetweenVertices = 5;
-    static const int Size = VerticesPerSide * DistanceBetweenVertices;
 
 private:
     glm::vec3 computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c);
@@ -45,8 +41,8 @@ public:
     bool HasPosition(int x, int y) { return x == globalOffsetX && y == globalOffsetY; };
     glm::vec2 GetPosition() { return glm::vec2(globalOffsetX, globalOffsetY); }; 
 
-    static float GetChunkCenterFromIndex(int i){ return i * Chunk::Size + Chunk::Size/2; };
-    static int GetChunkIndexFromPosition(float pos){ return floor(pos / Chunk::Size); };
+    static float GetChunkCenterFromIndex(int i){ return i * ChunkSettings::Size + ChunkSettings::Size/2; };
+    static int GetChunkIndexFromPosition(float pos){ return floor(pos / ChunkSettings::Size); };
     static float GetMaxHeight(int offsetX, int offSetZ, MeshHeight meshHeight);
 };
 

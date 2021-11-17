@@ -16,6 +16,7 @@
 #include "Vertex.h"
 #include "Chunk.h"
 #include "MeshHeight.h"
+#include "../settings/MeshSettings.h"
 #include "../camera/Camera.h"
 
 #include "glm/gtx/norm.hpp"
@@ -30,13 +31,8 @@ private:
     Chunk sampleLowLODChunk = Chunk(0,0,1);;
 
     std::unordered_map<int, int> distanceLOD = std::unordered_map<int, int>();
-    
-    const int sphereRadius = 30;
-    
+        
     glm::vec2 lastFrameCameraChunkPosition; 
-
-public:
-    static const int ChunkNumber = 10;
     
 public:
     MeshBuilder(Camera camera);

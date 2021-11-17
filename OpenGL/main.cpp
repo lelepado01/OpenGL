@@ -10,6 +10,8 @@
 #include "materials/Material.h"
 #include "mesh/Mesh.h"
 #include "mesh/MeshBuilder.h"
+#include "settings/MeshSettings.h"
+#include "settings/ChunkSettings.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -68,8 +70,8 @@ int main( void ) {
         closeShader.SetUniformLight("u_Light", light);
         
         farShader.Bind();
-        farShader.SetUniform1i("u_ChunkSize", Chunk::Size);
-        farShader.SetUniform1i("u_ChunkNumber", MeshBuilder::ChunkNumber);
+        farShader.SetUniform1i("u_ChunkSize", ChunkSettings::Size);
+        farShader.SetUniform1i("u_ChunkNumber", MeshSettings::ChunkNumber);
         farShader.SetUniformMat4f("u_MVP", mvp);
         farShader.SetUniformMaterial("u_Material", material);
         farShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);

@@ -24,8 +24,8 @@ MeshBuilder::~MeshBuilder(){}
 void MeshBuilder::constructInitialMesh(Camera camera){
     glm::vec2 cameraChunkPosition = getCameraChunkPosition(camera.GetPosition());
 
-    for (int x = -ChunkNumber; x < ChunkNumber; x++) {
-        for (int z = -ChunkNumber; z < ChunkNumber; z++) {
+    for (int x = -MeshSettings::ChunkNumber; x < MeshSettings::ChunkNumber; x++) {
+        for (int z = -MeshSettings::ChunkNumber; z < MeshSettings::ChunkNumber; z++) {
             
             int xglobal = x + cameraChunkPosition.x;
             int zglobal = z + cameraChunkPosition.y;
@@ -54,8 +54,8 @@ void MeshBuilder::UpdateMesh(Camera camera){
     removeChunksOutOfView(camera);
     
     // TODO: do I have to iterate over all chunks? 
-    for (int x = -ChunkNumber; x < ChunkNumber; x++) {
-        for (int z = -ChunkNumber; z < ChunkNumber; z++) {
+    for (int x = -MeshSettings::ChunkNumber; x < MeshSettings::ChunkNumber; x++) {
+        for (int z = -MeshSettings::ChunkNumber; z < MeshSettings::ChunkNumber; z++) {
 
             int xglobal = x + cameraChunkPosition.x;
             int zglobal = z + cameraChunkPosition.y;
@@ -83,9 +83,9 @@ float MeshBuilder::getGlobalOffset(glm::vec3 cameraPosition){
     glm::vec3 origin = glm::vec3(0,0,0);
     float d2 = glm::distance(cameraPosition, origin) * glm::distance(cameraPosition, origin);
 
-    float HplusS = sqrt(d2 - sphereRadius*sphereRadius) + sqrt(R2 - sphereRadius*sphereRadius);
+    float HplusS = sqrt(d2 - MeshSettings::SphereRadius*MeshSettings::SphereRadius) + sqrt(R2 - MeshSettings::SphereRadius*MeshSettings::SphereRadius);
 
-    return (R2 + d2 - HplusS*HplusS) / (2*sphereRadius * HplusS);
+    return (R2 + d2 - HplusS*HplusS) / (2*MeshSettings::SphereRadius * HplusS);
 }
 
 void MeshBuilder::gridMeshToSphere(glm::vec3 cameraPosition){

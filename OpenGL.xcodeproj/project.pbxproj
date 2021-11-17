@@ -87,6 +87,8 @@
 		B623EA192743BC1F007A158C /* FarMesh.gs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = FarMesh.gs; sourceTree = "<group>"; };
 		B625C59C27457B3D00F90B2C /* water.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = water.fs; sourceTree = "<group>"; };
 		B625C59D27457B3D00F90B2C /* water.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = water.vs; sourceTree = "<group>"; };
+		B625C59E27457C5B00F90B2C /* MeshSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshSettings.h; sourceTree = "<group>"; };
+		B625C59F27457CAB00F90B2C /* ChunkSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChunkSettings.h; sourceTree = "<group>"; };
 		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
@@ -247,6 +249,15 @@
 			path = materials;
 			sourceTree = "<group>";
 		};
+		B625C5A027457DC800F90B2C /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				B625C59E27457C5B00F90B2C /* MeshSettings.h */,
+				B625C59F27457CAB00F90B2C /* ChunkSettings.h */,
+			);
+			path = settings;
+			sourceTree = "<group>";
+		};
 		B63A996D273723E100CA007E /* mesh */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +294,7 @@
 		B6BFF5D426F8EDC6002ECA4B /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				B625C5A027457DC800F90B2C /* settings */,
 				B63A996D273723E100CA007E /* mesh */,
 				B61FAB3D2736993B00D6DD56 /* materials */,
 				B6FDF28A2735A26500DEBCB9 /* camera */,
