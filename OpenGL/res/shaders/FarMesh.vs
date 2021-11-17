@@ -13,16 +13,23 @@ uniform Material u_Material;
 uniform Light u_Light;
 
 out VS_OUT {
+    int chunkSize;
+    int chunkNumber;
+    
     vec3 objectNormal;
     vec3 fragPos;
     vec3 cameraPos;
 
     Material material;
     Light light;
+    
     mat4 modelViewProjMatrix;
 } vs_out;
 
 void main() {
+    vs_out.chunkSize = u_ChunkSize;
+    vs_out.chunkNumber = u_ChunkNumber;
+
     vs_out.material = u_Material;
     vs_out.objectNormal = normal;
     vs_out.fragPos = position;

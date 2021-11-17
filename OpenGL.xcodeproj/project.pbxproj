@@ -85,6 +85,8 @@
 		B6218A9A273A7AE000564709 /* MeshBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshBuilder.cpp; sourceTree = "<group>"; };
 		B6218A9B273A7AE000564709 /* MeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshBuilder.h; sourceTree = "<group>"; };
 		B623EA192743BC1F007A158C /* FarMesh.gs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = FarMesh.gs; sourceTree = "<group>"; };
+		B625C59C27457B3D00F90B2C /* water.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = water.fs; sourceTree = "<group>"; };
+		B625C59D27457B3D00F90B2C /* water.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = water.vs; sourceTree = "<group>"; };
 		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
@@ -183,6 +185,8 @@
 		B617D9712734273B004FE945 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B625C59C27457B3D00F90B2C /* water.fs */,
+				B625C59D27457B3D00F90B2C /* water.vs */,
 				B61FAB3F27369A7800D6DD56 /* Common.shader */,
 				B617D9722734273B004FE945 /* CloseMesh.vs */,
 				B617D98127342FFD004FE945 /* CloseMesh.fs */,
