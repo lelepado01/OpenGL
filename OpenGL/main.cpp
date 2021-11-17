@@ -59,7 +59,7 @@ int main( void ) {
         camera.UpdatePosition();
         
         glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 mvp = (*camera.GetProjection()) * (*camera.GetView()) * model;
+        glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) * model;
         
         closeShader.Bind();
         closeShader.SetUniformMat4f("u_MVP", mvp);
@@ -67,20 +67,21 @@ int main( void ) {
         closeShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         closeShader.SetUniformLight("u_Light", light);
         
-        closeShader.Bind();
-        closeShader.SetUniformMat4f("u_MVP", mvp);
-        closeShader.SetUniformMaterial("u_Material", material);
-        closeShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-        closeShader.SetUniformLight("u_Light", light);
+        farShader.Bind();
+        farShader.SetUniform1i("u_ChunkSize", Chunk::Size);
+        farShader.SetUniform1i("u_ChunkNumber", MeshBuilder::ChunkNumber);
+        farShader.SetUniformMat4f("u_MVP", mvp);
+        farShader.SetUniformMaterial("u_Material", material);
+        farShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
+        farShader.SetUniformLight("u_Light", light);
         
-
         if (camera.HasMoved() || camera.HasRotated()){
             meshBuilder.UpdateMesh(camera);
             closeMesh.UpdateMesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
         }
         
         OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), &closeShader);
-        OpenGLEngine::Draw(closeMesh.GetVertexArray(), farMesh.GetIndexBuffer(), &farShader);
+        OpenGLEngine::Draw(farMesh.GetVertexArray(), farMesh.GetIndexBuffer(), &farShader);
         
         ImGui::SliderFloat3("Light Angle", &light.direction.x, -0.5, 0.5);
 

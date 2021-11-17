@@ -32,10 +32,12 @@ private:
     std::unordered_map<int, int> distanceLOD = std::unordered_map<int, int>();
     
     const int sphereRadius = 30;
-    const int chunkNumber = 10; 
     
     glm::vec2 lastFrameCameraChunkPosition; 
-        
+
+public:
+    static const int ChunkNumber = 10;
+    
 public:
     MeshBuilder(Camera camera);
     ~MeshBuilder();

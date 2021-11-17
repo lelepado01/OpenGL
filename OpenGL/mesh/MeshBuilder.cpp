@@ -24,8 +24,8 @@ MeshBuilder::~MeshBuilder(){}
 void MeshBuilder::constructInitialMesh(Camera camera){
     glm::vec2 cameraChunkPosition = getCameraChunkPosition(camera.GetPosition());
 
-    for (int x = -chunkNumber; x < chunkNumber; x++) {
-        for (int z = -chunkNumber; z < chunkNumber; z++) {
+    for (int x = -ChunkNumber; x < ChunkNumber; x++) {
+        for (int z = -ChunkNumber; z < ChunkNumber; z++) {
             
             int xglobal = x + cameraChunkPosition.x;
             int zglobal = z + cameraChunkPosition.y;
@@ -54,8 +54,8 @@ void MeshBuilder::UpdateMesh(Camera camera){
     removeChunksOutOfView(camera);
     
     // TODO: do I have to iterate over all chunks? 
-    for (int x = -chunkNumber; x < chunkNumber; x++) {
-        for (int z = -chunkNumber; z < chunkNumber; z++) {
+    for (int x = -ChunkNumber; x < ChunkNumber; x++) {
+        for (int z = -ChunkNumber; z < ChunkNumber; z++) {
 
             int xglobal = x + cameraChunkPosition.x;
             int zglobal = z + cameraChunkPosition.y;

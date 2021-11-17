@@ -3,6 +3,9 @@
 layout(location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 
+uniform int u_ChunkSize;
+uniform int u_ChunkNumber; 
+
 uniform mat4 u_MVP;
 uniform vec3 u_cameraPos;
 

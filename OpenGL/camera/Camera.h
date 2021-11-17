@@ -48,8 +48,8 @@ public:
     void UpdatePosition();
     void UpdateDirection();
     
-    glm::mat4* GetProjection() { return &proj; };
-    glm::mat4* GetView() { return &view; };
+    glm::mat4 GetProjection() { return proj; };
+    glm::mat4 GetView() { return view; };
     glm::vec3 GetPosition() { return position; };
     glm::vec3 GetDirection() { return direction; };
 
