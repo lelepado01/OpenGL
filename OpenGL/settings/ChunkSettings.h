@@ -13,7 +13,7 @@ class ChunkSettings {
 public:
     static const int VerticesPerSide = 4;
     static const int DistanceBetweenVertices = 5;
-    static const int Size = VerticesPerSide * DistanceBetweenVertices;
+    static const int ChunkSize = VerticesPerSide * DistanceBetweenVertices;
 };
 
 #endif /* ChunkSettings_h */

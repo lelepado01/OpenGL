@@ -48,7 +48,7 @@ private:
     int getLODFromDistance(int distance);
         
     bool cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY);
-    bool chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ);
+    bool chunkIsOcclusionCulled(Camera camera, int offsetX, int offsetZ);
     bool chunkIsVisible(Camera camera, glm::vec2 globalPosition);
     bool positionIsInListOfChunks(int x, int y);
     

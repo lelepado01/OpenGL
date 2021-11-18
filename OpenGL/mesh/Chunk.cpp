@@ -16,8 +16,8 @@ Chunk::Chunk(int offsetX, int offSetZ){
     for (float z = 0; z <= ChunkSettings::VerticesPerSide; z++) {
         for (float x = 0; x <= ChunkSettings::VerticesPerSide; x++) {
             
-            float globalX = x * ChunkSettings::DistanceBetweenVertices + offsetX * ChunkSettings::Size;
-            float globalZ = z * ChunkSettings::DistanceBetweenVertices + offSetZ * ChunkSettings::Size;
+            float globalX = x * ChunkSettings::DistanceBetweenVertices + offsetX * ChunkSettings::ChunkSize;
+            float globalZ = z * ChunkSettings::DistanceBetweenVertices + offSetZ * ChunkSettings::ChunkSize;
             
             Vertex v = {};
             v.position = glm::vec3(globalX, 0, globalZ);
@@ -56,8 +56,8 @@ Chunk::Chunk(int offsetX, int offSetZ, int LOD){
     for (float z = 0; z <= ChunkSettings::VerticesPerSide * LOD; z++) {
         for (float x = 0; x <= ChunkSettings::VerticesPerSide * LOD; x++) {
             
-            float globalX = x * ChunkSettings::DistanceBetweenVertices / LOD + offsetX * ChunkSettings::Size;
-            float globalZ = z * ChunkSettings::DistanceBetweenVertices / LOD + offSetZ * ChunkSettings::Size;
+            float globalX = x * ChunkSettings::DistanceBetweenVertices / LOD + offsetX * ChunkSettings::ChunkSize;
+            float globalZ = z * ChunkSettings::DistanceBetweenVertices / LOD + offSetZ * ChunkSettings::ChunkSize;
             
             Vertex v = {};
             v.position = glm::vec3(globalX,
@@ -122,8 +122,8 @@ float Chunk::GetMaxHeight(int offsetX, int offSetZ){
     for (float z = 0; z <= ChunkSettings::VerticesPerSide; z++) {
         for (float x = 0; x <= ChunkSettings::VerticesPerSide; x++) {
             
-            float globalX = x * ChunkSettings::DistanceBetweenVertices + offsetX * ChunkSettings::Size;
-            float globalZ = z * ChunkSettings::DistanceBetweenVertices + offSetZ * ChunkSettings::Size;
+            float globalX = x * ChunkSettings::DistanceBetweenVertices + offsetX * ChunkSettings::ChunkSize;
+            float globalZ = z * ChunkSettings::DistanceBetweenVertices + offSetZ * ChunkSettings::ChunkSize;
             
             float height = MeshHeight::GetHeight(globalX ,globalZ);
             

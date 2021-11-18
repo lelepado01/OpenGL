@@ -41,8 +41,8 @@ public:
     bool HasPosition(int x, int y) { return x == globalOffsetX && y == globalOffsetY; };
     glm::vec2 GetPosition() { return glm::vec2(globalOffsetX, globalOffsetY); }; 
 
-    static float GetChunkCenterFromIndex(int i){ return i * ChunkSettings::Size + ChunkSettings::Size/2; };
-    static int GetChunkIndexFromPosition(float pos){ return floor(pos / ChunkSettings::Size); };
+    static float GetChunkCenterFromIndex(int i){ return i * ChunkSettings::ChunkSize + ChunkSettings::ChunkSize/2; };
+    static int GetChunkIndexFromPosition(float pos){ return floor(pos / ChunkSettings::ChunkSize); };
     static float GetMaxHeight(int offsetX, int offSetZ);
 };
 

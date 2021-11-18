@@ -8,8 +8,8 @@
 #include "CloseMeshBuilder.h"
 
 CloseMeshBuilder::CloseMeshBuilder(Camera camera){
-    distanceLOD[30] = 2;
-    distanceLOD[20] = 4;
+    distanceLOD[5 * ChunkSettings::ChunkSize] = 2;
+    distanceLOD[2 * ChunkSettings::ChunkSize] = 4;
     
     UpdateMesh(camera);
 }
@@ -18,7 +18,7 @@ CloseMeshBuilder::CloseMeshBuilder(Camera camera){
 CloseMeshBuilder::~CloseMeshBuilder(){}
 
 void CloseMeshBuilder::UpdateMesh(Camera camera){
-    if ( !camera.HasChangedChunk() && !camera.HasRotated()) {
+    if ( !camera.HasMoved() && !camera.HasRotated()) {
         return;
     }
     
@@ -39,7 +39,7 @@ void CloseMeshBuilder::UpdateMesh(Camera camera){
             int chunkCenterX = Chunk::GetChunkCenterFromIndex(xglobal);
             int chunkCenterZ = Chunk::GetChunkCenterFromIndex(zglobal);
 
-            if (camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ) && chunkIsVisibleFromCamera(camera, xglobal, zglobal)){
+            if (camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ) && !chunkIsOcclusionCulled(camera, xglobal, zglobal)){
                 Chunk c(xglobal, zglobal, getChunkLOD(camera.GetPosition(), xglobal, zglobal));
                 chunks.push_back(c);
             } else if (cameraIsCloseToChunk(camera.GetPosition(), chunkCenterX, chunkCenterZ)){
@@ -139,14 +139,32 @@ bool CloseMeshBuilder::cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX
     glm::vec2 camera2d = glm::vec2(cameraPosition.x, cameraPosition.z);
     glm::vec2 chunk2d = glm::vec2(chunkX, chunkY);
     
-    return abs(glm::distance(camera2d, chunk2d)) < 60;
+    return abs(glm::distance(camera2d, chunk2d)) < 5 * ChunkSettings::ChunkSize;
 }
 
-bool CloseMeshBuilder::chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ){
+bool CloseMeshBuilder::chunkIsOcclusionCulled(Camera camera, int offsetX, int offsetZ){
     
-    float maxHeight = Chunk::GetMaxHeight(offsetX, offSetZ);
+    glm::vec3 chunkPoint = glm::vec3(offsetX * ChunkSettings::ChunkSize, Chunk::GetMaxHeight(offsetX, offsetZ), offsetZ * ChunkSettings::ChunkSize);
+    glm::vec3 cameraPosition = camera.GetPosition();
+    cameraPosition.y -= 7;
     
-    return maxHeight > -100;
+    float stepNumber = 100;
+    glm::vec3 stepDirection = chunkPoint - cameraPosition;
+    glm::vec3 stepAmount = stepDirection / stepNumber;
+    
+    float cameraToChunkDistance = glm::distance(chunkPoint, cameraPosition);
+    float cameraToIntermediatePointDistance = 0;
+    
+    for (glm::vec3 intermediatePoint = camera.GetPosition(); cameraToIntermediatePointDistance < cameraToChunkDistance; intermediatePoint += stepAmount) {
+        
+        cameraToIntermediatePointDistance = glm::distance(intermediatePoint, cameraPosition);
+        
+        if (MeshHeight::GetHeight(intermediatePoint.x, intermediatePoint.z) > intermediatePoint.y){
+            return true;
+        }
+    }
+
+    return false;
     
 }
 
@@ -162,9 +180,9 @@ bool CloseMeshBuilder::chunkIsVisible(Camera camera, glm::vec2 globalPosition){
     int chunkCenterX = Chunk::GetChunkCenterFromIndex(globalPosition.x);
     int chunkCenterZ = Chunk::GetChunkCenterFromIndex(globalPosition.y);
 
-    return  camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ) &&
-            chunkIsVisibleFromCamera(camera, globalPosition.x, globalPosition.y) &&
-            cameraIsCloseToChunk(camera.GetPosition(), chunkCenterX, chunkCenterZ);
+    return camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ) &&
+           !chunkIsOcclusionCulled(camera, globalPosition.x, globalPosition.y) &&
+           cameraIsCloseToChunk(camera.GetPosition(), chunkCenterX, chunkCenterZ);
 }
 
 void CloseMeshBuilder::removeChunksOutOfView(Camera camera){

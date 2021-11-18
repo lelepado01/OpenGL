@@ -74,13 +74,13 @@ int main( void ) {
         closeShader.SetUniformLight("u_Light", light);
         
         farShader.Bind();
-        farShader.SetUniform1i("u_ChunkSize", ChunkSettings::Size);
+        farShader.SetUniform1i("u_ChunkSize", ChunkSettings::ChunkSize);
         farShader.SetUniform1i("u_ChunkNumber", MeshSettings::ChunkNumber);
         farShader.SetUniformMat4f("u_MVP", mvp);
         farShader.SetUniformMaterial("u_Material", material);
         farShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         farShader.SetUniformLight("u_Light", light);
-        
+                
         if (camera.HasMoved() || camera.HasRotated()){
             closeMeshBuilder.UpdateMesh(camera);
             closeMesh.UpdateMesh(*closeMeshBuilder.GetVertices(), *closeMeshBuilder.GetIndices());
