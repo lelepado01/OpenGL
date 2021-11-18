@@ -1,12 +1,12 @@
 //
-//  MeshBuilder.h
+//  FarMeshBuilder.hpp
 //  OpenGL
 //
-//  Created by Gabriele Padovani on 09/11/21.
+//  Created by Gabriele Padovani on 18/11/21.
 //
 
-#ifndef MeshBuilder_h
-#define MeshBuilder_h
+#ifndef FarMeshBuilder_h
+#define FarMeshBuilder_h
 
 #include <stdio.h>
 #include <iostream>
@@ -22,51 +22,42 @@
 #include "glm/gtx/norm.hpp"
 #include <glm/gtx/string_cast.hpp>
 
-class MeshBuilder {
+class FarMeshBuilder {
 private:
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
     
     std::vector<Chunk> chunks = std::vector<Chunk>();
     Chunk sampleLowLODChunk = Chunk(0,0,1);;
-
-    std::unordered_map<int, int> distanceLOD = std::unordered_map<int, int>();
         
-    glm::vec2 lastFrameCameraChunkPosition; 
+    glm::vec2 lastFrameCameraChunkPosition;
     
 public:
-    MeshBuilder(Camera camera);
-    ~MeshBuilder();
-
-    MeshHeight meshHeight;
+    FarMeshBuilder(Camera camera);
+    ~FarMeshBuilder();
     
     void UpdateMesh(Camera camera);
     
     std::vector<Vertex>* GetVertices();
     std::vector<unsigned int>* GetIndices();
-    
-    std::vector<Vertex>* GetLowLODVertices();
-    std::vector<unsigned int>* GetLowLODIndices();
 
 private:
-    void gridMeshToSphere(glm::vec3 cameraPosition);
-    void constructInitialMesh(Camera camera); 
+//    void gridMeshToSphere(glm::vec3 cameraPosition);
+    void constructInitialMesh(Camera camera);
     
-    float getChunkCenterFromIndex(int i); 
-    float getGlobalOffset(glm::vec3 cameraPosition);
-    
-    int getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ);
-    int getLODFromDistance(int distance);
+    float getChunkCenterFromIndex(int i);
+//    float getGlobalOffset(glm::vec3 cameraPosition);
     
     glm::vec2 getCameraChunkPosition(glm::vec3 cameraPosition);
     glm::vec3 getCameraLookDirection(glm::vec3 cameraDirection);
     
     bool cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY);
-    bool chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ, MeshHeight meshHeight);
+    bool chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ);
     bool chunkIsVisible(Camera camera, glm::vec2 globalPosition);
     bool positionIsInListOfChunks(int x, int y);
     
     void removeChunksOutOfView(Camera camera);
 };
 
-#endif /* MeshBuilder_h */
+
+#endif /* FarMeshBuilder_h */

@@ -7,16 +7,20 @@
 
 #include "MeshHeight.h"
 
-MeshHeight::MeshHeight(){
-    smallNoise = FastNoiseLite();
-    smallNoise.SetFrequency(SmallFrequency);
-    
-    largeNoise = FastNoiseLite();
-    largeNoise.SetFrequency(LargeFrequency);
-}
+float MeshHeight::SmallFrequency = 0.4f;
+float MeshHeight::SmallScale = 0.2f;
+float MeshHeight::SmallMultiplier = 1.5f;
 
-MeshHeight::~MeshHeight(){
-    
+float MeshHeight::LargeFrequency = 0.04f;
+float MeshHeight::LargeMultiplier = 2.5f;
+float MeshHeight::LargeScale = 0.2f;
+
+FastNoiseLite MeshHeight::smallNoise = FastNoiseLite();
+FastNoiseLite MeshHeight::largeNoise = FastNoiseLite();
+
+void MeshHeight::Init(){
+    smallNoise.SetFrequency(SmallFrequency);
+    largeNoise.SetFrequency(LargeFrequency);
 }
 
 float MeshHeight::GetHeight(float x, float y){

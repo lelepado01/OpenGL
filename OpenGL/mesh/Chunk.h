@@ -32,8 +32,8 @@ private:
     void calculateNormals(); 
 
 public:
-    Chunk(int offsetX, int offSetZ, MeshHeight meshHeight, int LOD);
     Chunk(int offsetX, int offSetZ, int LOD);
+    Chunk(int offsetX, int offSetZ);
     ~Chunk();
     
     std::vector<Vertex>* GetVertices() { return &vertices; };
@@ -43,7 +43,7 @@ public:
 
     static float GetChunkCenterFromIndex(int i){ return i * ChunkSettings::Size + ChunkSettings::Size/2; };
     static int GetChunkIndexFromPosition(float pos){ return floor(pos / ChunkSettings::Size); };
-    static float GetMaxHeight(int offsetX, int offSetZ, MeshHeight meshHeight);
+    static float GetMaxHeight(int offsetX, int offSetZ);
 };
 
 #endif /* Chunk_h */

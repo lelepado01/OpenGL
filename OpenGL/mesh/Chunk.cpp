@@ -7,17 +7,17 @@
 
 #include "Chunk.h"
 
-Chunk::Chunk(int offsetX, int offSetZ, int LOD){
+Chunk::Chunk(int offsetX, int offSetZ){
     globalOffsetX = offsetX;
     globalOffsetY = offSetZ;
     vertices = std::vector<Vertex>();
     indices = std::vector<unsigned int>();
         
-    for (float z = 0; z <= ChunkSettings::VerticesPerSide * LOD; z++) {
-        for (float x = 0; x <= ChunkSettings::VerticesPerSide * LOD; x++) {
+    for (float z = 0; z <= ChunkSettings::VerticesPerSide; z++) {
+        for (float x = 0; x <= ChunkSettings::VerticesPerSide; x++) {
             
-            float globalX = x * ChunkSettings::DistanceBetweenVertices / LOD + offsetX * ChunkSettings::Size;
-            float globalZ = z * ChunkSettings::DistanceBetweenVertices / LOD + offSetZ * ChunkSettings::Size;
+            float globalX = x * ChunkSettings::DistanceBetweenVertices + offsetX * ChunkSettings::Size;
+            float globalZ = z * ChunkSettings::DistanceBetweenVertices + offSetZ * ChunkSettings::Size;
             
             Vertex v = {};
             v.position = glm::vec3(globalX, 0, globalZ);
@@ -27,16 +27,16 @@ Chunk::Chunk(int offsetX, int offSetZ, int LOD){
     }
 
     int vertexIndex = 0;
-    for (int z = 0; z <= ChunkSettings::VerticesPerSide * LOD; z++) {
-        for (int x = 0; x <= ChunkSettings::VerticesPerSide * LOD; x++) {
-            if (x < ChunkSettings::VerticesPerSide * LOD && z < ChunkSettings::VerticesPerSide * LOD){
+    for (int z = 0; z <= ChunkSettings::VerticesPerSide; z++) {
+        for (int x = 0; x <= ChunkSettings::VerticesPerSide; x++) {
+            if (x < ChunkSettings::VerticesPerSide && z < ChunkSettings::VerticesPerSide){
                 indices.push_back(vertexIndex);
-                indices.push_back(vertexIndex + ChunkSettings::VerticesPerSide * LOD + 1);
+                indices.push_back(vertexIndex + ChunkSettings::VerticesPerSide + 1);
                 indices.push_back(vertexIndex + 1);
                 
                 indices.push_back(vertexIndex + 1);
-                indices.push_back(vertexIndex + ChunkSettings::VerticesPerSide * LOD + 1);
-                indices.push_back(vertexIndex + ChunkSettings::VerticesPerSide * LOD + 2);
+                indices.push_back(vertexIndex + ChunkSettings::VerticesPerSide + 1);
+                indices.push_back(vertexIndex + ChunkSettings::VerticesPerSide + 2);
 
                 vertexIndex++;
             }
@@ -47,7 +47,7 @@ Chunk::Chunk(int offsetX, int offSetZ, int LOD){
 }
 
 
-Chunk::Chunk(int offsetX, int offSetZ, MeshHeight meshHeight, int LOD){
+Chunk::Chunk(int offsetX, int offSetZ, int LOD){
     globalOffsetX = offsetX;
     globalOffsetY = offSetZ; 
     vertices = std::vector<Vertex>();
@@ -61,7 +61,7 @@ Chunk::Chunk(int offsetX, int offSetZ, MeshHeight meshHeight, int LOD){
             
             Vertex v = {};
             v.position = glm::vec3(globalX,
-                                   meshHeight.GetHeight(globalX ,globalZ),
+                                   MeshHeight::GetHeight(globalX ,globalZ),
                                    globalZ);
             
             vertices.push_back(v);
@@ -116,7 +116,7 @@ glm::vec3 Chunk::computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
     return glm::cross(b-a, c-a);
 }
 
-float Chunk::GetMaxHeight(int offsetX, int offSetZ, MeshHeight meshHeight){
+float Chunk::GetMaxHeight(int offsetX, int offSetZ){
     float maxHeight = 0;
     
     for (float z = 0; z <= ChunkSettings::VerticesPerSide; z++) {
@@ -125,7 +125,7 @@ float Chunk::GetMaxHeight(int offsetX, int offSetZ, MeshHeight meshHeight){
             float globalX = x * ChunkSettings::DistanceBetweenVertices + offsetX * ChunkSettings::Size;
             float globalZ = z * ChunkSettings::DistanceBetweenVertices + offSetZ * ChunkSettings::Size;
             
-            float height = meshHeight.GetHeight(globalX ,globalZ);
+            float height = MeshHeight::GetHeight(globalX ,globalZ);
             
             if (height > maxHeight) maxHeight = height;
         }

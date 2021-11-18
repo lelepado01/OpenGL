@@ -9,7 +9,8 @@
 #include "camera/Camera.h"
 #include "materials/Material.h"
 #include "mesh/Mesh.h"
-#include "mesh/MeshBuilder.h"
+#include "mesh/CloseMeshBuilder.h"
+#include "mesh/FarMeshBuilder.h"
 #include "settings/MeshSettings.h"
 #include "settings/ChunkSettings.h"
 
@@ -22,10 +23,13 @@ int main( void ) {
     OpenGLEngine::Init();
 
     Camera camera(0, 0, 0);
-        
-    MeshBuilder meshBuilder = MeshBuilder(camera);
-    Mesh closeMesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
-    Mesh farMesh(*meshBuilder.GetLowLODVertices(), *meshBuilder.GetLowLODIndices());
+    
+    MeshHeight::Init(); 
+    CloseMeshBuilder closeMeshBuilder = CloseMeshBuilder(camera);
+    FarMeshBuilder farMeshBuilder = FarMeshBuilder(camera);
+    
+    Mesh closeMesh(*closeMeshBuilder.GetVertices(), *closeMeshBuilder.GetIndices());
+    Mesh farMesh(*farMeshBuilder.GetVertices(), *farMeshBuilder.GetIndices());
 
     Shader closeShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.vs",
                        "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.fs");
@@ -78,8 +82,11 @@ int main( void ) {
         farShader.SetUniformLight("u_Light", light);
         
         if (camera.HasMoved() || camera.HasRotated()){
-            meshBuilder.UpdateMesh(camera);
-            closeMesh.UpdateMesh(*meshBuilder.GetVertices(), *meshBuilder.GetIndices());
+            closeMeshBuilder.UpdateMesh(camera);
+            closeMesh.UpdateMesh(*closeMeshBuilder.GetVertices(), *closeMeshBuilder.GetIndices());
+            
+            farMeshBuilder.UpdateMesh(camera);
+            farMesh.UpdateMesh(*farMeshBuilder.GetVertices(), *farMeshBuilder.GetIndices()); 
         }
         
         OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), &closeShader);
@@ -87,11 +94,11 @@ int main( void ) {
         
         ImGui::SliderFloat3("Light Angle", &light.direction.x, -0.5, 0.5);
 
-        ImGui::SliderFloat("Large Freq", &meshBuilder.meshHeight.LargeFrequency, 0, 1);
-        ImGui::SliderFloat("Small Freq", &meshBuilder.meshHeight.SmallFrequency, 0, 1);
-        ImGui::SliderFloat("Small Scale", &meshBuilder.meshHeight.SmallScale, 0, 1);
-        ImGui::SliderFloat("Large Scale", &meshBuilder.meshHeight.LargeScale, 0, 1);
-        ImGui::SliderFloat("Large Mult", &meshBuilder.meshHeight.LargeMultiplier, 1, 5);
+        ImGui::SliderFloat("Large Freq", &MeshHeight::LargeFrequency, 0, 1);
+        ImGui::SliderFloat("Small Freq", &MeshHeight::SmallFrequency, 0, 1);
+        ImGui::SliderFloat("Small Scale", &MeshHeight::SmallScale, 0, 1);
+        ImGui::SliderFloat("Large Scale", &MeshHeight::LargeScale, 0, 1);
+        ImGui::SliderFloat("Large Mult", &MeshHeight::LargeMultiplier, 1, 5);
         
         ImGui::Separator();
         

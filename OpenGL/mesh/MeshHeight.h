@@ -14,23 +14,21 @@
 
 class MeshHeight {
 private:
-    FastNoiseLite largeNoise;
-    FastNoiseLite smallNoise;
+    static FastNoiseLite largeNoise;
+    static FastNoiseLite smallNoise;
 
 public:
-    float SmallFrequency = 0.4f;
-    float SmallScale = 0.2f;
-    float SmallMultiplier = 1.5f;
+    static float SmallFrequency;
+    static float SmallScale;
+    static float SmallMultiplier;
     
-    float LargeFrequency = 0.04f;
-    float LargeMultiplier = 2.5f;
-    float LargeScale = 0.2f;
+    static float LargeFrequency;
+    static float LargeMultiplier;
+    static float LargeScale;
 
 public:
-    MeshHeight();
-    ~MeshHeight();
-    
-    float GetHeight(float x, float y); 
+    static void Init(); 
+    static float GetHeight(float x, float y);
 };
 
 #endif /* MeshHeight_h */
