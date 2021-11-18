@@ -31,8 +31,11 @@ private:
     
     bool directionHasChanged = false;
     bool hasMoved = false;
+    bool hasChangedChunk = false; 
     
     glm::vec3 lastFramePosition;
+    glm::vec2 lastFrameChunkPosition;
+
     glm::vec3 position;
     glm::vec3 front;
     glm::vec3 up;
@@ -54,6 +57,7 @@ public:
     glm::vec3 GetDirection() { return direction; };
 
     bool HasMoved() { return hasMoved; };
+    bool HasChangedChunk() { return hasChangedChunk; };
     bool HasRotated() { return directionHasChanged; };
     
     bool PointIsVisibleFromCamera(int pointX, int pointY);

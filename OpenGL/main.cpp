@@ -4,13 +4,13 @@
 
 #include <iostream>
 
-#include "shaders/Shader.h"
 #include "engine/OpenGLEngine.h"
 #include "camera/Camera.h"
 #include "materials/Material.h"
+#include "shaders/Shader.h"
 #include "mesh/Mesh.h"
-#include "mesh/CloseMeshBuilder.h"
-#include "mesh/FarMeshBuilder.h"
+#include "mesh/meshBuilder/CloseMeshBuilder.h"
+#include "mesh/meshBuilder/FarMeshBuilder.h"
 #include "settings/MeshSettings.h"
 #include "settings/ChunkSettings.h"
 

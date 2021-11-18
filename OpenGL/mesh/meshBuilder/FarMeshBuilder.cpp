@@ -1,57 +1,33 @@
 //
-//  MeshBuilder.cpp
+//  FarMeshBuilder.cpp
 //  OpenGL
 //
-//  Created by Gabriele Padovani on 09/11/21.
+//  Created by Gabriele Padovani on 18/11/21.
 //
 
-#include "CloseMeshBuilder.h"
+#include "FarMeshBuilder.h"
 
-CloseMeshBuilder::CloseMeshBuilder(Camera camera){
-    distanceLOD[30] = 2;
-    distanceLOD[20] = 4;
-    
+
+FarMeshBuilder::FarMeshBuilder(Camera camera){
     UpdateMesh(camera);
 }
 
 
-CloseMeshBuilder::~CloseMeshBuilder(){}
+FarMeshBuilder::~FarMeshBuilder(){}
 
-void CloseMeshBuilder::UpdateMesh(Camera camera){
-    glm::vec2 cameraChunkPosition = getCameraChunkPosition(camera.GetPosition());
-    if ( cameraChunkPosition == lastFrameCameraChunkPosition && !camera.HasRotated()) {
+void FarMeshBuilder::UpdateMesh(Camera camera){
+    if ( !camera.HasChangedChunk() && !camera.HasRotated()) {
         return;
     }
-    lastFrameCameraChunkPosition = cameraChunkPosition;
     
     removeChunksOutOfView(camera);
     
-    // TODO: do I have to iterate over all chunks? 
-    for (int x = -MeshSettings::ChunkNumber; x < MeshSettings::ChunkNumber; x++) {
-        for (int z = -MeshSettings::ChunkNumber; z < MeshSettings::ChunkNumber; z++) {
-
-            int xglobal = x + cameraChunkPosition.x;
-            int zglobal = z + cameraChunkPosition.y;
-
-            if (positionIsInListOfChunks(xglobal, zglobal)) continue;
-
-            int chunkCenterX = Chunk::GetChunkCenterFromIndex(xglobal);
-            int chunkCenterZ = Chunk::GetChunkCenterFromIndex(zglobal);
-
-            if (camera.PointIsVisibleFromCamera(chunkCenterX, chunkCenterZ) && chunkIsVisibleFromCamera(camera, xglobal, zglobal)){
-                Chunk c(xglobal, zglobal, getChunkLOD(camera.GetPosition(), xglobal, zglobal));
-                chunks.push_back(c);
-            } else if (cameraIsCloseToChunk(camera.GetPosition(), chunkCenterX, chunkCenterZ)){
-                Chunk c(xglobal, zglobal, 1);
-                chunks.push_back(c);
-            }
-        }
-    }
+    
     
     
 }
 
-//float CloseMeshBuilder::getGlobalOffset(glm::vec3 cameraPosition){
+//float FarMeshBuilder::getGlobalOffset(glm::vec3 cameraPosition){
 //    float R2 = 10000;
 //    glm::vec3 origin = glm::vec3(0,0,0);
 //    float d2 = glm::distance(cameraPosition, origin) * glm::distance(cameraPosition, origin);
@@ -61,7 +37,7 @@ void CloseMeshBuilder::UpdateMesh(Camera camera){
 //    return (R2 + d2 - HplusS*HplusS) / (2*MeshSettings::SphereRadius * HplusS);
 //}
 
-//void CloseMeshBuilder::gridMeshToSphere(glm::vec3 cameraPosition){
+//void FarMeshBuilder::gridMeshToSphere(glm::vec3 cameraPosition){
 //    vertices = std::vector<Vertex>();
 //    vertices = gridVertices;
 //
@@ -86,7 +62,7 @@ void CloseMeshBuilder::UpdateMesh(Camera camera){
 //    }
 //}
 
-std::vector<Vertex>* CloseMeshBuilder::GetVertices() {
+std::vector<Vertex>* FarMeshBuilder::GetVertices() {
     vertices = std::vector<Vertex>();
 
     for (int i=0; i < chunks.size(); i++) {
@@ -101,7 +77,7 @@ std::vector<Vertex>* CloseMeshBuilder::GetVertices() {
     return &vertices;
 }
 
-std::vector<unsigned int>* CloseMeshBuilder::GetIndices(){
+std::vector<unsigned int>* FarMeshBuilder::GetIndices(){
     indices = std::vector<unsigned int>();
 
     int chunkOffset = 0;
@@ -118,42 +94,14 @@ std::vector<unsigned int>* CloseMeshBuilder::GetIndices(){
     return &indices;
 }
 
-std::vector<Vertex>* CloseMeshBuilder::GetLowLODVertices(){
-    return sampleLowLODChunk.GetVertices();
-}
-
-std::vector<unsigned int>* CloseMeshBuilder::GetLowLODIndices(){
-    return sampleLowLODChunk.GetIndices();
-}
-
-int CloseMeshBuilder::getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ){
-    glm::vec3 chunkPosition = glm::vec3(Chunk::GetChunkCenterFromIndex(offX), 0.0f, Chunk::GetChunkCenterFromIndex(offX));
-
-    return getLODFromDistance(glm::distance(chunkPosition, cameraPosition));
-}
-
-int CloseMeshBuilder::getLODFromDistance(int distance){
-    for (auto detailLevel : distanceLOD) {
-        if ( distance < detailLevel.first){
-            return detailLevel.second;
-        }
-    }
-    
-    return 1;
-}
-
-glm::vec2 CloseMeshBuilder::getCameraChunkPosition(glm::vec3 cameraPosition){
-    return glm::vec2(Chunk::GetChunkIndexFromPosition(cameraPosition.x), Chunk::GetChunkIndexFromPosition(cameraPosition.z));
-}
-
-bool CloseMeshBuilder::cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY){
+bool FarMeshBuilder::cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY){
     glm::vec2 camera2d = glm::vec2(cameraPosition.x, cameraPosition.z);
     glm::vec2 chunk2d = glm::vec2(chunkX, chunkY);
     
     return abs(glm::distance(camera2d, chunk2d)) < 60;
 }
 
-bool CloseMeshBuilder::chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ){
+bool FarMeshBuilder::chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ){
     
     float maxHeight = Chunk::GetMaxHeight(offsetX, offSetZ);
     
@@ -161,7 +109,7 @@ bool CloseMeshBuilder::chunkIsVisibleFromCamera(Camera camera, int offsetX, int 
     
 }
 
-bool CloseMeshBuilder::positionIsInListOfChunks(int x, int y){
+bool FarMeshBuilder::positionIsInListOfChunks(int x, int y){
     for (int i = 0; i < chunks.size(); i++) {
         if (chunks.at(i).HasPosition(x, y)) return true;
     }
@@ -169,7 +117,7 @@ bool CloseMeshBuilder::positionIsInListOfChunks(int x, int y){
     return false;
 }
 
-bool CloseMeshBuilder::chunkIsVisible(Camera camera, glm::vec2 globalPosition){
+bool FarMeshBuilder::chunkIsVisible(Camera camera, glm::vec2 globalPosition){
     int chunkCenterX = Chunk::GetChunkCenterFromIndex(globalPosition.x);
     int chunkCenterZ = Chunk::GetChunkCenterFromIndex(globalPosition.y);
 
@@ -178,7 +126,7 @@ bool CloseMeshBuilder::chunkIsVisible(Camera camera, glm::vec2 globalPosition){
             cameraIsCloseToChunk(camera.GetPosition(), chunkCenterX, chunkCenterZ);
 }
 
-void CloseMeshBuilder::removeChunksOutOfView(Camera camera){
+void FarMeshBuilder::removeChunksOutOfView(Camera camera){
     
     int chunkIndex = 0;
     for (Chunk chunk : chunks) {
@@ -193,3 +141,4 @@ void CloseMeshBuilder::removeChunksOutOfView(Camera camera){
         chunkIndex++;
     }
 }
+

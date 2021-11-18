@@ -60,7 +60,13 @@ void Camera::UpdatePosition(){
         position += movementSpeed * glm::normalize(-up);
     }
     
+    glm::vec2 newChunkPosition = glm::vec2(Chunk::GetChunkIndexFromPosition(position.x),
+                                           Chunk::GetChunkIndexFromPosition(position.z));
+    
     hasMoved = oldPosition != position;
+    hasChangedChunk = lastFrameChunkPosition != newChunkPosition;
+    
+    lastFrameChunkPosition = newChunkPosition;
     
     if (directionHasChanged || hasMoved){
         recalculateCameraView();

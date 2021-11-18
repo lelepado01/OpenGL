@@ -1,40 +1,39 @@
 //
-//  FarMeshBuilder.hpp
+//  CloseMeshBuilder.h
 //  OpenGL
 //
-//  Created by Gabriele Padovani on 18/11/21.
+//  Created by Gabriele Padovani on 09/11/21.
 //
 
-#ifndef FarMeshBuilder_h
-#define FarMeshBuilder_h
+#ifndef CloseMeshBuilder_h
+#define CloseMeshBuilder_h
 
 #include <stdio.h>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
 
-#include "Vertex.h"
-#include "Chunk.h"
-#include "MeshHeight.h"
-#include "../settings/MeshSettings.h"
-#include "../camera/Camera.h"
+#include "../Vertex.h"
+#include "../Chunk.h"
+#include "../MeshHeight.h"
+#include "../../settings/MeshSettings.h"
+#include "../../camera/Camera.h"
 
 #include "glm/gtx/norm.hpp"
 #include <glm/gtx/string_cast.hpp>
 
-class FarMeshBuilder {
+class CloseMeshBuilder {
 private:
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
     
     std::vector<Chunk> chunks = std::vector<Chunk>();
-    Chunk sampleLowLODChunk = Chunk(0,0,1);;
-        
-    glm::vec2 lastFrameCameraChunkPosition;
     
+    std::unordered_map<int, int> distanceLOD = std::unordered_map<int, int>();
+        
 public:
-    FarMeshBuilder(Camera camera);
-    ~FarMeshBuilder();
+    CloseMeshBuilder(Camera camera);
+    ~CloseMeshBuilder();
     
     void UpdateMesh(Camera camera);
     
@@ -43,14 +42,11 @@ public:
 
 private:
 //    void gridMeshToSphere(glm::vec3 cameraPosition);
-    void constructInitialMesh(Camera camera);
-    
-    float getChunkCenterFromIndex(int i);
 //    float getGlobalOffset(glm::vec3 cameraPosition);
     
-    glm::vec2 getCameraChunkPosition(glm::vec3 cameraPosition);
-    glm::vec3 getCameraLookDirection(glm::vec3 cameraDirection);
-    
+    int getChunkLOD(glm::vec3 cameraPosition, int offX, int offZ);
+    int getLODFromDistance(int distance);
+        
     bool cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY);
     bool chunkIsVisibleFromCamera(Camera camera, int offsetX, int offSetZ);
     bool chunkIsVisible(Camera camera, glm::vec2 globalPosition);
@@ -59,5 +55,4 @@ private:
     void removeChunksOutOfView(Camera camera);
 };
 
-
-#endif /* FarMeshBuilder_h */
+#endif /* CloseMeshBuilder_h */
