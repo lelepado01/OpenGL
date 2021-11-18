@@ -10,17 +10,18 @@
 
 #include <stdio.h>
 
-#include "OpenGLEngine.h"
+#include "../engine/OpenGLEngine.h"
+#include "../engine/Time.h"
+#include "../mesh/Chunk.h"
 
 #include "glm/glm.hpp"
 #include <glm/gtx/vector_angle.hpp>
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "../mesh/Chunk.h"
 
 class Camera {
 private:
-    const float movementSpeed = 0.5f;
+    const float movementSpeed = 100.f;
     
     float pitch = 0;
     float yaw = 0;

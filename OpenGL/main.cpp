@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "engine/OpenGLEngine.h"
+#include "engine/Time.h"
 #include "camera/Camera.h"
 #include "materials/Material.h"
 #include "shaders/Shader.h"
@@ -57,7 +58,8 @@ int main( void ) {
 
     while( OpenGLEngine::IsRunning() ){
         OpenGLEngine::Clear();
-        OpenGLEngine::UpdateTime(); 
+        OpenGLEngine::UpdateTime();
+        Time::Count(); 
 
         OpenGLEngine::ImguiNewFrame();
         
@@ -86,7 +88,7 @@ int main( void ) {
             closeMesh.UpdateMesh(*closeMeshBuilder.GetVertices(), *closeMeshBuilder.GetIndices());
             
             farMeshBuilder.UpdateMesh(camera);
-            farMesh.UpdateMesh(*farMeshBuilder.GetVertices(), *farMeshBuilder.GetIndices()); 
+            farMesh.UpdateMesh(*farMeshBuilder.GetVertices(), *farMeshBuilder.GetIndices());
         }
         
         OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), &closeShader);

@@ -42,30 +42,31 @@ void Camera::UpdatePosition(){
     glm::vec3 oldPosition = position;
     
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_W)){
-        position += movementSpeed * front;
+        position += movementSpeed * front * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_S)){
-        position -= movementSpeed * front;
+        position -= movementSpeed * front * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_A)){
-        position -= movementSpeed * glm::normalize(glm::cross(front, up));
+        position -= movementSpeed * glm::normalize(glm::cross(front, up)) * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_D)){
-        position += movementSpeed * glm::normalize(glm::cross(front, up));
+        position += movementSpeed * glm::normalize(glm::cross(front, up)) * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_SPACE)){
-        position += movementSpeed * glm::normalize(up);
+        position += movementSpeed * glm::normalize(up) * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_LEFT_SHIFT)){
-        position += movementSpeed * glm::normalize(-up);
+        position += movementSpeed * glm::normalize(-up) * Time::DeltaTime();
     }
     
     glm::vec2 newChunkPosition = glm::vec2(Chunk::GetChunkIndexFromPosition(position.x),
                                            Chunk::GetChunkIndexFromPosition(position.z));
     
     hasMoved = oldPosition != position;
-    hasChangedChunk = lastFrameChunkPosition != newChunkPosition;
+    oldPosition = position;
     
+    hasChangedChunk = lastFrameChunkPosition != newChunkPosition;
     lastFrameChunkPosition = newChunkPosition;
     
     if (directionHasChanged || hasMoved){

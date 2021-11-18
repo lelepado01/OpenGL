@@ -26,6 +26,7 @@
 		B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */; };
 		B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */; };
 		B6BFF5E726F8EE22002ECA4B /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */; };
+		B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ED0F682746CB4900459069 /* Time.cpp */; };
 		B6F13526273EE44D00DF29E4 /* MeshHeight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F13524273EE44D00DF29E4 /* MeshHeight.cpp */; };
 		B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6FDF28B2735A27200DEBCB9 /* Camera.cpp */; };
 /* End PBXBuildFile section */
@@ -103,6 +104,8 @@
 		B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
 		B6BFF5E426F8EE22002ECA4B /* libGLEW.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.dylib; path = ../../../../../../usr/local/Cellar/glew/2.2.0_1/lib/libGLEW.dylib; sourceTree = "<group>"; };
 		B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.2.0.dylib; path = ../../../../../../usr/local/Cellar/glew/2.2.0_1/lib/libGLEW.2.2.0.dylib; sourceTree = "<group>"; };
+		B6ED0F682746CB4900459069 /* Time.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Time.cpp; sourceTree = "<group>"; };
+		B6ED0F692746CB4900459069 /* Time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Time.h; sourceTree = "<group>"; };
 		B6F13524273EE44D00DF29E4 /* MeshHeight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshHeight.cpp; sourceTree = "<group>"; };
 		B6F13525273EE44D00DF29E4 /* MeshHeight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshHeight.h; sourceTree = "<group>"; };
 		B6FDF28B2735A27200DEBCB9 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 				B617D9672734273A004FE945 /* Debug.h */,
 				B617D96A2734273B004FE945 /* OpenGLEngine.cpp */,
 				B617D9682734273B004FE945 /* OpenGLEngine.h */,
+				B6ED0F682746CB4900459069 /* Time.cpp */,
+				B6ED0F692746CB4900459069 /* Time.h */,
 			);
 			path = engine;
 			sourceTree = "<group>";
@@ -412,6 +417,7 @@
 				B617D9772734273B004FE945 /* imgui.cpp in Sources */,
 				B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */,
 				B617D9792734273B004FE945 /* imgui_demo.cpp in Sources */,
+				B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */,
 				B617D97D2734273B004FE945 /* Texture.cpp in Sources */,
 				B617D97C2734273B004FE945 /* VertexBuffer.cpp in Sources */,
 				B675CE33273739730010C4AB /* Mesh.cpp in Sources */,

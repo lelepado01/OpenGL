@@ -14,7 +14,6 @@ CloseMeshBuilder::CloseMeshBuilder(Camera camera){
     UpdateMesh(camera);
 }
 
-
 CloseMeshBuilder::~CloseMeshBuilder(){}
 
 void CloseMeshBuilder::UpdateMesh(Camera camera){
@@ -143,6 +142,8 @@ bool CloseMeshBuilder::cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX
 }
 
 bool CloseMeshBuilder::chunkIsOcclusionCulled(Camera camera, int offsetX, int offsetZ){
+    
+    // TODO: not correct (completely)
     
     glm::vec3 chunkPoint = glm::vec3(offsetX * ChunkSettings::ChunkSize, Chunk::GetMaxHeight(offsetX, offsetZ), offsetZ * ChunkSettings::ChunkSize);
     glm::vec3 cameraPosition = camera.GetPosition();
