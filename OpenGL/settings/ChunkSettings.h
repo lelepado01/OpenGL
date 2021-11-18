@@ -11,8 +11,8 @@
 
 class ChunkSettings {
 public:
-    static const int VerticesPerSide = 4;
-    static const int DistanceBetweenVertices = 5;
+    static const int VerticesPerSide = 10;
+    static const int DistanceBetweenVertices = 10;
     static const int ChunkSize = VerticesPerSide * DistanceBetweenVertices;
 };
 

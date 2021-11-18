@@ -10,7 +10,7 @@
 
 class MeshSettings {
 public:
-    static const int ChunkNumber = 10;
+    static const int ChunkNumber = 5;
     static const int SphereRadius = 30;
     
     static const int CloseMeshDistance = 10;

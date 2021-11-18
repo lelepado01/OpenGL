@@ -8,8 +8,8 @@
 #include "CloseMeshBuilder.h"
 
 CloseMeshBuilder::CloseMeshBuilder(Camera camera){
-    distanceLOD[5 * ChunkSettings::ChunkSize] = 2;
-    distanceLOD[2 * ChunkSettings::ChunkSize] = 4;
+//    distanceLOD[3 * ChunkSettings::ChunkSize] = 2;
+//    distanceLOD[1 * ChunkSettings::ChunkSize] = 4;
     
     UpdateMesh(camera);
 }
