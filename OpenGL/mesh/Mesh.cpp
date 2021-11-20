@@ -7,7 +7,7 @@
 
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices) {
+Mesh::Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices) {
     vertexArray = new VertexArray();
     vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
     indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
@@ -25,7 +25,7 @@ Mesh::~Mesh(){
     
 }
 
-void Mesh::UpdateMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices){
+void Mesh::UpdateMesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices){
     vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
     indexBuffer->Update(indices.data(), (unsigned int)indices.size());
     

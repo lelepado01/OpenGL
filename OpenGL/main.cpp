@@ -29,8 +29,8 @@ int main( void ) {
     CloseMeshBuilder closeMeshBuilder = CloseMeshBuilder(camera);
     FarMeshBuilder farMeshBuilder = FarMeshBuilder(camera);
     
-    Mesh closeMesh(*closeMeshBuilder.GetVertices(), *closeMeshBuilder.GetIndices());
-    Mesh farMesh(*farMeshBuilder.GetVertices(), *farMeshBuilder.GetIndices());
+    Mesh closeMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
+    Mesh farMesh(farMeshBuilder.GetVertices(), farMeshBuilder.GetIndices());
 
     Shader closeShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.vs",
                        "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.fs");
@@ -85,14 +85,14 @@ int main( void ) {
                 
         if (camera.HasMoved() || camera.HasRotated()){
             closeMeshBuilder.UpdateMesh(camera);
-            closeMesh.UpdateMesh(*closeMeshBuilder.GetVertices(), *closeMeshBuilder.GetIndices());
+            closeMesh.UpdateMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
             
             farMeshBuilder.UpdateMesh(camera);
-            farMesh.UpdateMesh(*farMeshBuilder.GetVertices(), *farMeshBuilder.GetIndices());
+            farMesh.UpdateMesh(farMeshBuilder.GetVertices(), farMeshBuilder.GetIndices());
         }
         
-        OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), &closeShader);
-        OpenGLEngine::Draw(farMesh.GetVertexArray(), farMesh.GetIndexBuffer(), &farShader);
+        OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), closeShader);
+        OpenGLEngine::Draw(farMesh.GetVertexArray(), farMesh.GetIndexBuffer(), farShader);
         
         ImGui::SliderFloat3("Light Angle", &light.direction.x, -0.5, 0.5);
 

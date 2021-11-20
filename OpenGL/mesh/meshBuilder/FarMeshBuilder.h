@@ -35,8 +35,8 @@ public:
     
     void UpdateMesh(Camera camera);
     
-    std::vector<Vertex>* GetVertices();
-    std::vector<unsigned int>* GetIndices();
+    const std::vector<Vertex>& GetVertices();
+    const std::vector<unsigned int>& GetIndices();
 
 private:
 //    void gridMeshToSphere(glm::vec3 cameraPosition);

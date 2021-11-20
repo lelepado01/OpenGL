@@ -24,7 +24,8 @@ private:
     std::vector<unsigned int> indices = std::vector<unsigned int>();
     
     int globalOffsetX;
-    int globalOffsetY; 
+    int globalOffsetY;
+    int LOD;
 
 private:
     glm::vec3 computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c);
@@ -38,6 +39,8 @@ public:
     
     std::vector<Vertex>* GetVertices() { return &vertices; };
     std::vector<unsigned int>* GetIndices() { return &indices; };
+    int GetLOD() { return LOD; };
+    
     bool HasPosition(int x, int y) { return x == globalOffsetX && y == globalOffsetY; };
     glm::vec2 GetPosition() { return glm::vec2(globalOffsetX, globalOffsetY); }; 
 

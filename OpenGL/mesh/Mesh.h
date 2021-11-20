@@ -27,13 +27,13 @@ private:
     int verticesNumber; 
     
 public:
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+    Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices);
     ~Mesh();
     
-    void UpdateMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+    void UpdateMesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices);
     
-    VertexArray* GetVertexArray() { return vertexArray; };
-    IndexBuffer* GetIndexBuffer() { return indexBuffer; };
+    VertexArray& GetVertexArray() { return *vertexArray; };
+    IndexBuffer& GetIndexBuffer() { return *indexBuffer; };
     
     int GetVerticesNumber(){ return verticesNumber; }; 
 };

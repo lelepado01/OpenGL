@@ -35,7 +35,7 @@ public:
 
     static void Init();
     static void Clear();
-    static void Draw(const VertexArray* va, const IndexBuffer* ib, const Shader* shader);
+    static void Draw(const VertexArray &va, const IndexBuffer &ib, const Shader &shader);
     static void SwapBuffers();
     static void PollEvents();
     static void UpdateTime(); 

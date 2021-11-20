@@ -62,7 +62,7 @@ void FarMeshBuilder::UpdateMesh(Camera camera){
 //    }
 //}
 
-std::vector<Vertex>* FarMeshBuilder::GetVertices() {
+const std::vector<Vertex>& FarMeshBuilder::GetVertices() {
     vertices = std::vector<Vertex>();
 
     for (int i=0; i < chunks.size(); i++) {
@@ -74,10 +74,10 @@ std::vector<Vertex>* FarMeshBuilder::GetVertices() {
         }
     }
     
-    return &vertices;
+    return vertices;
 }
 
-std::vector<unsigned int>* FarMeshBuilder::GetIndices(){
+const std::vector<unsigned int>& FarMeshBuilder::GetIndices(){
     indices = std::vector<unsigned int>();
 
     int chunkOffset = 0;
@@ -91,7 +91,7 @@ std::vector<unsigned int>* FarMeshBuilder::GetIndices(){
         chunkOffset += chunks[i].GetVertices()->size();
     }
     
-    return &indices;
+    return indices;
 }
 
 bool FarMeshBuilder::cameraIsCloseToChunk(glm::vec3 cameraPosition, int chunkX, int chunkY){

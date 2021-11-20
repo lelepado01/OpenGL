@@ -88,10 +88,10 @@ void OpenGLEngine::Clear() {
     GLCall( glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) );
 }
 
-void OpenGLEngine::Draw(const VertexArray* va, const IndexBuffer* ib, const Shader* shader) {
-    shader->Bind();
-    va->Bind();
-    ib->Bind();
+void OpenGLEngine::Draw(const VertexArray &va, const IndexBuffer &ib, const Shader &shader) {
+    shader.Bind();
+    va.Bind();
+    ib.Bind();
     
     if (debugMode){
         GLCall( glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ));
@@ -99,7 +99,7 @@ void OpenGLEngine::Draw(const VertexArray* va, const IndexBuffer* ib, const Shad
         GLCall( glPolygonMode( GL_FRONT_AND_BACK, GL_FILL ));
     }
     
-    GLCall( glDrawElements(GL_TRIANGLES, ib->GetCount(), GL_UNSIGNED_INT, nullptr) );
+    GLCall( glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr) );
 }
 
 void OpenGLEngine::SwapBuffers(){

@@ -27,7 +27,7 @@ private:
     float yaw = 0;
     float roll = 0;
     
-    float visibilityAngle = 45;
+    float visibilityAngle = 30;
     const float minVisibilityAngle = 55; 
     
     bool directionHasChanged = false;

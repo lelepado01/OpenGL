@@ -12,7 +12,8 @@ Chunk::Chunk(int offsetX, int offSetZ){
     globalOffsetY = offSetZ;
     vertices = std::vector<Vertex>();
     indices = std::vector<unsigned int>();
-        
+    this->LOD = 1; 
+    
     for (float z = 0; z <= ChunkSettings::VerticesPerSide; z++) {
         for (float x = 0; x <= ChunkSettings::VerticesPerSide; x++) {
             
@@ -52,6 +53,7 @@ Chunk::Chunk(int offsetX, int offSetZ, int LOD){
     globalOffsetY = offSetZ; 
     vertices = std::vector<Vertex>();
     indices = std::vector<unsigned int>();
+    this->LOD = LOD;
         
     for (float z = 0; z <= ChunkSettings::VerticesPerSide * LOD; z++) {
         for (float x = 0; x <= ChunkSettings::VerticesPerSide * LOD; x++) {
