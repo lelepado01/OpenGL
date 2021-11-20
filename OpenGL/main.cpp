@@ -11,7 +11,6 @@
 #include "shaders/Shader.h"
 #include "mesh/Mesh.h"
 #include "mesh/meshBuilder/CloseMeshBuilder.h"
-#include "mesh/meshBuilder/FarMeshBuilder.h"
 #include "settings/MeshSettings.h"
 #include "settings/ChunkSettings.h"
 
@@ -26,20 +25,12 @@ int main( void ) {
     Camera camera(0, 0, 0);
     
     MeshHeight::Init(); 
-    CloseMeshBuilder closeMeshBuilder = CloseMeshBuilder(camera);
-    FarMeshBuilder farMeshBuilder = FarMeshBuilder(camera);
-    
+    CloseMeshBuilder closeMeshBuilder = CloseMeshBuilder(camera);    
     Mesh closeMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
-    Mesh farMesh(farMeshBuilder.GetVertices(), farMeshBuilder.GetIndices());
 
     Shader closeShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.vs",
                        "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.fs");
     closeShader.Bind();
-    
-    Shader farShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/FarMesh.vs",
-                     "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/FarMesh.gs",
-                     "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/FarMesh.fs");
-    farShader.Bind();
     
     Material material = {};
     material.color = glm::vec3(1,1,1);
@@ -74,25 +65,13 @@ int main( void ) {
         closeShader.SetUniformMaterial("u_Material", material);
         closeShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         closeShader.SetUniformLight("u_Light", light);
-        
-        farShader.Bind();
-        farShader.SetUniform1i("u_ChunkSize", ChunkSettings::ChunkSize);
-        farShader.SetUniform1i("u_ChunkNumber", MeshSettings::ChunkNumber);
-        farShader.SetUniformMat4f("u_MVP", mvp);
-        farShader.SetUniformMaterial("u_Material", material);
-        farShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-        farShader.SetUniformLight("u_Light", light);
-                
+                    
         if (camera.HasMoved() || camera.HasRotated()){
             closeMeshBuilder.UpdateMesh(camera);
             closeMesh.UpdateMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
-            
-            farMeshBuilder.UpdateMesh(camera);
-            farMesh.UpdateMesh(farMeshBuilder.GetVertices(), farMeshBuilder.GetIndices());
         }
         
         OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), closeShader);
-        OpenGLEngine::Draw(farMesh.GetVertexArray(), farMesh.GetIndexBuffer(), farShader);
         
         ImGui::SliderFloat3("Light Angle", &light.direction.x, -0.5, 0.5);
 
