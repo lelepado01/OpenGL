@@ -11,6 +11,9 @@
 class QuadtreeSettings {
 public:
     static const int MaxSubdivisions = 8;
+    static const int VerticesPerPatchSide = 10;
+
+    constexpr static float MinDistanceToTerrain = 1.5;
 };
 
 #endif /* QuadtreeSettings_h */

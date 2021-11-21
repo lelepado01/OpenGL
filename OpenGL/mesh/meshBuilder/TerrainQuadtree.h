@@ -20,8 +20,8 @@
 
 class TerrainQuadtree {
 private:
-    int LOD;
-    int x, y, width;
+    int nodeX, nodeY, nodeWidth;
+    int levelOfDetail;
     
     std::vector<TerrainQuadtree> subdivisions = std::vector<TerrainQuadtree>();
     std::optional<TerrainPatch> terrainPatch;
@@ -41,10 +41,12 @@ public:
     
     int GetVertexNumber(); 
 
-    inline bool IsLeaf() { return subdivisions.size() == 0; };
+    bool IsLeaf() { return subdivisions.size() == 0; };
     bool IsVisible(Camera camera);
+    bool NodeHasToMerge(Camera camera);
+    bool NodeHasToSplit(Camera camera);
     
-    inline glm::vec2 GetCenter() { return glm::vec2(x + width / 2, y + width / 2); };
+    glm::vec2 GetCenter() { return glm::vec2(nodeX + nodeWidth / 2, nodeY + nodeWidth / 2); };
 };
 
 #endif /* TerrainQuadtree_h */

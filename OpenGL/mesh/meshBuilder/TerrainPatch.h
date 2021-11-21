@@ -17,13 +17,13 @@
 #include "../MeshHeight.h"
 #include "../../engine/OpenGLEngine.h"
 #include "../../shaders/ActiveShaders.h"
+#include "../../settings/QuadtreeSettings.h"
 
 #include "glm/glm.hpp"
 
 class TerrainPatch {
 private:
     int globalPositionX, globalPositionY, width;
-    int verticesPerSide = 10;
     float distanceBetweenVertices;
     
     VertexArray* vertexArray;

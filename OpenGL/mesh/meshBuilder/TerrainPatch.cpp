@@ -11,7 +11,7 @@ TerrainPatch::TerrainPatch(int x, int y, int width){
     this->globalPositionX = x;
     this->globalPositionY = y;
     this->width = width;
-    this->distanceBetweenVertices = (float)width / verticesPerSide;
+    this->distanceBetweenVertices = (float)width / QuadtreeSettings::VerticesPerPatchSide;
     
     createMesh(); 
     
@@ -26,11 +26,7 @@ TerrainPatch::TerrainPatch(int x, int y, int width){
     vertexArray->AddBuffer(*vertexBuffer, layout);
 }
 
-TerrainPatch::~TerrainPatch(){
-//    delete vertexArray;
-//    delete indexBuffer;
-//    delete vertexBuffer;
-}
+TerrainPatch::~TerrainPatch(){}
 
 
 void TerrainPatch::Update(){
@@ -44,8 +40,8 @@ void TerrainPatch::Render(){
 
 
 void TerrainPatch::createMesh(){
-    for (float z = 0; z <= verticesPerSide; z++) {
-        for (float x = 0; x <= verticesPerSide; x++) {
+    for (float z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
+        for (float x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
             
             float globalX = x * distanceBetweenVertices + globalPositionX;
             float globalZ = z * distanceBetweenVertices + globalPositionY;
@@ -58,16 +54,16 @@ void TerrainPatch::createMesh(){
     }
 
     int vertexIndex = 0;
-    for (int z = 0; z <= verticesPerSide; z++) {
-        for (int x = 0; x <= verticesPerSide; x++) {
-            if (x < verticesPerSide && z < verticesPerSide){
+    for (int z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
+        for (int x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
+            if (x < QuadtreeSettings::VerticesPerPatchSide && z < QuadtreeSettings::VerticesPerPatchSide){
                 indices.push_back(vertexIndex);
-                indices.push_back(vertexIndex + verticesPerSide + 1);
+                indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1);
                 indices.push_back(vertexIndex + 1);
                 
                 indices.push_back(vertexIndex + 1);
-                indices.push_back(vertexIndex + verticesPerSide + 1);
-                indices.push_back(vertexIndex + verticesPerSide + 2);
+                indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1);
+                indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2);
 
                 vertexIndex++;
             }
