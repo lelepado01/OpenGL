@@ -42,6 +42,17 @@ Shader::~Shader() {
     GLCall( glDeleteProgram(m_RendererID) );
 }
 
+Shader& Shader::operator=(Shader &shader){
+    this->m_VertexPath = shader.m_VertexPath;
+    this->m_FragmentPath = shader.m_FragmentPath;
+    
+    this->m_RendererID = shader.m_RendererID;
+    
+    GLCall( glUseProgram(m_RendererID) );
+    
+    return *this;
+}
+
 void Shader::Bind() const {
     GLCall( glUseProgram(m_RendererID) );
 }

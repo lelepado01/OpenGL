@@ -21,7 +21,9 @@
 		B617D97F2734273B004FE945 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9732734273B004FE945 /* Shader.cpp */; };
 		B6218A9C273A7AE000564709 /* CloseMeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6218A9A273A7AE000564709 /* CloseMeshBuilder.cpp */; };
 		B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9642734273A004FE945 /* stb_image.cpp */; };
-		B653E715274696E40042B4B8 /* FarMeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B653E713274696E40042B4B8 /* FarMeshBuilder.cpp */; };
+		B66E113627492FB400E7E9F4 /* TerrainQuadtree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E113427492FB400E7E9F4 /* TerrainQuadtree.cpp */; };
+		B66E1139274933BE00E7E9F4 /* TerrainPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E1137274933BE00E7E9F4 /* TerrainPatch.cpp */; };
+		B66E113E27496A9F00E7E9F4 /* ActiveShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E113D27496A9F00E7E9F4 /* ActiveShaders.cpp */; };
 		B675CE33273739730010C4AB /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B675CE31273739730010C4AB /* Mesh.cpp */; };
 		B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */; };
 		B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */; };
@@ -47,8 +49,6 @@
 		B60A8004273C27DF002DBAEA /* FastNoiseLite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastNoiseLite.h; sourceTree = "<group>"; };
 		B60A8006273C2930002DBAEA /* Chunk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chunk.cpp; sourceTree = "<group>"; };
 		B60A8007273C2930002DBAEA /* Chunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chunk.h; sourceTree = "<group>"; };
-		B60EC8D527451BFA00D50A76 /* FarMesh.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = FarMesh.vs; sourceTree = "<group>"; };
-		B60EC8D627451C6600D50A76 /* FarMesh.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = FarMesh.fs; sourceTree = "<group>"; };
 		B617D94E2734273A004FE945 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		B617D94F2734273A004FE945 /* VertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexArray.cpp; sourceTree = "<group>"; };
 		B617D9502734273A004FE945 /* VertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexBuffer.h; sourceTree = "<group>"; };
@@ -86,7 +86,6 @@
 		B61FAB3F27369A7800D6DD56 /* Common.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.shader; sourceTree = "<group>"; };
 		B6218A9A273A7AE000564709 /* CloseMeshBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CloseMeshBuilder.cpp; sourceTree = "<group>"; };
 		B6218A9B273A7AE000564709 /* CloseMeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloseMeshBuilder.h; sourceTree = "<group>"; };
-		B623EA192743BC1F007A158C /* FarMesh.gs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = FarMesh.gs; sourceTree = "<group>"; };
 		B625C59C27457B3D00F90B2C /* water.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = water.fs; sourceTree = "<group>"; };
 		B625C59D27457B3D00F90B2C /* water.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = water.vs; sourceTree = "<group>"; };
 		B625C59E27457C5B00F90B2C /* MeshSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshSettings.h; sourceTree = "<group>"; };
@@ -94,8 +93,13 @@
 		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
-		B653E713274696E40042B4B8 /* FarMeshBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FarMeshBuilder.cpp; sourceTree = "<group>"; };
-		B653E714274696E40042B4B8 /* FarMeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FarMeshBuilder.h; sourceTree = "<group>"; };
+		B66E113427492FB400E7E9F4 /* TerrainQuadtree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainQuadtree.cpp; sourceTree = "<group>"; };
+		B66E113527492FB400E7E9F4 /* TerrainQuadtree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainQuadtree.h; sourceTree = "<group>"; };
+		B66E1137274933BE00E7E9F4 /* TerrainPatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainPatch.cpp; sourceTree = "<group>"; };
+		B66E1138274933BE00E7E9F4 /* TerrainPatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainPatch.h; sourceTree = "<group>"; };
+		B66E113B2749699A00E7E9F4 /* ActiveShaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActiveShaders.h; sourceTree = "<group>"; };
+		B66E113D27496A9F00E7E9F4 /* ActiveShaders.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ActiveShaders.cpp; sourceTree = "<group>"; };
+		B66E6422274AB359002C9D54 /* QuadtreeSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuadtreeSettings.h; sourceTree = "<group>"; };
 		B675CE31273739730010C4AB /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
 		B675CE32273739730010C4AB /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		B6BFF5D226F8EDC6002ECA4B /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,9 +202,6 @@
 				B61FAB3F27369A7800D6DD56 /* Common.shader */,
 				B617D9722734273B004FE945 /* CloseMesh.vs */,
 				B617D98127342FFD004FE945 /* CloseMesh.fs */,
-				B60EC8D527451BFA00D50A76 /* FarMesh.vs */,
-				B623EA192743BC1F007A158C /* FarMesh.gs */,
-				B60EC8D627451C6600D50A76 /* FarMesh.fs */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -224,6 +225,8 @@
 			children = (
 				B617D9732734273B004FE945 /* Shader.cpp */,
 				B617D94E2734273A004FE945 /* Shader.h */,
+				B66E113B2749699A00E7E9F4 /* ActiveShaders.h */,
+				B66E113D27496A9F00E7E9F4 /* ActiveShaders.cpp */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			children = (
 				B625C59E27457C5B00F90B2C /* MeshSettings.h */,
 				B625C59F27457CAB00F90B2C /* ChunkSettings.h */,
+				B66E6422274AB359002C9D54 /* QuadtreeSettings.h */,
 			);
 			path = settings;
 			sourceTree = "<group>";
@@ -284,10 +288,12 @@
 		B653E7162746A47A0042B4B8 /* meshBuilder */ = {
 			isa = PBXGroup;
 			children = (
-				B653E713274696E40042B4B8 /* FarMeshBuilder.cpp */,
-				B653E714274696E40042B4B8 /* FarMeshBuilder.h */,
 				B6218A9A273A7AE000564709 /* CloseMeshBuilder.cpp */,
 				B6218A9B273A7AE000564709 /* CloseMeshBuilder.h */,
+				B66E113427492FB400E7E9F4 /* TerrainQuadtree.cpp */,
+				B66E113527492FB400E7E9F4 /* TerrainQuadtree.h */,
+				B66E1137274933BE00E7E9F4 /* TerrainPatch.cpp */,
+				B66E1138274933BE00E7E9F4 /* TerrainPatch.h */,
 			);
 			path = meshBuilder;
 			sourceTree = "<group>";
@@ -412,18 +418,20 @@
 				B617D9752734273B004FE945 /* main.cpp in Sources */,
 				B60A8008273C2930002DBAEA /* Chunk.cpp in Sources */,
 				B617D97A2734273B004FE945 /* imgui_draw.cpp in Sources */,
-				B653E715274696E40042B4B8 /* FarMeshBuilder.cpp in Sources */,
 				B6218A9C273A7AE000564709 /* CloseMeshBuilder.cpp in Sources */,
 				B617D9772734273B004FE945 /* imgui.cpp in Sources */,
 				B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */,
 				B617D9792734273B004FE945 /* imgui_demo.cpp in Sources */,
+				B66E113627492FB400E7E9F4 /* TerrainQuadtree.cpp in Sources */,
 				B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */,
 				B617D97D2734273B004FE945 /* Texture.cpp in Sources */,
 				B617D97C2734273B004FE945 /* VertexBuffer.cpp in Sources */,
+				B66E1139274933BE00E7E9F4 /* TerrainPatch.cpp in Sources */,
 				B675CE33273739730010C4AB /* Mesh.cpp in Sources */,
 				B617D9742734273B004FE945 /* VertexArray.cpp in Sources */,
 				B617D9782734273B004FE945 /* imgui_impl_glfw_gl3.cpp in Sources */,
 				B617D97F2734273B004FE945 /* Shader.cpp in Sources */,
+				B66E113E27496A9F00E7E9F4 /* ActiveShaders.cpp in Sources */,
 				B617D9762734273B004FE945 /* IndexBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

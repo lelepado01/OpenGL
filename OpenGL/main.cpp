@@ -9,8 +9,10 @@
 #include "camera/Camera.h"
 #include "materials/Material.h"
 #include "shaders/Shader.h"
+#include "shaders/ActiveShaders.h"
 #include "mesh/Mesh.h"
 #include "mesh/meshBuilder/CloseMeshBuilder.h"
+#include "mesh/meshBuilder/TerrainQuadtree.h"
 #include "settings/MeshSettings.h"
 #include "settings/ChunkSettings.h"
 
@@ -25,12 +27,12 @@ int main( void ) {
     Camera camera(0, 0, 0);
     
     MeshHeight::Init(); 
-    CloseMeshBuilder closeMeshBuilder = CloseMeshBuilder(camera);    
-    Mesh closeMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
+//    CloseMeshBuilder closeMeshBuilder = CloseMeshBuilder(camera);
+//    Mesh closeMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
 
-    Shader closeShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.vs",
-                       "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/CloseMesh.fs");
-    closeShader.Bind();
+    TerrainQuadtree terrain(0, 0, 512, 1);
+    
+    ActiveShaders::Init(); 
     
     Material material = {};
     material.color = glm::vec3(1,1,1);
@@ -60,18 +62,21 @@ int main( void ) {
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) * model;
         
-        closeShader.Bind();
-        closeShader.SetUniformMat4f("u_MVP", mvp);
-        closeShader.SetUniformMaterial("u_Material", material);
-        closeShader.SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-        closeShader.SetUniformLight("u_Light", light);
+        ActiveShaders::TerrainShader->Bind();
+        ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
+        ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
+        ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
+        ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
                     
-        if (camera.HasMoved() || camera.HasRotated()){
-            closeMeshBuilder.UpdateMesh(camera);
-            closeMesh.UpdateMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
-        }
+//        if (camera.HasMoved() || camera.HasRotated()){
+//            closeMeshBuilder.UpdateMesh(camera);
+//            closeMesh.UpdateMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
+//        }
+//
+//        OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), *ActiveShaders::TerrainShader);
         
-        OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), closeShader);
+        terrain.Update(camera);
+        terrain.Render(camera);
         
         ImGui::SliderFloat3("Light Angle", &light.direction.x, -0.5, 0.5);
 
@@ -84,8 +89,9 @@ int main( void ) {
         ImGui::Separator();
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
-        ImGui::Text("%.1d Vertices Displayed)", closeMesh.GetVerticesNumber());
-        ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode()); 
+        ImGui::Text("%.1d Vertices Displayed)", terrain.GetVertexNumber());
+//        ImGui::Text("%.1d Vertices Displayed)", closeMesh.GetVerticesNumber());
+        ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode());
                 
         OpenGLEngine::ImguiDraw();
 
