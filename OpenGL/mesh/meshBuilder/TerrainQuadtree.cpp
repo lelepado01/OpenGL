@@ -45,7 +45,6 @@ void TerrainQuadtree::Render(Camera camera){
     
     if (IsLeaf()){
         terrainPatch.value().Render();
-//        if (terrainPatch != nullptr) terrainPatch->Render();
     } else {
         for (int i = 0; i < subdivisions.size(); i++) {
             subdivisions[i].Render(camera);
@@ -64,11 +63,15 @@ void TerrainQuadtree::Split(){
 void TerrainQuadtree::Merge(){
     subdivisions = std::vector<TerrainQuadtree>();
     terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth);
-//    terrainPatch = new TerrainPatch(nodeX, nodeY, nodeWidth);
 }
 
 bool TerrainQuadtree::IsVisible(Camera camera){
-    return true;
+    bool tl = camera.PointIsVisibleFromCamera(nodeX, nodeY);
+    bool tr = camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY);
+    bool bl = camera.PointIsVisibleFromCamera(nodeX, nodeY + nodeWidth);
+    bool br = camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY + nodeWidth);
+
+    return tl || tr || bl || br;
 }
 
 bool TerrainQuadtree::cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition){
@@ -90,7 +93,6 @@ bool TerrainQuadtree::NodeHasToSplit(Camera camera){
 int TerrainQuadtree::GetVertexNumber(){
     if (IsLeaf()){
         return terrainPatch.value().GetVertexNumber();
-//        return (terrainPatch != nullptr) ? terrainPatch->GetVertexNumber() : 0;
     } else {
         int vertCount = 0;
         for (int i = 0; i < subdivisions.size(); i++) {

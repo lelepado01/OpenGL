@@ -39,7 +39,8 @@ TerrainPatch::TerrainPatch(const TerrainPatch& terrainPatch) {
         this->width = terrainPatch.width;
         this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
         
-        this->createMesh();
+        this->vertices = terrainPatch.vertices;
+        this->indices = terrainPatch.indices;
         
         this->vertexArray = new VertexArray();
         this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
@@ -61,7 +62,8 @@ TerrainPatch& TerrainPatch::operator=(const TerrainPatch& terrainPatch) {
         this->width = terrainPatch.width;
         this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
         
-        this->createMesh();
+        this->vertices = terrainPatch.vertices;
+        this->indices = terrainPatch.indices;
         
         this->vertexArray = new VertexArray();
         this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
@@ -86,7 +88,8 @@ TerrainPatch::TerrainPatch(TerrainPatch&& terrainPatch) {
         this->width = terrainPatch.width;
         this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
         
-        this->createMesh();
+        this->vertices = terrainPatch.vertices;
+        this->indices = terrainPatch.indices;
         
         this->vertexArray = new VertexArray();
         this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
