@@ -13,11 +13,11 @@
 #include "../../buffers/IndexBuffer.h"
 #include "../../buffers/VertexArray.h"
 #include "../../buffers/VertexBufferLayout.h"
-#include "../Vertex.h"
-#include "../MeshHeight.h"
 #include "../../engine/OpenGLEngine.h"
 #include "../../shaders/ActiveShaders.h"
 #include "../../settings/QuadtreeSettings.h"
+#include "../Vertex.h"
+#include "../MeshHeight.h"
 
 #include "glm/glm.hpp"
 
@@ -26,9 +26,9 @@ private:
     int globalPositionX, globalPositionY, width;
     float distanceBetweenVertices;
     
-    VertexArray* vertexArray;
-    VertexBuffer* vertexBuffer;
-    IndexBuffer* indexBuffer;
+    VertexArray* vertexArray = nullptr;
+    VertexBuffer* vertexBuffer = nullptr;
+    IndexBuffer* indexBuffer = nullptr;
     
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
@@ -40,7 +40,11 @@ private:
     
 public:
     TerrainPatch(int x, int y, int width);
+    TerrainPatch(const TerrainPatch& terrainPatch);
+    TerrainPatch(TerrainPatch&& terrainPatch);
     ~TerrainPatch();
+    
+    TerrainPatch& operator=(const TerrainPatch& terrainPatch);
     
     void Update(); 
     void Render();

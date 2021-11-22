@@ -12,9 +12,9 @@
 #include <vector>
 #include <optional>
 
-#include "TerrainPatch.h"
 #include "../../camera/Camera.h"
 #include "../../settings/QuadtreeSettings.h"
+#include "TerrainPatch.h"
 
 #include "glm/glm.hpp"
 
@@ -24,8 +24,9 @@ private:
     int levelOfDetail;
     
     std::vector<TerrainQuadtree> subdivisions = std::vector<TerrainQuadtree>();
-    std::optional<TerrainPatch> terrainPatch;
-    
+    std::optional<TerrainPatch> terrainPatch = {};
+//    TerrainPatch* terrainPatch = nullptr;
+
 private:
     bool cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition);
     

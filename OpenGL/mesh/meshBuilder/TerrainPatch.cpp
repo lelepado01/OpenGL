@@ -13,7 +13,7 @@ TerrainPatch::TerrainPatch(int x, int y, int width){
     this->width = width;
     this->distanceBetweenVertices = (float)width / QuadtreeSettings::VerticesPerPatchSide;
     
-    createMesh(); 
+    createMesh();
     
     vertexArray = new VertexArray();
     vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
@@ -26,7 +26,80 @@ TerrainPatch::TerrainPatch(int x, int y, int width){
     vertexArray->AddBuffer(*vertexBuffer, layout);
 }
 
-TerrainPatch::~TerrainPatch(){}
+TerrainPatch::~TerrainPatch(){
+    delete vertexArray;
+    delete indexBuffer;
+    delete vertexBuffer;
+}
+
+TerrainPatch::TerrainPatch(const TerrainPatch& terrainPatch) {
+    if (this != &terrainPatch) {
+        this->globalPositionX = terrainPatch.globalPositionX;
+        this->globalPositionY = terrainPatch.globalPositionY;
+        this->width = terrainPatch.width;
+        this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
+        
+        this->createMesh();
+        
+        this->vertexArray = new VertexArray();
+        this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
+        this->indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
+        
+        VertexBufferLayout layout;
+        layout.AddFloat(3);
+        layout.AddFloat(3);
+
+        this->vertexArray->AddBuffer(*vertexBuffer, layout);
+
+    }
+}
+
+TerrainPatch& TerrainPatch::operator=(const TerrainPatch& terrainPatch) {
+    if (this != &terrainPatch) {
+        this->globalPositionX = terrainPatch.globalPositionX;
+        this->globalPositionY = terrainPatch.globalPositionY;
+        this->width = terrainPatch.width;
+        this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
+        
+        this->createMesh();
+        
+        this->vertexArray = new VertexArray();
+        this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
+        this->indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
+        
+        VertexBufferLayout layout;
+        layout.AddFloat(3);
+        layout.AddFloat(3);
+
+        this->vertexArray->AddBuffer(*vertexBuffer, layout);
+
+    }
+    
+    return *this; 
+}
+
+
+TerrainPatch::TerrainPatch(TerrainPatch&& terrainPatch) {
+    if (this != &terrainPatch) {
+        this->globalPositionX = terrainPatch.globalPositionX;
+        this->globalPositionY = terrainPatch.globalPositionY;
+        this->width = terrainPatch.width;
+        this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
+        
+        this->createMesh();
+        
+        this->vertexArray = new VertexArray();
+        this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
+        this->indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
+        
+        VertexBufferLayout layout;
+        layout.AddFloat(3);
+        layout.AddFloat(3);
+
+        this->vertexArray->AddBuffer(*vertexBuffer, layout);
+
+    }
+}
 
 
 void TerrainPatch::Update(){
