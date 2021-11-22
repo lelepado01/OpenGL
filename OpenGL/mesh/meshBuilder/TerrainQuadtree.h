@@ -25,7 +25,6 @@ private:
     
     std::vector<TerrainQuadtree> subdivisions = std::vector<TerrainQuadtree>();
     std::optional<TerrainPatch> terrainPatch = {};
-//    TerrainPatch* terrainPatch = nullptr;
 
 private:
     bool cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition);

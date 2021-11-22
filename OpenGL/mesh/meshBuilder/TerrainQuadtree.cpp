@@ -66,12 +66,10 @@ void TerrainQuadtree::Merge(){
 }
 
 bool TerrainQuadtree::IsVisible(Camera camera){
-    bool tl = camera.PointIsVisibleFromCamera(nodeX, nodeY);
-    bool tr = camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY);
-    bool bl = camera.PointIsVisibleFromCamera(nodeX, nodeY + nodeWidth);
-    bool br = camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY + nodeWidth);
-
-    return tl || tr || bl || br;
+    return camera.PointIsVisibleFromCamera(nodeX, nodeY) ||
+            camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY) ||
+            camera.PointIsVisibleFromCamera(nodeX, nodeY + nodeWidth) ||
+            camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY + nodeWidth);
 }
 
 bool TerrainQuadtree::cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition){
@@ -80,7 +78,8 @@ bool TerrainQuadtree::cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition){
 }
 
 bool TerrainQuadtree::NodeHasToMerge(Camera camera){
-    return (!camera.PointIsVisibleFromCamera(GetCenter().x, GetCenter().y) || !cameraIsCloseToTerrainPatch(camera.GetPosition())) && !IsLeaf();
+    return (!camera.PointIsVisibleFromCamera(GetCenter().x, GetCenter().y) ||
+            !cameraIsCloseToTerrainPatch(camera.GetPosition())) && !IsLeaf();
 }
 
 bool TerrainQuadtree::NodeHasToSplit(Camera camera){
