@@ -59,16 +59,10 @@ void Camera::UpdatePosition(){
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_LEFT_SHIFT)){
         position += movementSpeed * glm::normalize(-up) * Time::DeltaTime();
     }
-    
-    glm::vec2 newChunkPosition = glm::vec2(Chunk::GetChunkIndexFromPosition(position.x),
-                                           Chunk::GetChunkIndexFromPosition(position.z));
-    
+        
     hasMoved = oldPosition != position;
     oldPosition = position;
-    
-    hasChangedChunk = lastFrameChunkPosition != newChunkPosition;
-    lastFrameChunkPosition = newChunkPosition;
-    
+        
     if (directionHasChanged || hasMoved){
         recalculateCameraView();
     }

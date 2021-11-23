@@ -10,11 +10,7 @@
 #include "materials/Material.h"
 #include "shaders/Shader.h"
 #include "shaders/ActiveShaders.h"
-#include "mesh/Mesh.h"
-#include "mesh/meshBuilder/CloseMeshBuilder.h"
 #include "mesh/meshBuilder/PlanetaryMesh.h"
-#include "settings/MeshSettings.h"
-#include "settings/ChunkSettings.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -26,10 +22,8 @@ int main( void ) {
 
     Camera camera(0, 0, 0);
     
-    MeshHeight::Init(); 
-//    CloseMeshBuilder closeMeshBuilder = CloseMeshBuilder(camera);
-//    Mesh closeMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
-
+    MeshHeight::Init();
+    
     PlanetaryMesh terrain;
     
     ActiveShaders::Init(); 
@@ -68,13 +62,6 @@ int main( void ) {
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
                     
-//        if (camera.HasMoved() || camera.HasRotated()){
-//            closeMeshBuilder.UpdateMesh(camera);
-//            closeMesh.UpdateMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
-//        }
-//
-//        OpenGLEngine::Draw(closeMesh.GetVertexArray(), closeMesh.GetIndexBuffer(), *ActiveShaders::TerrainShader);
-        
         terrain.Update(camera);
         terrain.Render(camera);
         
@@ -90,7 +77,6 @@ int main( void ) {
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
         ImGui::Text("%.1d Vertices Displayed)", terrain.GetVertexNumber());
-//        ImGui::Text("%.1d Vertices Displayed)", closeMesh.GetVerticesNumber());
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode());
                 
         OpenGLEngine::ImguiDraw();

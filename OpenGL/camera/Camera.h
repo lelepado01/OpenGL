@@ -12,7 +12,6 @@
 
 #include "../engine/OpenGLEngine.h"
 #include "../engine/Time.h"
-#include "../mesh/Chunk.h"
 
 #include "glm/glm.hpp"
 #include <glm/gtx/vector_angle.hpp>
@@ -32,10 +31,8 @@ private:
     
     bool directionHasChanged = false;
     bool hasMoved = false;
-    bool hasChangedChunk = false; 
     
     glm::vec3 lastFramePosition;
-    glm::vec2 lastFrameChunkPosition;
 
     glm::vec3 position;
     glm::vec3 front;
@@ -44,6 +41,11 @@ private:
     
     glm::mat4 proj;
     glm::mat4 view;
+    
+private:
+    void recalculateCameraDirection();
+    void recalculateCameraView();
+    void recalculateVisibilityAngle();
     
 public:
     Camera(int x, int y, int z);
@@ -58,15 +60,9 @@ public:
     glm::vec3 GetDirection() { return direction; };
 
     bool HasMoved() { return hasMoved; };
-    bool HasChangedChunk() { return hasChangedChunk; };
     bool HasRotated() { return directionHasChanged; };
     
     bool PointIsVisibleFromCamera(int pointX, int pointY);
-
-private:
-    void recalculateCameraDirection();
-    void recalculateCameraView();
-    void recalculateVisibilityAngle(); 
 };
 
 #endif /* Camera_hpp */
