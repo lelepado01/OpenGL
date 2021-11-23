@@ -20,7 +20,7 @@
 int main( void ) {
     OpenGLEngine::Init();
 
-    Camera camera(0, 0, 0);
+    Camera camera(0, 100, 0);
     
     MeshHeight::Init();
     
