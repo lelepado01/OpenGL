@@ -111,8 +111,16 @@ int TerrainQuadtree::GetVertexNumber(){
 }
 
 glm::vec3 TerrainQuadtree::GetTerrainPatchCenter(){
-    glm::vec3 planePoint = glm::vec3(nodeX + nodeWidth / 2,
-                                     QuadtreeSettings::InitialWidth / 2,
-                                     nodeY + nodeWidth / 2);
-    return planePoint * TerrainFace::GetAxisRotationMatrix(direction);
+    float centerX = nodeX + nodeWidth / 2;
+    float centerZ = nodeY + nodeWidth / 2;
+    glm::vec3 planePoint = glm::vec3(centerX,
+                                     QuadtreeSettings::InitialWidth / 2 + MeshHeight::GetHeight(centerX, centerZ),
+                                     centerZ);
+    return TerrainPatch::PointCubeToSphere(TerrainFace::GetAxisRotationMatrix(direction)* planePoint);
 }
+
+//Vertex v = {};
+//v.position = glm::vec3(globalX, MeshHeight::GetHeight(globalX ,globalZ) + globalPositionY, globalZ);
+//v.position = axisRotationMatrix * v.position;
+//v.position = pointCubeToSphere(v.position);
+

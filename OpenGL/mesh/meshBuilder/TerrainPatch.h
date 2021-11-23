@@ -40,7 +40,6 @@ private:
     void copyData(const TerrainPatch& terrainPatch);
     
     glm::vec3 computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c);
-    glm::vec3 pointCubeToSphere(glm::vec3 point);
     
 public:
     TerrainPatch(int x, int z, int width, TerrainFaceDirection dir);
@@ -53,6 +52,9 @@ public:
     void Render();
     
     int GetVertexNumber() { return (int)vertices.size(); };
+    
+    static glm::vec3 PointCubeToSphere(glm::vec3 point);
+
 };
 
 #endif /* TerrainPatch_h */

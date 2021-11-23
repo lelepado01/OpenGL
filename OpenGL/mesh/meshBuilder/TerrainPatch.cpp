@@ -97,7 +97,7 @@ void TerrainPatch::createMesh(){
             Vertex v = {};
             v.position = glm::vec3(globalX, MeshHeight::GetHeight(globalX ,globalZ) + globalPositionY, globalZ);
             v.position = axisRotationMatrix * v.position;
-//            v.position = pointCubeToSphere(v.position);
+            v.position = PointCubeToSphere(v.position);
             
             vertices.push_back(v);
         }
@@ -159,8 +159,10 @@ void TerrainPatch::calculateNormals(){
 }
 
 
-glm::vec3 TerrainPatch::pointCubeToSphere(glm::vec3 point) {
-        
+glm::vec3 TerrainPatch::PointCubeToSphere(glm::vec3 point) {
+    
+    return glm::normalize(point) * 100.0f;
+    
     const double x2 = point.x * point.x;
     const double y2 = point.y * point.y;
     const double z2 = point.z * point.z;
