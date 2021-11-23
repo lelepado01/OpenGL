@@ -20,12 +20,19 @@
 #include "../MeshHeight.h"
 
 #include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
+enum TerrainFaceDirection {
+    Top, Bottom, Front, Back, Left, Right
+};
 
 class TerrainPatch {
 private:
-    int globalPositionX, globalPositionY, width;
+    int globalPositionX, globalPositionY, globalPositionZ, width;
     float distanceBetweenVertices;
     
+    TerrainFaceDirection direction;  
+        
     VertexArray* vertexArray = nullptr;
     VertexBuffer* vertexBuffer = nullptr;
     IndexBuffer* indexBuffer = nullptr;
@@ -37,9 +44,10 @@ private:
     void createMesh();
     void calculateNormals();
     glm::vec3 computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c);
+    glm::vec3 pointCubeToSphere(glm::vec3 point);
     
 public:
-    TerrainPatch(int x, int y, int width);
+    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir);
     TerrainPatch(const TerrainPatch& terrainPatch);
     TerrainPatch(TerrainPatch&& terrainPatch);
     ~TerrainPatch();
@@ -50,6 +58,9 @@ public:
     void Render();
     
     int GetVertexNumber() { return (int)vertices.size(); };
+    glm::mat3x3 GetAxisRotationMatrix();
+    
+    bool IsBackFace(); 
 };
 
 #endif /* TerrainPatch_h */

@@ -22,6 +22,7 @@ class TerrainQuadtree {
 private:
     int nodeX, nodeY, nodeWidth;
     int levelOfDetail;
+    TerrainFaceDirection direction; 
     
     std::vector<TerrainQuadtree> subdivisions = std::vector<TerrainQuadtree>();
     std::optional<TerrainPatch> terrainPatch = {};
@@ -30,7 +31,8 @@ private:
     bool cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition);
     
 public:
-    TerrainQuadtree(int x, int y, int width, int LOD);
+    TerrainQuadtree(int x, int y, TerrainFaceDirection dir);
+    TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int width, int LOD);
     ~TerrainQuadtree();
     
     void Split();

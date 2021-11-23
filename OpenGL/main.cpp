@@ -12,7 +12,7 @@
 #include "shaders/ActiveShaders.h"
 #include "mesh/Mesh.h"
 #include "mesh/meshBuilder/CloseMeshBuilder.h"
-#include "mesh/meshBuilder/TerrainQuadtree.h"
+#include "mesh/meshBuilder/PlanetaryMesh.h"
 #include "settings/MeshSettings.h"
 #include "settings/ChunkSettings.h"
 
@@ -30,7 +30,7 @@ int main( void ) {
 //    CloseMeshBuilder closeMeshBuilder = CloseMeshBuilder(camera);
 //    Mesh closeMesh(closeMeshBuilder.GetVertices(), closeMeshBuilder.GetIndices());
 
-    TerrainQuadtree terrain(0, 0, 512, 1);
+    PlanetaryMesh terrain;
     
     ActiveShaders::Init(); 
     
