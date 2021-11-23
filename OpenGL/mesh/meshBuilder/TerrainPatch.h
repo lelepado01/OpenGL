@@ -18,13 +18,7 @@
 #include "../../settings/QuadtreeSettings.h"
 #include "../Vertex.h"
 #include "../MeshHeight.h"
-
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
-enum TerrainFaceDirection {
-    Top, Bottom, Front, Back, Left, Right
-};
+#include "TerrainFaceUtils.h"
 
 class TerrainPatch {
 private:
@@ -59,10 +53,6 @@ public:
     void Render();
     
     int GetVertexNumber() { return (int)vertices.size(); };
-    
-    glm::mat3x3 GetAxisRotationMatrix();
-    
-    bool IsBackFace(); 
 };
 
 #endif /* TerrainPatch_h */

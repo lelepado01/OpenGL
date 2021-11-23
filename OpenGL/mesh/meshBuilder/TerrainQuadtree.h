@@ -46,7 +46,8 @@ public:
     bool NodeHasToMerge(Camera camera);
     bool NodeHasToSplit(Camera camera);
     
-    glm::vec2 GetCenter() { return glm::vec2(nodeX + nodeWidth / 2, nodeY + nodeWidth / 2); };
+    glm::vec3 GetTerrainPatchCenter();
+
 };
 
 #endif /* TerrainQuadtree_h */

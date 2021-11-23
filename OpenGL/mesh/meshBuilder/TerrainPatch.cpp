@@ -86,7 +86,7 @@ void TerrainPatch::Render(){
 
 void TerrainPatch::createMesh(){
     
-    glm::mat3x3 axisRotationMatrix = GetAxisRotationMatrix();
+    glm::mat3x3 axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
     
     for (float z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
         for (float x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
@@ -107,7 +107,7 @@ void TerrainPatch::createMesh(){
     for (int z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
         for (int x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
             if (x < QuadtreeSettings::VerticesPerPatchSide && z < QuadtreeSettings::VerticesPerPatchSide){
-                if (IsBackFace()){
+                if (TerrainFace::IsBackFace(direction)){
                     indices.push_back(vertexIndex + 1);
                     indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1);
                     indices.push_back(vertexIndex);
@@ -168,27 +168,4 @@ glm::vec3 TerrainPatch::pointCubeToSphere(glm::vec3 point) {
     return glm::vec3(point.x * sqrt(1.0 - (y2 + z2) * 0.5 + y2 * z2 * 0.33333333333333333333),
                      point.y * sqrt(1.0 - (z2 + x2) * 0.5 + z2 * x2 * 0.33333333333333333333),
                      point.z * sqrt(1.0 - (x2 + y2) * 0.5 + x2 * y2 * 0.33333333333333333333));
-}
-
-
-bool TerrainPatch::IsBackFace(){
-    return direction == TerrainFaceDirection::Back
-        || direction == TerrainFaceDirection::Bottom
-        || direction == TerrainFaceDirection::Right;
-}
-
-glm::mat3x3 TerrainPatch::GetAxisRotationMatrix(){
-    if (direction == TerrainFaceDirection::Bottom){
-        return glm::mat3x3(1,0,0,0,-1,0,0,0,1);
-    } else if (direction == TerrainFaceDirection::Front){
-        return glm::mat3x3(1,0,0,0,0,-1,0,1,0);
-    } else if (direction == TerrainFaceDirection::Back){
-        return glm::mat3x3(1,0,0,0,0,1,0,1,0);
-    } else if (direction == TerrainFaceDirection::Left){
-        return glm::mat3x3(0,1,0,-1,0,0,0,0,1);
-    } else if (direction == TerrainFaceDirection::Right){
-        return glm::mat3x3(0,1,0,+1,0,0,0,0,1);
-    }
-    
-    return glm::identity<glm::mat3x3>();
 }

@@ -83,19 +83,18 @@ bool TerrainQuadtree::IsVisible(Camera camera){
 
 bool TerrainQuadtree::cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition){
     float minDistance = QuadtreeSettings::MinDistanceToTerrain * nodeWidth;
-    return glm::distance(cameraPosition, glm::vec3(GetCenter().x, 0, GetCenter().y)) < minDistance; 
+    return glm::distance(cameraPosition, GetTerrainPatchCenter()) < minDistance; 
 }
 
 bool TerrainQuadtree::NodeHasToMerge(Camera camera){
-    return (!camera.PointIsVisibleFromCamera(GetCenter().x, GetCenter().y) ||
-            !cameraIsCloseToTerrainPatch(camera.GetPosition())) && !IsLeaf();
+    return !IsLeaf() && !cameraIsCloseToTerrainPatch(camera.GetPosition());
 }
 
 bool TerrainQuadtree::NodeHasToSplit(Camera camera){
-    return IsLeaf() &&
-        IsVisible(camera) &&
-        levelOfDetail < QuadtreeSettings::MaxSubdivisions &&
-        cameraIsCloseToTerrainPatch(camera.GetPosition()); 
+    return IsLeaf()
+        && IsVisible(camera)
+        && levelOfDetail < QuadtreeSettings::MaxSubdivisions
+        && cameraIsCloseToTerrainPatch(camera.GetPosition());
 }
 
 int TerrainQuadtree::GetVertexNumber(){
@@ -109,4 +108,11 @@ int TerrainQuadtree::GetVertexNumber(){
         
         return vertCount; 
     }
+}
+
+glm::vec3 TerrainQuadtree::GetTerrainPatchCenter(){
+    glm::vec3 planePoint = glm::vec3(nodeX + nodeWidth / 2,
+                                     QuadtreeSettings::InitialWidth / 2,
+                                     nodeY + nodeWidth / 2);
+    return planePoint * TerrainFace::GetAxisRotationMatrix(direction);
 }
