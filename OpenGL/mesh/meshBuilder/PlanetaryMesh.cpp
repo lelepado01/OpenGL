@@ -9,7 +9,9 @@
 
 PlanetaryMesh::PlanetaryMesh(){
     for (int i = 0; i < 6; i++) {
-        faces.push_back(TerrainQuadtree(-QuadtreeSettings::InitialWidth / 2,-QuadtreeSettings::InitialWidth / 2, (TerrainFaceDirection)i));
+        faces.push_back(TerrainQuadtree(-QuadtreeSettings::InitialWidth / 2,
+                                        -QuadtreeSettings::InitialWidth / 2,
+                                        (TerrainFaceDirection)i));
     }
 
 }

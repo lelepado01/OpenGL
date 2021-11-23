@@ -36,61 +36,19 @@ TerrainPatch::~TerrainPatch(){
 }
 
 TerrainPatch::TerrainPatch(const TerrainPatch& terrainPatch) {
-    if (this != &terrainPatch) {
-        this->globalPositionX = terrainPatch.globalPositionX;
-        this->globalPositionY = terrainPatch.globalPositionY;
-        this->globalPositionZ = terrainPatch.globalPositionZ;
-        this->width = terrainPatch.width;
-        this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
-        
-        this->direction = terrainPatch.direction;
-        
-        this->vertices = terrainPatch.vertices;
-        this->indices = terrainPatch.indices;
-        
-        this->vertexArray = new VertexArray();
-        this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
-        this->indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
-        
-        VertexBufferLayout layout;
-        layout.AddFloat(3);
-        layout.AddFloat(3);
+    copyData(terrainPatch);
+}
 
-        this->vertexArray->AddBuffer(*vertexBuffer, layout);
-
-    }
+TerrainPatch::TerrainPatch(TerrainPatch&& terrainPatch) {
+    copyData(terrainPatch);
 }
 
 TerrainPatch& TerrainPatch::operator=(const TerrainPatch& terrainPatch) {
-    if (this != &terrainPatch) {
-        this->globalPositionX = terrainPatch.globalPositionX;
-        this->globalPositionY = terrainPatch.globalPositionY;
-        this->globalPositionZ = terrainPatch.globalPositionZ;
-        this->width = terrainPatch.width;
-        this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
-        
-        this->direction = terrainPatch.direction;
-        
-        this->vertices = terrainPatch.vertices;
-        this->indices = terrainPatch.indices;
-        
-        this->vertexArray = new VertexArray();
-        this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
-        this->indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
-        
-        VertexBufferLayout layout;
-        layout.AddFloat(3);
-        layout.AddFloat(3);
-
-        this->vertexArray->AddBuffer(*vertexBuffer, layout);
-
-    }
-    
+    copyData(terrainPatch);
     return *this; 
 }
 
-
-TerrainPatch::TerrainPatch(TerrainPatch&& terrainPatch) {
+void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
     if (this != &terrainPatch) {
         this->globalPositionX = terrainPatch.globalPositionX;
         this->globalPositionY = terrainPatch.globalPositionY;
@@ -99,7 +57,7 @@ TerrainPatch::TerrainPatch(TerrainPatch&& terrainPatch) {
         this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
         
         this->direction = terrainPatch.direction;
-
+        
         this->vertices = terrainPatch.vertices;
         this->indices = terrainPatch.indices;
         
@@ -115,7 +73,6 @@ TerrainPatch::TerrainPatch(TerrainPatch&& terrainPatch) {
 
     }
 }
-
 
 void TerrainPatch::Update(){
     vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
@@ -140,7 +97,7 @@ void TerrainPatch::createMesh(){
             Vertex v = {};
             v.position = glm::vec3(globalX, MeshHeight::GetHeight(globalX ,globalZ) + globalPositionY, globalZ);
             v.position = axisRotationMatrix * v.position;
-            v.position = pointCubeToSphere(v.position);
+//            v.position = pointCubeToSphere(v.position);
             
             vertices.push_back(v);
         }
@@ -203,9 +160,7 @@ void TerrainPatch::calculateNormals(){
 
 
 glm::vec3 TerrainPatch::pointCubeToSphere(glm::vec3 point) {
-    
-    return glm::normalize(point) * 100.0f;
-    
+        
     const double x2 = point.x * point.x;
     const double y2 = point.y * point.y;
     const double z2 = point.z * point.z;

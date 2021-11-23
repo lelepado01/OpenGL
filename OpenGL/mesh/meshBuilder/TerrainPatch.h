@@ -43,6 +43,8 @@ private:
 private:
     void createMesh();
     void calculateNormals();
+    void copyData(const TerrainPatch& terrainPatch);
+    
     glm::vec3 computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c);
     glm::vec3 pointCubeToSphere(glm::vec3 point);
     
@@ -51,13 +53,13 @@ public:
     TerrainPatch(const TerrainPatch& terrainPatch);
     TerrainPatch(TerrainPatch&& terrainPatch);
     ~TerrainPatch();
-    
     TerrainPatch& operator=(const TerrainPatch& terrainPatch);
     
     void Update(); 
     void Render();
     
     int GetVertexNumber() { return (int)vertices.size(); };
+    
     glm::mat3x3 GetAxisRotationMatrix();
     
     bool IsBackFace(); 

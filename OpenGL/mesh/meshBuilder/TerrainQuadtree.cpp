@@ -75,10 +75,10 @@ void TerrainQuadtree::Merge(){
 }
 
 bool TerrainQuadtree::IsVisible(Camera camera){
-    return camera.PointIsVisibleFromCamera(nodeX, nodeY) ||
-            camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY) ||
-            camera.PointIsVisibleFromCamera(nodeX, nodeY + nodeWidth) ||
-            camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY + nodeWidth);
+    return true || camera.PointIsVisibleFromCamera(nodeX, nodeY)
+                || camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY)
+                || camera.PointIsVisibleFromCamera(nodeX, nodeY + nodeWidth)
+                || camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY + nodeWidth);
 }
 
 bool TerrainQuadtree::cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition){

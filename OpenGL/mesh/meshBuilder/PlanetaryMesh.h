@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <vector>
 
-#include "../../camera/Camera.h"
 #include "TerrainQuadtree.h"
 
 class PlanetaryMesh {
