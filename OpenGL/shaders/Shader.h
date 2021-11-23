@@ -17,6 +17,14 @@ private:
     
     std::string commonShaderSource; 
 
+private:
+    int getUniformLocation(const std::string& name);
+    std::string parseShader(const std::string& filepath);
+    
+    unsigned int compileShader(unsigned int type, const std::string& source);
+    unsigned int createShader(const std::string& vertexShader, const std::string& fragmentShader);
+    unsigned int createShader(const std::string& vertexShader, const std::string& geometryShader, const std::string& fragmentShader);
+    
 public:
     Shader(){};
     Shader(const std::string& vertexpath, const std::string& fragmentPath);
@@ -34,13 +42,5 @@ public:
     void SetUniformMaterial(const std::string& name, Material material);
     void SetUniformLight(const std::string& name, Light light); 
 
-    Shader& operator=(Shader &shader); 
-    
-private:
-    int getUniformLocation(const std::string& name);
-    std::string parseShader(const std::string& filepath);
-    
-    unsigned int compileShader(unsigned int type, const std::string& source);
-    unsigned int createShader(const std::string& vertexShader, const std::string& fragmentShader);
-    unsigned int createShader(const std::string& vertexShader, const std::string& geometryShader, const std::string& fragmentShader);
+    Shader& operator=(Shader &shader);
 };

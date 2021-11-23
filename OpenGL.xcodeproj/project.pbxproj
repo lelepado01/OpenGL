@@ -75,9 +75,9 @@
 		B617D96C2734273B004FE945 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		B617D96F2734273B004FE945 /* gold-dollar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gold-dollar.png"; sourceTree = "<group>"; };
 		B617D9702734273B004FE945 /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
-		B617D9722734273B004FE945 /* CloseMesh.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CloseMesh.vs; sourceTree = "<group>"; };
+		B617D9722734273B004FE945 /* TerrainMesh.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TerrainMesh.vs; sourceTree = "<group>"; };
 		B617D9732734273B004FE945 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
-		B617D98127342FFD004FE945 /* CloseMesh.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = CloseMesh.fs; sourceTree = "<group>"; };
+		B617D98127342FFD004FE945 /* TerrainMesh.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = TerrainMesh.fs; sourceTree = "<group>"; };
 		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		B61FAB3F27369A7800D6DD56 /* Common.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.shader; sourceTree = "<group>"; };
 		B625C59C27457B3D00F90B2C /* water.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = water.fs; sourceTree = "<group>"; };
@@ -193,8 +193,8 @@
 				B625C59C27457B3D00F90B2C /* water.fs */,
 				B625C59D27457B3D00F90B2C /* water.vs */,
 				B61FAB3F27369A7800D6DD56 /* Common.shader */,
-				B617D9722734273B004FE945 /* CloseMesh.vs */,
-				B617D98127342FFD004FE945 /* CloseMesh.fs */,
+				B617D9722734273B004FE945 /* TerrainMesh.vs */,
+				B617D98127342FFD004FE945 /* TerrainMesh.fs */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

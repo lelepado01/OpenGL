@@ -19,7 +19,6 @@ private:
     
 public:
     PlanetaryMesh();
-    ~PlanetaryMesh();
     
     void Update(Camera camera);
     void Render(Camera camera);

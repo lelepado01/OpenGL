@@ -18,10 +18,6 @@ Camera::Camera(int x, int y, int z){
     recalculateCameraDirection();
 }
 
-Camera::~Camera(){
-    
-}
-
 
 void Camera::UpdateDirection(){
     directionHasChanged = OpenGLEngine::GetMouseOffsetX() != 0 || OpenGLEngine::GetMouseOffsetY() != 0;

@@ -15,7 +15,6 @@ TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir){
     direction = dir;
 }
 
-
 TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int width, int LOD){
     nodeX = x;
     nodeY = y;
@@ -23,8 +22,6 @@ TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int wid
     levelOfDetail = LOD;
     direction = dir;
 }
-
-TerrainQuadtree::~TerrainQuadtree(){}
 
 void TerrainQuadtree::Update(Camera camera){
     

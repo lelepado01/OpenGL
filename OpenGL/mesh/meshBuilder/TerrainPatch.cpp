@@ -161,8 +161,6 @@ void TerrainPatch::calculateNormals(){
 
 glm::vec3 TerrainPatch::PointCubeToSphere(glm::vec3 point) {
     
-//    return glm::normalize(point) * 100.0f;
-    
     point /= QuadtreeSettings::InitialWidth / 2;
     
     const double x2 = point.x * point.x;

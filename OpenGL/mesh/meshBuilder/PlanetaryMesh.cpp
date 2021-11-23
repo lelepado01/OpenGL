@@ -16,8 +16,6 @@ PlanetaryMesh::PlanetaryMesh(){
 
 }
 
-PlanetaryMesh::~PlanetaryMesh(){}
-
 void PlanetaryMesh::Update(Camera camera){
     for (int i = 0; i < faces.size(); i++) {
         faces.at(i).Update(camera);

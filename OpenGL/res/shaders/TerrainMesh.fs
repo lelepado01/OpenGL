@@ -10,17 +10,17 @@ in Light light;
 out vec4 color;
 
 vec3 getColorFromHeight(float height){
-    if (height < 0.4) {
+    if (height < 512) {
         return vec3(0,0,1);
-    } else if (height < 1 ) {
+    } else if (height < 515 ) {
         return vec3(0.3,0.3,1);
-    } else if (height < 2 ) {
+    } else if (height < 520 ) {
         return vec3(1,1,0.1);
-    }  else if (height < 5 ) {
+    }  else if (height < 525 ) {
         return vec3(0,1,0);
-    }  else if (height < 8 ) {
+    }  else if (height < 535 ) {
         return vec3(0.1,0.7,0.1);
-    }  else if (height < 10 ) {
+    }  else if (height < 540 ) {
         return vec3(0.5,0.5,0.5);
     }
         
@@ -51,6 +51,6 @@ void main() {
     vec3 ambient = light.ambient * material.ambient;
     vec3 diffuse = light.diffuse * (diff * material.diffuse);
     
-    vec3 result = (ambient + diffuse + specular) * getColorFromHeight(fragPos.y);
+    vec3 result = (ambient + diffuse + specular) * getColorFromHeight(distance(fragPos, vec3(0,0,0)));
     color = vec4(result, 1.0);
 }

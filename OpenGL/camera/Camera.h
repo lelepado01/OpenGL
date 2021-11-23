@@ -49,8 +49,7 @@ private:
     
 public:
     Camera(int x, int y, int z);
-    ~Camera();
-    
+
     void UpdatePosition();
     void UpdateDirection();
     

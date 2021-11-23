@@ -19,14 +19,13 @@
 
 int main( void ) {
     OpenGLEngine::Init();
-
-    Camera camera(0, 100, 0);
     
+    ActiveShaders::Init();
     MeshHeight::Init();
+
+    Camera camera(0, 500, 0);
     
     PlanetaryMesh terrain;
-    
-    ActiveShaders::Init(); 
     
     Material material = {};
     material.color = glm::vec3(1,1,1);

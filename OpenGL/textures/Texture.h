@@ -2,8 +2,7 @@
 
 #include "OpenGLEngine.h"
 
-class Texture
-{
+class Texture {
     private:
         unsigned int m_RendererID;
         std::string m_FilePath;

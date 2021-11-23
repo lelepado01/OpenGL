@@ -40,7 +40,6 @@ private:
 public:
     TerrainQuadtree(int x, int y, TerrainFaceDirection dir);
     TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int width, int LOD);
-    ~TerrainQuadtree();
     
     void Update(Camera camera);
     void Render(Camera camera);
