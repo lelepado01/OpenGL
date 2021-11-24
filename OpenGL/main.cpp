@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <chrono>
 
 #include "engine/OpenGLEngine.h"
 #include "engine/Time.h"
@@ -42,6 +43,7 @@ int main( void ) {
 
     OpenGLEngine::ImguiInit();
 
+    float time = 0;
     while( OpenGLEngine::IsRunning() ){
         OpenGLEngine::Clear();
         OpenGLEngine::UpdateTime();
@@ -56,6 +58,9 @@ int main( void ) {
         glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) * model;
         
         ActiveShaders::TerrainShader->Bind();
+        time += 0.0001;
+        if (time > 60) time = 0; 
+        ActiveShaders::TerrainShader->SetUniform1f("u_Time", time);
         ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);

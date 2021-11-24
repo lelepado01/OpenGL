@@ -78,6 +78,8 @@
 		B617D9722734273B004FE945 /* TerrainMesh.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TerrainMesh.vs; sourceTree = "<group>"; };
 		B617D9732734273B004FE945 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		B617D98127342FFD004FE945 /* TerrainMesh.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = TerrainMesh.fs; sourceTree = "<group>"; };
+		B61DE3EF274D8F0900A43A6D /* Cartoon_Trees.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartoon_Trees.obj; sourceTree = "<group>"; };
+		B61DE3F0274D8F1200A43A6D /* NatureFreePack1.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = NatureFreePack1.blend; sourceTree = "<group>"; };
 		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		B61FAB3F27369A7800D6DD56 /* Common.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.shader; sourceTree = "<group>"; };
 		B625C59C27457B3D00F90B2C /* water.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = water.fs; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 		B617D96D2734273B004FE945 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				B61DE3EE274D8F0000A43A6D /* models */,
 				B617D96E2734273B004FE945 /* textures */,
 				B617D9712734273B004FE945 /* shaders */,
 			);
@@ -243,6 +246,15 @@
 				B6ED0F692746CB4900459069 /* Time.h */,
 			);
 			path = engine;
+			sourceTree = "<group>";
+		};
+		B61DE3EE274D8F0000A43A6D /* models */ = {
+			isa = PBXGroup;
+			children = (
+				B61DE3F0274D8F1200A43A6D /* NatureFreePack1.blend */,
+				B61DE3EF274D8F0900A43A6D /* Cartoon_Trees.obj */,
+			);
+			path = models;
 			sourceTree = "<group>";
 		};
 		B61FAB3D2736993B00D6DD56 /* materials */ = {
