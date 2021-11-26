@@ -12,7 +12,8 @@ class QuadtreeSettings {
 public:
     static const int MaxSubdivisions = 8;
     static const int VerticesPerPatchSide = 10;
-    static const int InitialWidth = 512; 
+    static const int InitialWidth = 512;
+    static const int SphereRadius = 2;
 
     constexpr static float MinDistanceToTerrain = 1.2;
 };

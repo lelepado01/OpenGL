@@ -28,7 +28,7 @@ public:
 
 public:
     static void Init(); 
-    static float GetHeight(float x, float y);
+    static float GetHeight(float x, float y, float z);
 };
 
 #endif /* MeshHeight_h */

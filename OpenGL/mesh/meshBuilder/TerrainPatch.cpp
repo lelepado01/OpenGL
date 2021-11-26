@@ -87,21 +87,23 @@ void TerrainPatch::Render(){
 void TerrainPatch::createMesh(){
     
     glm::mat3x3 axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
-    
+
     for (float z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
         for (float x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
-            
+     
             float globalX = x * distanceBetweenVertices + globalPositionX;
             float globalZ = z * distanceBetweenVertices + globalPositionZ;
             
             Vertex v = {};
-            v.position = glm::vec3(globalX, MeshHeight::GetHeight(globalX ,globalZ) + globalPositionY, globalZ);
+            v.position = glm::vec3(globalX, globalPositionY, globalZ);
             v.position = axisRotationMatrix * v.position;
             v.position = PointCubeToSphere(v.position);
+            v.position += MeshHeight::GetHeight(v.position.x ,v.position.y, v.position.z) * glm::normalize(v.position);
             
             vertices.push_back(v);
         }
     }
+
 
     int vertexIndex = 0;
     for (int z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
@@ -169,5 +171,5 @@ glm::vec3 TerrainPatch::PointCubeToSphere(glm::vec3 point) {
         
     return glm::vec3(point.x * sqrt(1.0 - (y2 + z2) * 0.5 + y2 * z2 * 0.33333333333333333333),
                      point.y * sqrt(1.0 - (z2 + x2) * 0.5 + z2 * x2 * 0.33333333333333333333),
-                     point.z * sqrt(1.0 - (x2 + y2) * 0.5 + x2 * y2 * 0.33333333333333333333)) * (float)QuadtreeSettings::InitialWidth;
+                     point.z * sqrt(1.0 - (x2 + y2) * 0.5 + x2 * y2 * 0.33333333333333333333)) * (float)(QuadtreeSettings::InitialWidth);
 }

@@ -23,12 +23,12 @@ void MeshHeight::Init(){
     largeNoise.SetFrequency(LargeFrequency);
 }
 
-float MeshHeight::GetHeight(float x, float y){
+float MeshHeight::GetHeight(float x, float y, float z){
     smallNoise.SetFrequency(SmallFrequency);
     largeNoise.SetFrequency(LargeFrequency);
-    
-    float large = largeNoise.GetNoise(x * LargeScale, y * LargeScale) * LargeMultiplier;
-    float small = smallNoise.GetNoise(x * SmallScale, y * SmallScale) * SmallMultiplier;
+        
+    float large = largeNoise.GetNoise(x * LargeScale, y * LargeScale, z * LargeScale) * LargeMultiplier;
+    float small = smallNoise.GetNoise(x * SmallScale, y * SmallScale, z * SmallScale) * SmallMultiplier;
     
     float height = large * large * large + small;
     

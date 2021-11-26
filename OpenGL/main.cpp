@@ -53,12 +53,14 @@ int main( void ) {
         
         camera.UpdateDirection();
         camera.UpdatePosition();
-        
+        long div = 36000000000;
+        light.direction.y = ((double)(std::chrono::high_resolution_clock::now().time_since_epoch().count() % div)) / (div/6)-3;
+
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) * model;
         
         ActiveShaders::TerrainShader->Bind();
-        time += 0.0001;
+        time += 1;
         if (time > 60) time = 0; 
         ActiveShaders::TerrainShader->SetUniform1f("u_Time", time);
         ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
@@ -69,7 +71,7 @@ int main( void ) {
         terrain.Update(camera);
         terrain.Render(camera);
         
-        ImGui::SliderFloat3("Light Angle", &light.direction.x, -0.5, 0.5);
+        ImGui::SliderFloat3("Light Angle", &light.direction.x, -1, 1);
 
         ImGui::SliderFloat("Large Freq", &MeshHeight::LargeFrequency, 0, 1);
         ImGui::SliderFloat("Small Freq", &MeshHeight::SmallFrequency, 0, 1);

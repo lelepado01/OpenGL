@@ -11,7 +11,7 @@ Shader::Shader(const std::string& vertexpath, const std::string& fragmentPath) :
     m_VertexPath = vertexpath;
     m_FragmentPath = fragmentPath;
     
-    commonShaderSource = parseShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Common.shader");
+    commonShaderSource = parseShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Common.glsl");
     
     std::string vertexSource = parseShader(vertexpath);
     std::string fragmentSource = parseShader(fragmentPath);

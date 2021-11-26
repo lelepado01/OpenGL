@@ -39,6 +39,6 @@ void main() {
     
     if (distance(fragPos, vec3(0,0,0)) < 513){
         vec3 wave = vec3(1,1,1) * waveHeight(position);
-        gl_Position = u_MVP * vec4(position + wave, 1);
+        gl_Position = u_MVP * vec4(position, 1);//vec4(position + wave, 1);
     }
 }

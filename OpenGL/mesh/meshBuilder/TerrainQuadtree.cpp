@@ -13,6 +13,11 @@ TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir){
     nodeWidth = QuadtreeSettings::InitialWidth;
     levelOfDetail = 1;
     direction = dir;
+    
+//    neighbours[Left] = nullptr;
+//    neighbours[Right] = nullptr;
+//    neighbours[Top] = nullptr;
+//    neighbours[Bottom] = nullptr;
 }
 
 TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int width, int LOD){
@@ -21,7 +26,45 @@ TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int wid
     nodeWidth = width;
     levelOfDetail = LOD;
     direction = dir;
+    
+//    neighbours[Left] = nullptr;
+//    neighbours[Right] = nullptr;
+//    neighbours[Top] = nullptr;
+//    neighbours[Bottom] = nullptr;
 }
+
+//TerrainQuadtree::TerrainQuadtree(const TerrainQuadtree& terrainQuadtree){
+//    copyData(terrainQuadtree);
+//}
+//
+//TerrainQuadtree::TerrainQuadtree(TerrainQuadtree&& terrainQuadtree){
+//    copyData(terrainQuadtree);
+//}
+//
+//TerrainQuadtree& TerrainQuadtree::operator=(const TerrainQuadtree& terrainQuadtree){
+//    copyData(terrainQuadtree);
+//    return *this;
+//}
+//
+//void TerrainQuadtree::copyData(const TerrainQuadtree& terrainQuadtree){
+//    if (this != &terrainQuadtree) {
+//        this->nodeX = terrainQuadtree.nodeX;
+//        this->nodeY = terrainQuadtree.nodeY;
+//        this->nodeWidth = terrainQuadtree.nodeWidth;
+//        this->levelOfDetail = terrainQuadtree.levelOfDetail;
+//        this->direction = terrainQuadtree.direction;
+//
+//        this->neighbours = terrainQuadtree.neighbours;
+//    }
+//}
+
+
+//TerrainQuadtree::~TerrainQuadtree(){
+//    if (neighbours[Left] != nullptr) neighbours[Left]->SetNeighbour(nullptr, Right);
+//    if (neighbours[Right] != nullptr) neighbours[Right]->SetNeighbour(nullptr, Left);
+//    if (neighbours[Top] != nullptr) neighbours[Top]->SetNeighbour(nullptr, Bottom);
+//    if (neighbours[Bottom] != nullptr) neighbours[Bottom]->SetNeighbour(nullptr, Top);
+//}
 
 void TerrainQuadtree::Update(Camera camera){
     
@@ -60,13 +103,41 @@ void TerrainQuadtree::Render(Camera camera){
 
 void TerrainQuadtree::split(){
     terrainPatch = {};
-    subdivisions.push_back(TerrainQuadtree(nodeX, nodeY, direction, nodeWidth / 2, levelOfDetail+1));
-    subdivisions.push_back(TerrainQuadtree(nodeX + nodeWidth / 2, nodeY, direction, nodeWidth / 2, levelOfDetail+1));
-    subdivisions.push_back(TerrainQuadtree(nodeX, nodeY + nodeWidth / 2, direction, nodeWidth / 2, levelOfDetail+1));
-    subdivisions.push_back(TerrainQuadtree(nodeX + nodeWidth / 2, nodeY + nodeWidth / 2, direction, nodeWidth / 2, levelOfDetail+1));
+    TerrainQuadtree topLeft = TerrainQuadtree(nodeX, nodeY, direction, nodeWidth / 2, levelOfDetail+1);
+    TerrainQuadtree topRight = TerrainQuadtree(nodeX + nodeWidth / 2, nodeY, direction, nodeWidth / 2, levelOfDetail+1);
+    TerrainQuadtree bottomLeft = TerrainQuadtree(nodeX, nodeY + nodeWidth / 2, direction, nodeWidth / 2, levelOfDetail+1);
+    TerrainQuadtree bottomRight = TerrainQuadtree(nodeX + nodeWidth / 2, nodeY + nodeWidth / 2, direction, nodeWidth / 2, levelOfDetail+1);
+    
+//    topLeft.PairNeighbour(&topRight, Right);
+//    topLeft.PairNeighbour(&bottomLeft, Bottom);
+//    bottomRight.PairNeighbour(&topRight, Top);
+//    bottomRight.PairNeighbour(&bottomLeft, Left);
+//
+//    topRight.PairNeighbour(neighbours[Right].get(), Right);
+//    bottomRight.PairNeighbour(neighbours[Right].get(), Right);
+//
+//    topLeft.PairNeighbour(neighbours[Top].get(), Top);
+//    topRight.PairNeighbour(neighbours[Top].get(), Top);
+//
+//    topLeft.PairNeighbour(neighbours[Left].get(), Left);
+//    bottomLeft.PairNeighbour(neighbours[Left].get(), Left);
+//
+//    bottomLeft.PairNeighbour(neighbours[Bottom].get(), Bottom);
+//    bottomRight.PairNeighbour(neighbours[Bottom].get(), Bottom);
+    
+    subdivisions.push_back(topLeft);
+    subdivisions.push_back(topRight);
+    subdivisions.push_back(bottomLeft);
+    subdivisions.push_back(bottomRight);
 }
 
 void TerrainQuadtree::merge(){
+    
+//    PairNeighbour(getSubdivisionNeighbour(Right), Right);
+//    PairNeighbour(getSubdivisionNeighbour(Left), Left);
+//    PairNeighbour(getSubdivisionNeighbour(Top), Top);
+//    PairNeighbour(getSubdivisionNeighbour(Bottom), Bottom);
+    
     subdivisions = std::vector<TerrainQuadtree>();
     terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction);
 }
@@ -110,14 +181,56 @@ int TerrainQuadtree::GetVertexNumber(){
 glm::vec3 TerrainQuadtree::getTerrainPatchCenter(){
     float centerX = nodeX + nodeWidth / 2;
     float centerZ = nodeY + nodeWidth / 2;
-    glm::vec3 planePoint = glm::vec3(centerX,
-                                     QuadtreeSettings::InitialWidth / 2 + MeshHeight::GetHeight(centerX, centerZ),
-                                     centerZ);
-    return TerrainPatch::PointCubeToSphere(TerrainFace::GetAxisRotationMatrix(direction) * planePoint);
+    
+    glm::vec3 planePoint = glm::vec3(centerX, QuadtreeSettings::InitialWidth/2, centerZ);
+    planePoint = TerrainPatch::PointCubeToSphere(TerrainFace::GetAxisRotationMatrix(direction) * planePoint);
+    planePoint += MeshHeight::GetHeight(planePoint.x, planePoint.y, planePoint.z) * glm::normalize(planePoint);
+    
+    return planePoint;
 }
 
-//Vertex v = {};
-//v.position = glm::vec3(globalX, MeshHeight::GetHeight(globalX ,globalZ) + globalPositionY, globalZ);
-//v.position = axisRotationMatrix * v.position;
-//v.position = pointCubeToSphere(v.position);
 
+//TerrainQuadtree* TerrainQuadtree::getSubdivisionNeighbour(TerrainFaceDirection direction){
+//    for (int i = 0; i < subdivisions.size(); i++) {
+//        if (direction == Left && subdivisions[i].nodeX == nodeX){
+//            return subdivisions[i].neighbours[Left].get();
+//        }
+//        if (direction == Right && subdivisions[i].nodeX > nodeX){
+//            return subdivisions[i].neighbours[Right].get();
+//        }
+//        if (direction == Top && subdivisions[i].nodeY == nodeY){
+//            return subdivisions[i].neighbours[Top].get();
+//        }
+//        if (direction == Bottom && subdivisions[i].nodeY > nodeY){
+//            return subdivisions[i].neighbours[Bottom].get();
+//        }
+//    }
+//
+//    return nullptr;
+//}
+
+
+//void TerrainQuadtree::SetNeighbour(TerrainQuadtree *neigh, TerrainFaceDirection direction){
+//    neighbours[direction] = std::unique_ptr<TerrainQuadtree>(neigh);
+//}
+//
+//void TerrainQuadtree::PairNeighbour(TerrainQuadtree *neigh, TerrainFaceDirection direction){
+//    if (neigh == nullptr) return;
+//
+//    if (direction == TerrainFaceDirection::Left){
+//        neigh->SetNeighbour(this, Right);
+//        neighbours[Left] = std::unique_ptr<TerrainQuadtree>(neigh);
+//    }
+//    if (direction == TerrainFaceDirection::Right){
+//        neigh->SetNeighbour(this, Left);
+//        neighbours[Right] = std::unique_ptr<TerrainQuadtree>(neigh);
+//    }
+//    if (direction == TerrainFaceDirection::Top){
+//        neigh->SetNeighbour(this, Bottom);
+//        neighbours[Top] = std::unique_ptr<TerrainQuadtree>(neigh);
+//    }
+//    if (direction == TerrainFaceDirection::Bottom){
+//        neigh->SetNeighbour(this, Top);
+//        neighbours[Bottom] = std::unique_ptr<TerrainQuadtree>(neigh);
+//    }
+//}

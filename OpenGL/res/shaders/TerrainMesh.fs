@@ -14,7 +14,7 @@ vec3 getColorFromHeight(float height){
         float blueColor = height-511;
         if (blueColor > 1) blueColor = 1;
         if (blueColor < 0) blueColor = 0;
-        return vec3(0,0,blueColor);
+        return vec3(0,0,1);
     } else if (height < 513 ) {
         return vec3(0.3,0.3,1);
     } else if (height < 514 ) {
