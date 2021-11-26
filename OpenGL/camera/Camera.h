@@ -21,6 +21,7 @@
 class Camera {
 private:
     const float movementSpeed = 100.f;
+    float speedFromHeightModifier = 1; 
     
     float pitch = 0;
     float yaw = 0;
@@ -46,6 +47,7 @@ private:
     void recalculateCameraDirection();
     void recalculateCameraView();
     void recalculateVisibilityAngle();
+    void recalculateSpeedFromHeight();
     
 public:
     Camera(int x, int y, int z);

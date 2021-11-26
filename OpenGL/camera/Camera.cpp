@@ -35,25 +35,27 @@ void Camera::UpdateDirection(){
 
 void Camera::UpdatePosition(){
     
+    recalculateSpeedFromHeight();
+    
     glm::vec3 oldPosition = position;
     
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_W)){
-        position += movementSpeed * front * Time::DeltaTime();
+        position += movementSpeed * speedFromHeightModifier * front * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_S)){
-        position -= movementSpeed * front * Time::DeltaTime();
+        position -= movementSpeed * speedFromHeightModifier * front * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_A)){
-        position -= movementSpeed * glm::normalize(glm::cross(front, up)) * Time::DeltaTime();
+        position -= movementSpeed * speedFromHeightModifier * glm::normalize(glm::cross(front, up)) * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_D)){
-        position += movementSpeed * glm::normalize(glm::cross(front, up)) * Time::DeltaTime();
+        position += movementSpeed * speedFromHeightModifier * glm::normalize(glm::cross(front, up)) * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_SPACE)){
-        position += movementSpeed * glm::normalize(up) * Time::DeltaTime();
+        position += movementSpeed * speedFromHeightModifier * glm::normalize(up) * Time::DeltaTime();
     }
     if (OpenGLEngine::KeyIsPressed(GLFW_KEY_LEFT_SHIFT)){
-        position += movementSpeed * glm::normalize(-up) * Time::DeltaTime();
+        position += movementSpeed * speedFromHeightModifier * glm::normalize(-up) * Time::DeltaTime();
     }
         
     hasMoved = oldPosition != position;
@@ -97,4 +99,11 @@ bool Camera::PointIsVisibleFromCamera(int pointX, int pointY){
 
 void Camera::recalculateVisibilityAngle(){
     visibilityAngle = (1 - (direction.y + 1) / 2) * minVisibilityAngle + minVisibilityAngle;
+}
+
+void Camera::recalculateSpeedFromHeight(){
+    float maxDist = 2000;
+    float dist = glm::distance(position, glm::vec3(0,0,0));
+    if (dist > maxDist) dist = maxDist;
+    speedFromHeightModifier = dist / maxDist;
 }

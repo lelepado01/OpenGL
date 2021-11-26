@@ -71,16 +71,6 @@ int main( void ) {
         terrain.Update(camera);
         terrain.Render(camera);
         
-        ImGui::SliderFloat3("Light Angle", &light.direction.x, -1, 1);
-
-        ImGui::SliderFloat("Large Freq", &MeshHeight::LargeFrequency, 0, 1);
-        ImGui::SliderFloat("Small Freq", &MeshHeight::SmallFrequency, 0, 1);
-        ImGui::SliderFloat("Small Scale", &MeshHeight::SmallScale, 0, 1);
-        ImGui::SliderFloat("Large Scale", &MeshHeight::LargeScale, 0, 1);
-        ImGui::SliderFloat("Large Mult", &MeshHeight::LargeMultiplier, 1, 5);
-        
-        ImGui::Separator();
-        
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
         ImGui::Text("%.1d Vertices Displayed)", terrain.GetVertexNumber());
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode());
