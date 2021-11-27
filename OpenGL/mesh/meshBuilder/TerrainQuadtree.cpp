@@ -59,7 +59,7 @@ TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int wid
 void TerrainQuadtree::Update(Camera camera){
     
     if (!terrainPatch.has_value() && isLeaf()){
-        terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction);
+        terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, levelOfDetail);
     }
     
     if (nodeHasToMerge(camera)){
@@ -129,14 +129,15 @@ void TerrainQuadtree::merge(){
 //    PairNeighbour(getSubdivisionNeighbour(Bottom), Bottom);
     
     subdivisions = std::vector<TerrainQuadtree>();
-    terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction);
+    terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, levelOfDetail);
 }
 
 bool TerrainQuadtree::isVisible(Camera camera){
-    return true || camera.PointIsVisibleFromCamera(nodeX, nodeY)
-                || camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY)
-                || camera.PointIsVisibleFromCamera(nodeX, nodeY + nodeWidth)
-                || camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY + nodeWidth);
+    return true;
+//                || camera.PointIsVisibleFromCamera(nodeX, nodeY)
+//                || camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY)
+//                || camera.PointIsVisibleFromCamera(nodeX, nodeY + nodeWidth)
+//                || camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY + nodeWidth);
 }
 
 bool TerrainQuadtree::cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition){
@@ -174,7 +175,7 @@ glm::vec3 TerrainQuadtree::getTerrainPatchCenter(){
     
     glm::vec3 planePoint = glm::vec3(centerX, QuadtreeSettings::InitialWidth/2, centerZ);
     planePoint = TerrainPatch::PointCubeToSphere(TerrainFace::GetAxisRotationMatrix(direction) * planePoint);
-    planePoint += MeshHeight::GetHeight(planePoint.x, planePoint.y, planePoint.z) * glm::normalize(planePoint);
+    planePoint += MeshHeight::GetApproximateHeight(planePoint.x, planePoint.y, planePoint.z) * glm::normalize(planePoint);
     
     return planePoint;
 }

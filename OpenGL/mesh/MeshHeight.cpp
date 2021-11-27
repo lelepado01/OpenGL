@@ -7,32 +7,40 @@
 
 #include "MeshHeight.h"
 
-float MeshHeight::SmallFrequency = 0.4f;
-float MeshHeight::SmallScale = 0.2f;
-float MeshHeight::SmallMultiplier = 1.5f;
-
-float MeshHeight::LargeFrequency = 0.04f;
-float MeshHeight::LargeMultiplier = 2.5f;
-float MeshHeight::LargeScale = 0.2f;
-
-FastNoiseLite MeshHeight::smallNoise = FastNoiseLite();
-FastNoiseLite MeshHeight::largeNoise = FastNoiseLite();
+FastNoiseLite MeshHeight::noise = FastNoiseLite();
+std::vector<float> MeshHeight::levelFrequency = std::vector<float>(QuadtreeSettings::MaxSubdivisions);
+std::vector<float> MeshHeight::levelMultiplier = std::vector<float>(QuadtreeSettings::MaxSubdivisions);
+std::vector<float> MeshHeight::levelScale = std::vector<float>(QuadtreeSettings::MaxSubdivisions);
 
 void MeshHeight::Init(){
-    smallNoise.SetFrequency(SmallFrequency);
-    largeNoise.SetFrequency(LargeFrequency);
+    for (int i = 0; i < QuadtreeSettings::MaxSubdivisions; i++) {
+        
+        levelMultiplier[i] = (QuadtreeSettings::MaxSubdivisions-i) * 0.5;
+        levelFrequency[i] = (i+1) / ((float)QuadtreeSettings::MaxSubdivisions+1);
+        levelScale[i] = 0.1f;
+        
+    }
 }
 
-float MeshHeight::GetHeight(float x, float y, float z){
-    smallNoise.SetFrequency(SmallFrequency);
-    largeNoise.SetFrequency(LargeFrequency);
-        
-    float large = largeNoise.GetNoise(x * LargeScale, y * LargeScale, z * LargeScale) * LargeMultiplier;
-    float small = smallNoise.GetNoise(x * SmallScale, y * SmallScale, z * SmallScale) * SmallMultiplier;
+float MeshHeight::GetApproximateHeight(float x, float y, float z){
+    float height = noise.GetNoise(x * levelScale[0], y * levelScale[0], z * levelScale[0]) * levelMultiplier[0];
+    if (height < 0) height = 0;
+    return height;
+}
+
+float MeshHeight::GetHeight(float x, float y, float z, int LOD){
+    float height = 0;
     
-    float height = large * large * large + small;
+    for (int i = 0; i < LOD; i++) {
+        
+        noise = FastNoiseLite();
+        noise.SetFrequency(levelFrequency[i]);
+        
+        float noiseLevelHeight = noise.GetNoise(x * levelScale[i], y * levelScale[i], z * levelScale[i]) * levelMultiplier[i];
+        height += noiseLevelHeight;
+    }
+    
     
     if (height < 0) height = 0;
-    
     return height;
 }

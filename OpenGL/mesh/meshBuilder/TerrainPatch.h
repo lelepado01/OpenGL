@@ -35,14 +35,14 @@ private:
     std::vector<unsigned int> indices = std::vector<unsigned int>();
     
 private:
-    void createMesh();
+    void createMesh(int LOD);
     void calculateNormals();
     void copyData(const TerrainPatch& terrainPatch);
     
     glm::vec3 computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c);
     
 public:
-    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir);
+    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD);
     TerrainPatch(const TerrainPatch& terrainPatch);
     TerrainPatch(TerrainPatch&& terrainPatch);
     ~TerrainPatch();

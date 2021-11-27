@@ -15,7 +15,7 @@ public:
     static const int InitialWidth = 512;
     static const int SphereRadius = 1;
 
-    constexpr static float MinDistanceToTerrain = 1.2;
+    constexpr static float MinDistanceToTerrain = 1.5;
 };
 
 #endif /* QuadtreeSettings_h */

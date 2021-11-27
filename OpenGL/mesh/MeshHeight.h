@@ -9,26 +9,23 @@
 #define MeshHeight_h
 
 #include <stdio.h>
+#include <iostream>
+#include <vector>
 
 #include "../vendor/fast_noise/FastNoiseLite.h"
+#include "../settings/QuadtreeSettings.h"
 
 class MeshHeight {
 private:
-    static FastNoiseLite largeNoise;
-    static FastNoiseLite smallNoise;
+    static FastNoiseLite noise; 
+    static std::vector<float> levelFrequency; 
+    static std::vector<float> levelMultiplier;
+    static std::vector<float> levelScale; 
 
 public:
-    static float SmallFrequency;
-    static float SmallScale;
-    static float SmallMultiplier;
-    
-    static float LargeFrequency;
-    static float LargeMultiplier;
-    static float LargeScale;
-
-public:
-    static void Init(); 
-    static float GetHeight(float x, float y, float z);
+    static void Init();
+    static float GetApproximateHeight(float x, float y, float z);
+    static float GetHeight(float x, float y, float z, int LOD);
 };
 
 #endif /* MeshHeight_h */

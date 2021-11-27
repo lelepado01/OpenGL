@@ -7,7 +7,7 @@
 
 #include "TerrainPatch.h"
 
-TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir){
+TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD){
     this->globalPositionX = x;
     this->globalPositionZ = z;
     this->globalPositionY = QuadtreeSettings::InitialWidth / 2;
@@ -16,7 +16,7 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir){
     
     this->direction = dir;
     
-    createMesh();
+    createMesh(LOD);
     
     vertexArray = new VertexArray();
     vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
@@ -84,7 +84,7 @@ void TerrainPatch::Render(){
 }
 
 
-void TerrainPatch::createMesh(){
+void TerrainPatch::createMesh(int LOD){
     
     glm::mat3x3 axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
 
@@ -98,7 +98,7 @@ void TerrainPatch::createMesh(){
             v.position = glm::vec3(globalX, globalPositionY, globalZ);
             v.position = axisRotationMatrix * v.position;
             v.position = PointCubeToSphere(v.position);
-            v.position += MeshHeight::GetHeight(v.position.x ,v.position.y, v.position.z) * glm::normalize(v.position);
+            v.position += MeshHeight::GetHeight(v.position.x ,v.position.y, v.position.z, LOD) * glm::normalize(v.position);
             
             vertices.push_back(v);
         }
