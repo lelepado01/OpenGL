@@ -24,7 +24,7 @@ int main( void ) {
     ActiveShaders::Init();
     MeshHeight::Init();
 
-    Camera camera(0, 500, 0);
+    Camera camera(0, 512, 0);
     
     PlanetaryMesh terrain;
     

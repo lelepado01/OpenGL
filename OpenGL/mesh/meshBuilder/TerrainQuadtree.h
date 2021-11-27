@@ -22,13 +22,13 @@ private:
     int levelOfDetail;
     TerrainFaceDirection direction;
     
-//    std::unordered_map<TerrainFaceDirection, std::unique_ptr<TerrainQuadtree>> neighbours;
+    std::unordered_map<TerrainFaceDirection, std::vector<TerrainQuadtree*>> neighbours = std::unordered_map<TerrainFaceDirection, std::vector<TerrainQuadtree*>>(); 
 
     std::vector<TerrainQuadtree> subdivisions = std::vector<TerrainQuadtree>();
     std::optional<TerrainPatch> terrainPatch = {};
 
 private:
-    void copyData(const TerrainQuadtree& terrainQuadtree); 
+//    void copyData(const TerrainQuadtree& terrainQuadtree);
     void split();
     void merge();
     
@@ -41,7 +41,6 @@ private:
     glm::vec3 getTerrainPatchCenter();
     
 //    TerrainQuadtree* getSubdivisionNeighbour(TerrainFaceDirection direction);
-
     
 public:
     TerrainQuadtree(int x, int y, TerrainFaceDirection dir);
@@ -56,8 +55,9 @@ public:
     
     int GetVertexNumber();
     
-//    void SetNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
-//    void PairNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
+    void SetNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
+    void PairNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
+    void RemoveNeighbour(TerrainQuadtree *neigh, TerrainFaceDirection direction); 
 
 };
 
