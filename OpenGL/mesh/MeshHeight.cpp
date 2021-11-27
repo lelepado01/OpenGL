@@ -8,22 +8,20 @@
 #include "MeshHeight.h"
 
 FastNoiseLite MeshHeight::noise = FastNoiseLite();
-std::vector<float> MeshHeight::levelFrequency = std::vector<float>(QuadtreeSettings::MaxSubdivisions);
-std::vector<float> MeshHeight::levelMultiplier = std::vector<float>(QuadtreeSettings::MaxSubdivisions);
-std::vector<float> MeshHeight::levelScale = std::vector<float>(QuadtreeSettings::MaxSubdivisions);
+std::vector<MeshHeightLevel> MeshHeight::heightLevels = std::vector<MeshHeightLevel>(QuadtreeSettings::MaxSubdivisions);
 
 void MeshHeight::Init(){
     for (int i = 0; i < QuadtreeSettings::MaxSubdivisions; i++) {
         
-        levelMultiplier[i] = (QuadtreeSettings::MaxSubdivisions-i) * 0.5;
-        levelFrequency[i] = (i+1) / ((float)QuadtreeSettings::MaxSubdivisions+1);
-        levelScale[i] = 0.1f;
+        heightLevels[i].multiplier = (QuadtreeSettings::MaxSubdivisions-i) * 0.5;
+        heightLevels[i].frequency = i / (float)QuadtreeSettings::MaxSubdivisions + 0.1;
+        heightLevels[i].scale = 0.1f;
         
     }
 }
 
 float MeshHeight::GetApproximateHeight(float x, float y, float z){
-    float height = noise.GetNoise(x * levelScale[0], y * levelScale[0], z * levelScale[0]) * levelMultiplier[0];
+    float height = noise.GetNoise(x * heightLevels[0].scale, y * heightLevels[0].scale, z * heightLevels[0].scale) * heightLevels[0].multiplier;
     if (height < 0) height = 0;
     return height;
 }
@@ -34,9 +32,11 @@ float MeshHeight::GetHeight(float x, float y, float z, int LOD){
     for (int i = 0; i < LOD; i++) {
         
         noise = FastNoiseLite();
-        noise.SetFrequency(levelFrequency[i]);
+        noise.SetFrequency(heightLevels[i].frequency);
         
-        float noiseLevelHeight = noise.GetNoise(x * levelScale[i], y * levelScale[i], z * levelScale[i]) * levelMultiplier[i];
+        float noiseLevelHeight = noise.GetNoise(x * heightLevels[i].scale,
+                                                y * heightLevels[i].scale,
+                                                z * heightLevels[i].scale) * heightLevels[i].multiplier;
         height += noiseLevelHeight;
     }
     

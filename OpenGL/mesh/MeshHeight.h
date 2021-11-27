@@ -15,12 +15,16 @@
 #include "../vendor/fast_noise/FastNoiseLite.h"
 #include "../settings/QuadtreeSettings.h"
 
+struct MeshHeightLevel {
+    float frequency;
+    float multiplier;
+    float scale;
+};
+
 class MeshHeight {
 private:
     static FastNoiseLite noise; 
-    static std::vector<float> levelFrequency; 
-    static std::vector<float> levelMultiplier;
-    static std::vector<float> levelScale; 
+    static std::vector<MeshHeightLevel> heightLevels;
 
 public:
     static void Init();
