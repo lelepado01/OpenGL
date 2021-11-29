@@ -16,6 +16,7 @@
 #include "../settings/QuadtreeSettings.h"
 
 struct MeshHeightLevel {
+    bool enabled; 
     float frequency;
     float multiplier;
     float scale;
@@ -23,7 +24,8 @@ struct MeshHeightLevel {
 
 class MeshHeight {
 private:
-    static FastNoiseLite noise; 
+    static FastNoiseLite noise;
+public: 
     static std::vector<MeshHeightLevel> heightLevels;
 
 public:

@@ -12,12 +12,13 @@ std::vector<MeshHeightLevel> MeshHeight::heightLevels = std::vector<MeshHeightLe
 
 void MeshHeight::Init(){
     for (int i = 0; i < QuadtreeSettings::MaxSubdivisions; i++) {
-        
-        heightLevels[i].multiplier = (QuadtreeSettings::MaxSubdivisions-i) * 0.5;
-        heightLevels[i].frequency = i / (float)QuadtreeSettings::MaxSubdivisions + 0.1;
-        heightLevels[i].scale = 0.1f;
-        
+        heightLevels[i].enabled = true;
+        heightLevels[i].multiplier = (QuadtreeSettings::MaxSubdivisions+1-i) * 0.2f;
+        heightLevels[i].frequency = pow(QuadtreeSettings::MaxSubdivisions, (int)i / 2);
+        heightLevels[i].scale = ((float)QuadtreeSettings::MaxSubdivisions-i) * 0.0009;
     }
+    
+    heightLevels[4].enabled = true;
 }
 
 float MeshHeight::GetApproximateHeight(float x, float y, float z){
@@ -30,14 +31,14 @@ float MeshHeight::GetHeight(float x, float y, float z, int LOD){
     float height = 0;
     
     for (int i = 0; i < LOD; i++) {
-        
-        noise = FastNoiseLite();
-        noise.SetFrequency(heightLevels[i].frequency);
-        
-        float noiseLevelHeight = noise.GetNoise(x * heightLevels[i].scale,
-                                                y * heightLevels[i].scale,
-                                                z * heightLevels[i].scale) * heightLevels[i].multiplier;
-        height += noiseLevelHeight;
+        if (heightLevels[i].enabled){
+            noise.SetFrequency(heightLevels[i].frequency);
+            
+            float noiseLevelHeight = noise.GetNoise(x * heightLevels[i].scale,
+                                                    y * heightLevels[i].scale,
+                                                    z * heightLevels[i].scale) * heightLevels[i].multiplier;
+            height += noiseLevelHeight * noiseLevelHeight;
+        }
     }
     
     
