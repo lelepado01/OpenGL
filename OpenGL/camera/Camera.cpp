@@ -66,49 +66,26 @@ void Camera::UpdatePosition(){
     if (directionHasChanged || hasMoved){
         recalculateCameraView();
     }
+    
+    cameraFrustum = Frustum(proj * view);
 }
 
 void Camera::recalculateCameraDirection(){
     direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     direction.y = sin(glm::radians(pitch));
-    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    
-    recalculateVisibilityAngle();
+    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));    
 }
 
 void Camera::recalculateCameraView(){
     view = glm::lookAt(position, position + front, up);
 }
 
-bool Camera::PointIsVisibleFromCamera(int pointX, int pointY){
-    glm::vec2 point2d = glm::normalize(glm::vec2(pointX - position.x, pointY - position.z));
-    float pointAngle = atan2(point2d.y, point2d.x);
-    pointAngle *= 180 / M_PI;
-    pointAngle = (360 + (int)round(pointAngle)) % 360;
-    
-    glm::vec2 dir2d = glm::normalize(glm::vec2(direction.x, direction.z));
-    float cameraAngle = atan2(dir2d.y, dir2d.x);
-    cameraAngle *= 180 / M_PI;
-    cameraAngle = (360 + (int)round(cameraAngle)) % 360;
-    
-    float deltaAngle = abs(cameraAngle - pointAngle);
-    if (deltaAngle > 180) {
-        deltaAngle = 360 - deltaAngle;
-    }
-    
-    return deltaAngle <= visibilityAngle;
-}
-
 bool Camera::PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint){
     return cameraFrustum.IsBoxVisible(minPoint, maxPoint); 
 }
 
-void Camera::recalculateVisibilityAngle(){
-    visibilityAngle = (1 - (direction.y + 1) / 2) * minVisibilityAngle + minVisibilityAngle;
-}
-
 void Camera::recalculateSpeedFromHeight(){
-    float maxDist = 2000;
+    float maxDist = 6000;
     float dist = glm::distance(position, glm::vec3(0,0,0));
     if (dist > maxDist) dist = maxDist;
     speedFromHeightModifier = dist / maxDist;

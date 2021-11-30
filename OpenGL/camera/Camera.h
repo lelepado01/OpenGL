@@ -27,10 +27,7 @@ private:
     float pitch = 0;
     float yaw = 0;
     float roll = 0;
-    
-    float visibilityAngle = 30;
-    const float minVisibilityAngle = 55; 
-    
+        
     bool directionHasChanged = false;
     bool hasMoved = false;
     
@@ -49,7 +46,6 @@ private:
 private:
     void recalculateCameraDirection();
     void recalculateCameraView();
-    void recalculateVisibilityAngle();
     void recalculateSpeedFromHeight();
     
 public:
@@ -66,7 +62,6 @@ public:
     bool HasMoved() { return hasMoved; };
     bool HasRotated() { return directionHasChanged; };
     
-    bool PointIsVisibleFromCamera(int pointX, int pointY);
     bool PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint);
 };
 

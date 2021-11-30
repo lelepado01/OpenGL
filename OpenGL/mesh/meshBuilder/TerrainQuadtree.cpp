@@ -137,9 +137,9 @@ bool TerrainQuadtree::isVisible(Camera camera){
     
     if (!terrainPatch.has_value()) return true;
     
-    glm::vec3 maxPoint = terrainPatch.value().GetMinPoint();
     glm::vec3 minPoint = terrainPatch.value().GetMinPoint();
-    
+    glm::vec3 maxPoint = terrainPatch.value().GetMaxPoint();
+
     return camera.PointIsVisibleFromCamera(minPoint, maxPoint);
 }
 
