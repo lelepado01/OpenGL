@@ -10,20 +10,20 @@ in Light light;
 out vec4 color;
 
 vec3 getColorFromHeight(float height){
-    if (height < 512) {
-        float blueColor = height-511;
+    if (height < 4096) {
+        float blueColor = height-4095;
         if (blueColor > 1) blueColor = 1;
         if (blueColor < 0) blueColor = 0;
         return vec3(0,0,1);
-    } else if (height < 513 ) {
+    } else if (height < 4097 ) {
         return vec3(0.3,0.3,1);
-    } else if (height < 514 ) {
+    } else if (height < 4098 ) {
         return vec3(1,1,0.1);
-    }  else if (height < 525 ) {
+    }  else if (height < 4099 ) {
         return vec3(0,1,0);
-    }  else if (height < 535 ) {
+    }  else if (height < 4199 ) {
         return vec3(0.1,0.7,0.1);
-    }  else if (height < 540 ) {
+    }  else if (height < 4204 ) {
         return vec3(0.5,0.5,0.5);
     }
         
