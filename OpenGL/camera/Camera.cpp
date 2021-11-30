@@ -80,7 +80,7 @@ void Camera::recalculateCameraView(){
     view = glm::lookAt(position, position + front, up);
 }
 
-bool Camera::PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint){
+bool Camera::PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint) const {
     return cameraFrustum.IsBoxVisible(minPoint, maxPoint); 
 }
 

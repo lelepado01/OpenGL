@@ -20,10 +20,10 @@ private:
 public:
     PlanetaryMesh();
     
-    void Update(Camera camera);
-    void Render(Camera camera);
+    void Update(const Camera& camera);
+    void Render(const Camera& camera);
     
-    int GetVertexNumber(Camera camera); 
+    int GetVertexNumber(const Camera& camera) const;
 };
 
 #endif /* PlanetaryMesh_h */

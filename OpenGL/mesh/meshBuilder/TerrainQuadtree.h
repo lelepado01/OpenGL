@@ -34,11 +34,12 @@ private:
     void split();
     void merge();
     
-    bool isVisible(Camera camera);
-    bool isLeaf() { return subdivisions.size() == 0; };
-    bool nodeHasToMerge(Camera camera);
-    bool nodeHasToSplit(Camera camera);
-    bool cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition);
+    bool isVisible(const Camera& camera) const;
+    bool isLeaf() const { return subdivisions.size() == 0; };
+    
+    bool nodeHasToMerge(const Camera& camera);
+    bool nodeHasToSplit(const Camera& camera);
+    bool cameraIsCloseToTerrainPatch(const glm::vec3& cameraPosition);
     
     glm::vec3 getTerrainPatchCenter();
     TerrainQuadtree* getCorrectNeighbourFor(TerrainQuadtree& terrain, TerrainFaceDirection dir); 
@@ -56,7 +57,7 @@ public:
     void Update(Camera camera);
     void Render(Camera camera);
     
-    int GetVertexNumber(Camera camera);
+    int GetVertexNumber(const Camera& camera) const;
     
     void SetNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
     void PairNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);

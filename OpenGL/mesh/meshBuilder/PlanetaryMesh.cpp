@@ -16,19 +16,19 @@ PlanetaryMesh::PlanetaryMesh(){
 
 }
 
-void PlanetaryMesh::Update(Camera camera){
+void PlanetaryMesh::Update(const Camera& camera){
     for (int i = 0; i < faces.size(); i++) {
         faces.at(i).Update(camera);
     }
 }
 
-void PlanetaryMesh::Render(Camera camera){
+void PlanetaryMesh::Render(const Camera& camera){
     for (int i = 0; i < faces.size(); i++) {
         faces.at(i).Render(camera);
     }
 }
 
-int PlanetaryMesh::GetVertexNumber(Camera camera){
+int PlanetaryMesh::GetVertexNumber(const Camera& camera) const {
     
     int vertexNumber = 0;
     for (int i = 0; i < faces.size(); i++) {

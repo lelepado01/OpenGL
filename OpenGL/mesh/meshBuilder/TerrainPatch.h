@@ -26,7 +26,7 @@ class TerrainPatch {
 private:
     int globalPositionX, globalPositionY, globalPositionZ, width;
     float distanceBetweenVertices;
-    int LOD; 
+    int levelOfDetail; 
     
     TerrainFaceDirection direction;  
         
@@ -53,9 +53,10 @@ private:
     void calculateVertices(); 
     void calculateIndices(); 
     void calculateNormals();
+    void calculateMinMax(const glm::vec3& point); 
     
-    glm::vec3 computeVertexPosition(float x, float z, glm::mat3x3& axisRotationMatrix); 
-    glm::vec3 computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c);
+    glm::vec3 computeVertexPosition(float x, float z, const glm::mat3x3& axisRotationMatrix);
+    glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c);
     
 public:
     TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD);
@@ -67,12 +68,12 @@ public:
     void Update(); 
     void Render();
     
-    int GetVertexNumber() { return (int)vertices.size(); };
+    int GetVertexNumber() const { return (int)vertices.size(); };
     
-    glm::vec3& GetMinPoint() { return minVertex; };
-    glm::vec3& GetMaxPoint() { return maxVertex; };
+    const glm::vec3& GetMinPoint() const { return minVertex; };
+    const glm::vec3& GetMaxPoint() const { return maxVertex; };
 
-    static glm::vec3 PointCubeToSphere(glm::vec3 point);
+    static glm::vec3 PointCubeToSphere(const glm::vec3& point);
 
 };
 

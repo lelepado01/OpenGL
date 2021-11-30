@@ -53,15 +53,15 @@ public:
     void UpdatePosition();
     void UpdateDirection();
     
-    glm::mat4 GetProjection() { return proj; };
-    glm::mat4 GetView() { return view; };
-    glm::vec3 GetPosition() { return position; };
-    glm::vec3 GetDirection() { return direction; };
+    glm::mat4 GetProjection() const { return proj; };
+    glm::mat4 GetView() const { return view; };
+    glm::vec3 GetPosition() const { return position; };
+    glm::vec3 GetDirection() const { return direction; };
 
-    bool HasMoved() { return hasMoved; };
-    bool HasRotated() { return directionHasChanged; };
+    bool HasMoved() const { return hasMoved; };
+    bool HasRotated() const { return directionHasChanged; };
     
-    bool PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint);
+    bool PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint) const;
 };
 
 #endif /* Camera_hpp */

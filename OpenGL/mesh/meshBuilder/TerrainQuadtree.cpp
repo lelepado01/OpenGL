@@ -133,7 +133,7 @@ void TerrainQuadtree::merge(){
     terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, levelOfDetail);
 }
 
-bool TerrainQuadtree::isVisible(Camera camera){
+bool TerrainQuadtree::isVisible(const Camera& camera) const {
     
     if (!terrainPatch.has_value()) return true;
     
@@ -143,23 +143,23 @@ bool TerrainQuadtree::isVisible(Camera camera){
     return camera.PointIsVisibleFromCamera(minPoint, maxPoint);
 }
 
-bool TerrainQuadtree::cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition){
+bool TerrainQuadtree::cameraIsCloseToTerrainPatch(const glm::vec3& cameraPosition){
     float minDistance = QuadtreeSettings::MinDistanceToTerrain * nodeWidth;
     return glm::distance(cameraPosition, getTerrainPatchCenter()) < minDistance; 
 }
 
-bool TerrainQuadtree::nodeHasToMerge(Camera camera){
+bool TerrainQuadtree::nodeHasToMerge(const Camera& camera){
     return !isLeaf() && !cameraIsCloseToTerrainPatch(camera.GetPosition());
 }
 
-bool TerrainQuadtree::nodeHasToSplit(Camera camera){
+bool TerrainQuadtree::nodeHasToSplit(const Camera& camera){
     return isLeaf()
         && isVisible(camera)
         && levelOfDetail < QuadtreeSettings::MaxSubdivisions
         && cameraIsCloseToTerrainPatch(camera.GetPosition());
 }
 
-int TerrainQuadtree::GetVertexNumber(Camera camera){
+int TerrainQuadtree::GetVertexNumber(const Camera& camera) const {
     if (isLeaf()){
         
         if (isVisible(camera)){

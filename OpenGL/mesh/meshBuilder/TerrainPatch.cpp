@@ -12,7 +12,7 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->globalPositionZ = z;
     this->globalPositionY = QuadtreeSettings::InitialWidth / 2;
     this->width = width;
-    this->LOD = LOD; 
+    this->levelOfDetail = LOD;
     this->distanceBetweenVertices = (float)width / QuadtreeSettings::VerticesPerPatchSide;
     
     this->direction = dir;
@@ -62,7 +62,7 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->globalPositionY = terrainPatch.globalPositionY;
         this->globalPositionZ = terrainPatch.globalPositionZ;
         this->width = terrainPatch.width;
-        this->LOD = terrainPatch.LOD;
+        this->levelOfDetail = terrainPatch.levelOfDetail;
         this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
         
         this->direction = terrainPatch.direction;
@@ -86,7 +86,6 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         layout.AddFloat(3);
 
         this->vertexArray->AddBuffer(*vertexBuffer, layout);
-
     }
 }
 
@@ -120,21 +119,23 @@ void TerrainPatch::createMesh(){
     calculateNormals();
 }
 
-glm::vec3 TerrainPatch::computeVertexPosition(float x, float z, glm::mat3x3& axisRotationMatrix){
+glm::vec3 TerrainPatch::computeVertexPosition(float x, float z, const glm::mat3x3& axisRotationMatrix){
     float globalX = x * distanceBetweenVertices + globalPositionX;
     float globalZ = z * distanceBetweenVertices + globalPositionZ;
 
     glm::vec3 vertex = glm::vec3(globalX, globalPositionY, globalZ);
     vertex = axisRotationMatrix * vertex;
     vertex = PointCubeToSphere(vertex);
-    vertex += MeshHeight::GetHeight(vertex.x ,vertex.y, vertex.z, LOD) * glm::normalize(vertex);
+    vertex += MeshHeight::GetHeight(vertex.x ,vertex.y, vertex.z, levelOfDetail) * glm::normalize(vertex);
     
     return vertex;
 }
 
-glm::vec3 TerrainPatch::computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
+
+glm::vec3 TerrainPatch::computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c){
     return glm::cross(b-a, c-a);
 }
+
 
 void TerrainPatch::calculateVertices(){
 
@@ -165,19 +166,25 @@ void TerrainPatch::calculateVertices(){
                 
 //            }
             
-            minVertex.x = fmin(minVertex.x, v.position.x);
-            minVertex.y = fmin(minVertex.y, v.position.y);
-            minVertex.z = fmin(minVertex.z, v.position.z);
-
-            maxVertex.x = fmax(maxVertex.x, v.position.x);
-            maxVertex.y = fmax(maxVertex.y, v.position.y);
-            maxVertex.z = fmax(maxVertex.z, v.position.z);
+            calculateMinMax(v.position);
 
             vertices.push_back(v);
 
         }
     }
 }
+
+
+void TerrainPatch::calculateMinMax(const glm::vec3& point){
+    minVertex.x = fmin(minVertex.x, point.x);
+    minVertex.y = fmin(minVertex.y, point.y);
+    minVertex.z = fmin(minVertex.z, point.z);
+
+    maxVertex.x = fmax(maxVertex.x, point.x);
+    maxVertex.y = fmax(maxVertex.y, point.y);
+    maxVertex.z = fmax(maxVertex.z, point.z);
+}
+
 
 void TerrainPatch::calculateIndices(){
     int vertexIndex = 0;
@@ -229,15 +236,15 @@ void TerrainPatch::calculateNormals(){
 }
 
 
-glm::vec3 TerrainPatch::PointCubeToSphere(glm::vec3 point) {
-    
-    point /= QuadtreeSettings::InitialWidth / 2;
-    
-    const double x2 = point.x * point.x;
-    const double y2 = point.y * point.y;
-    const double z2 = point.z * point.z;
+glm::vec3 TerrainPatch::PointCubeToSphere(const glm::vec3& point) {
         
-    return glm::vec3(point.x * sqrt(1.0 - (y2 + z2) * 0.5 + y2 * z2 * 0.33333333333333333333),
-                     point.y * sqrt(1.0 - (z2 + x2) * 0.5 + z2 * x2 * 0.33333333333333333333),
-                     point.z * sqrt(1.0 - (x2 + y2) * 0.5 + x2 * y2 * 0.33333333333333333333)) * (float)QuadtreeSettings::InitialWidth;
+    glm::vec3 normalizedPoint = point / ((float)QuadtreeSettings::InitialWidth / 2);
+    
+    float x2 = normalizedPoint.x * normalizedPoint.x;
+    float y2 = normalizedPoint.y * normalizedPoint.y;
+    float z2 = normalizedPoint.z * normalizedPoint.z;
+        
+    return glm::vec3(normalizedPoint.x * sqrt(1.0 - (y2 + z2) * 0.5 + y2 * z2 * 0.33333333333333333333),
+                     normalizedPoint.y * sqrt(1.0 - (z2 + x2) * 0.5 + z2 * x2 * 0.33333333333333333333),
+                     normalizedPoint.z * sqrt(1.0 - (x2 + y2) * 0.5 + x2 * y2 * 0.33333333333333333333)) * (float)QuadtreeSettings::InitialWidth;
 }
