@@ -16,6 +16,8 @@
 #include "../../settings/QuadtreeSettings.h"
 #include "TerrainPatch.h"
 
+#include <glm/gtx/string_cast.hpp>
+
 class TerrainQuadtree {
 private:
     int nodeX, nodeY, nodeWidth;

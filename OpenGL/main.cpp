@@ -43,8 +43,7 @@ int main( void ) {
 
     OpenGLEngine::ImguiInit();
 
-    float time = 0;
-    bool frozen = false;
+//    float time = 0;
     while( OpenGLEngine::IsRunning() ){
         OpenGLEngine::Clear();
         OpenGLEngine::UpdateTime();
@@ -54,6 +53,7 @@ int main( void ) {
         
         camera.UpdateDirection();
         camera.UpdatePosition();
+        
         long div = 36000000000;
         light.direction.y = ((double)(std::chrono::high_resolution_clock::now().time_since_epoch().count() % div)) / (div/6)-3;
 
@@ -61,23 +61,20 @@ int main( void ) {
         glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) * model;
         
         ActiveShaders::TerrainShader->Bind();
-        time += 1;
-        if (time > 60) time = 0; 
-        ActiveShaders::TerrainShader->SetUniform1f("u_Time", time);
+//        time += 1;
+//        if (time > 60) time = 0;
+//        ActiveShaders::TerrainShader->SetUniform1f("u_Time", time);
         ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
                     
-        if (!frozen){
-            terrain.Update(camera);
-        }
+        terrain.Update(camera);
         terrain.Render(camera);
 
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
         ImGui::Text("%.1d Vertices Displayed)", terrain.GetVertexNumber(camera));
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode());
-        ImGui::Checkbox("Freeze updates", &frozen);
 
         OpenGLEngine::ImguiDraw();
 

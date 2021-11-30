@@ -21,6 +21,8 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->timeOfBuildCall = Time::GetMillisecondsFromEpoch();
     this->incrementalTimeHeightMultiplier = 1;
 
+    this->minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
+    this->maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
     
     createMesh();
     
@@ -75,6 +77,9 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->vertexArray = new VertexArray();
         this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
         this->indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
+        
+        this->minVertex = terrainPatch.minVertex;
+        this->maxVertex = terrainPatch.maxVertex; 
         
         VertexBufferLayout layout;
         layout.AddFloat(3);
@@ -160,6 +165,14 @@ void TerrainPatch::calculateVertices(){
                 
 //            }
             
+            minVertex.x = fmin(minVertex.x, v.position.x);
+            minVertex.y = fmin(minVertex.y, v.position.y);
+            minVertex.z = fmin(minVertex.z, v.position.z);
+
+            maxVertex.x = fmax(maxVertex.x, v.position.x);
+            maxVertex.y = fmax(maxVertex.y, v.position.y);
+            maxVertex.z = fmax(maxVertex.z, v.position.z);
+
             vertices.push_back(v);
 
         }

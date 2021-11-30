@@ -9,7 +9,6 @@
 #define TerrainPatch_h
 
 #include <stdio.h>
-#include <chrono>
 
 #include "../../buffers/VertexBuffer.h"
 #include "../../buffers/IndexBuffer.h"
@@ -37,6 +36,9 @@ private:
     
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
+    
+    glm::vec3 minVertex;
+    glm::vec3 maxVertex;
     
     bool wasBuiltInTheLastSecond;
     float incrementalTimeHeightMultiplier;
@@ -66,8 +68,9 @@ public:
     void Render();
     
     int GetVertexNumber() { return (int)vertices.size(); };
-    glm::vec3& GetMinPoint() { return vertices[0].position; };
-    glm::vec3& GetMaxPoint() { return vertices[vertices.size()].position; };
+    
+    glm::vec3& GetMinPoint() { return minVertex; };
+    glm::vec3& GetMaxPoint() { return maxVertex; };
 
     static glm::vec3 PointCubeToSphere(glm::vec3 point);
 
