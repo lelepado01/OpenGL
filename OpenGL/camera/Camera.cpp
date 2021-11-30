@@ -13,9 +13,11 @@ Camera::Camera(int x, int y, int z){
     front = glm::vec3(0.0f, 0.0f, 0.0f);
     up = glm::vec3(0.0f, 1.0f,  0.0f);
     proj = glm::perspective(45.0f, (float)OpenGLEngine::WINDOW_WIDTH / OpenGLEngine::WINDOW_HEIGHT, 0.1f, 10000.0f);
-
+    
     recalculateCameraView();
     recalculateCameraDirection();
+    
+    cameraFrustum = Frustum(proj * view);
 }
 
 
@@ -95,6 +97,10 @@ bool Camera::PointIsVisibleFromCamera(int pointX, int pointY){
     }
     
     return deltaAngle <= visibilityAngle;
+}
+
+bool Camera::PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint){
+    return cameraFrustum.IsBoxVisible(minPoint, maxPoint); 
 }
 
 void Camera::recalculateVisibilityAngle(){

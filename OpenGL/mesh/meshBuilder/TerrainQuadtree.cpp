@@ -134,11 +134,13 @@ void TerrainQuadtree::merge(){
 }
 
 bool TerrainQuadtree::isVisible(Camera camera){
-    return true;
-//                || camera.PointIsVisibleFromCamera(nodeX, nodeY)
-//                || camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY)
-//                || camera.PointIsVisibleFromCamera(nodeX, nodeY + nodeWidth)
-//                || camera.PointIsVisibleFromCamera(nodeX + nodeWidth, nodeY + nodeWidth);
+    
+    if (!terrainPatch.has_value()) return true;
+    
+    glm::vec3 maxPoint = terrainPatch.value().GetMinPoint();
+    glm::vec3 minPoint = terrainPatch.value().GetMinPoint();
+    
+    return camera.PointIsVisibleFromCamera(minPoint, maxPoint);
 }
 
 bool TerrainQuadtree::cameraIsCloseToTerrainPatch(glm::vec3 cameraPosition){
@@ -157,13 +159,20 @@ bool TerrainQuadtree::nodeHasToSplit(Camera camera){
         && cameraIsCloseToTerrainPatch(camera.GetPosition());
 }
 
-int TerrainQuadtree::GetVertexNumber(){
+int TerrainQuadtree::GetVertexNumber(Camera camera){
     if (isLeaf()){
-        return terrainPatch.value().GetVertexNumber();
+        
+        if (isVisible(camera)){
+            return terrainPatch.value().GetVertexNumber();
+        } else {
+            return 0;
+        }
+        
     } else {
+        
         int vertCount = 0;
         for (int i = 0; i < subdivisions.size(); i++) {
-            vertCount += subdivisions[i].GetVertexNumber();
+            vertCount += subdivisions[i].GetVertexNumber(camera);
         }
         
         return vertCount; 

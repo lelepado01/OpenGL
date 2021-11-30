@@ -28,10 +28,11 @@ void PlanetaryMesh::Render(Camera camera){
     }
 }
 
-int PlanetaryMesh::GetVertexNumber(){
+int PlanetaryMesh::GetVertexNumber(Camera camera){
+    
     int vertexNumber = 0;
     for (int i = 0; i < faces.size(); i++) {
-        vertexNumber += faces.at(i).GetVertexNumber();
+        vertexNumber += faces.at(i).GetVertexNumber(camera);
     }
     
     return vertexNumber;

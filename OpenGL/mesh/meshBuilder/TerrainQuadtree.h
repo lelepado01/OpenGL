@@ -54,7 +54,7 @@ public:
     void Update(Camera camera);
     void Render(Camera camera);
     
-    int GetVertexNumber();
+    int GetVertexNumber(Camera camera);
     
     void SetNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
     void PairNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);

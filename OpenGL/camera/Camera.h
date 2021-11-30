@@ -12,6 +12,7 @@
 
 #include "../engine/OpenGLEngine.h"
 #include "../engine/Time.h"
+#include "Frustum.h"
 
 #include "glm/glm.hpp"
 #include <glm/gtx/vector_angle.hpp>
@@ -43,6 +44,8 @@ private:
     glm::mat4 proj;
     glm::mat4 view;
     
+    Frustum cameraFrustum; 
+    
 private:
     void recalculateCameraDirection();
     void recalculateCameraView();
@@ -64,6 +67,7 @@ public:
     bool HasRotated() { return directionHasChanged; };
     
     bool PointIsVisibleFromCamera(int pointX, int pointY);
+    bool PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint);
 };
 
 #endif /* Camera_hpp */

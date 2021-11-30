@@ -66,7 +66,9 @@ public:
     void Render();
     
     int GetVertexNumber() { return (int)vertices.size(); };
-    
+    glm::vec3& GetMinPoint() { return vertices[0].position; };
+    glm::vec3& GetMaxPoint() { return vertices[vertices.size()].position; };
+
     static glm::vec3 PointCubeToSphere(glm::vec3 point);
 
 };

@@ -44,6 +44,7 @@ int main( void ) {
     OpenGLEngine::ImguiInit();
 
     float time = 0;
+    bool frozen = false;
     while( OpenGLEngine::IsRunning() ){
         OpenGLEngine::Clear();
         OpenGLEngine::UpdateTime();
@@ -68,13 +69,16 @@ int main( void ) {
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
                     
-        terrain.Update(camera);
+        if (!frozen){
+            terrain.Update(camera);
+        }
         terrain.Render(camera);
-        
+
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
-        ImGui::Text("%.1d Vertices Displayed)", terrain.GetVertexNumber());
+        ImGui::Text("%.1d Vertices Displayed)", terrain.GetVertexNumber(camera));
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode());
-                
+        ImGui::Checkbox("Freeze updates", &frozen);
+
         OpenGLEngine::ImguiDraw();
 
         OpenGLEngine::SwapBuffers();
