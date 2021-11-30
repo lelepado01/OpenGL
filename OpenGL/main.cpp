@@ -20,7 +20,6 @@
 
 int main( void ) {
     OpenGLEngine::Init();
-    
     ActiveShaders::Init();
     MeshHeight::Init();
 
@@ -43,7 +42,7 @@ int main( void ) {
 
     OpenGLEngine::ImguiInit();
 
-//    float time = 0;
+    float time = 0;
     while( OpenGLEngine::IsRunning() ){
         OpenGLEngine::Clear();
         OpenGLEngine::UpdateTime();
@@ -58,12 +57,11 @@ int main( void ) {
         light.direction.y = ((double)(std::chrono::high_resolution_clock::now().time_since_epoch().count() % div)) / (div/6)-3;
 
         glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) * model;
+        glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) *  model;
         
         ActiveShaders::TerrainShader->Bind();
-//        time += 1;
-//        if (time > 60) time = 0;
-//        ActiveShaders::TerrainShader->SetUniform1f("u_Time", time);
+        time += 1;
+        ActiveShaders::TerrainShader->SetUniform1f("u_Time", (float)time / 100);
         ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);

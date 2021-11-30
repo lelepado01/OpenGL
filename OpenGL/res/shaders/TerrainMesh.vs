@@ -19,13 +19,12 @@ out Material material;
 out Light light;
 
 const float pi = 3.14159;
-int numWaves = 2;
 
 float waveHeight(vec3 pos) {
     float frequency = 2*pi/0.9;
-    float phase = 2 * frequency;
+    float phase = 0.2 * frequency;
     float theta = dot(vec2(1,1), vec2(pos.x, pos.y));
-    return sin(theta * frequency + u_Time * phase);
+    return sin(theta * frequency + u_Time * phase) * 0.1;
 }
 
 void main() {
@@ -37,8 +36,9 @@ void main() {
  
     gl_Position = u_MVP * vec4(position, 1);
     
-    if (distance(fragPos, vec3(0,0,0)) < 513){
+    if (distance(fragPos, vec3(0,0,0)) < 4096.8){
         vec3 wave = vec3(1,1,1) * waveHeight(position);
-        gl_Position = u_MVP * vec4(position, 1);//vec4(position + wave, 1);
+        vec3 seaLevel = normalize(fragPos) * 4097;
+        gl_Position = u_MVP * vec4(seaLevel + wave, 1);
     }
 }
