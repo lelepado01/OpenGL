@@ -25,7 +25,6 @@ struct MeshHeightLevel {
 class MeshHeight {
 private:
     static FastNoiseLite noise;
-public: 
     static std::vector<MeshHeightLevel> heightLevels;
 
 public:

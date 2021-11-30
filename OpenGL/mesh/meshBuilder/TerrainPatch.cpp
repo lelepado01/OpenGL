@@ -12,11 +12,17 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->globalPositionZ = z;
     this->globalPositionY = QuadtreeSettings::InitialWidth / 2;
     this->width = width;
+    this->LOD = LOD; 
     this->distanceBetweenVertices = (float)width / QuadtreeSettings::VerticesPerPatchSide;
     
     this->direction = dir;
     
-    createMesh(LOD);
+    this->wasBuiltInTheLastSecond = true;
+    this->timeOfBuildCall = Time::GetMillisecondsFromEpoch();
+    this->incrementalTimeHeightMultiplier = 1;
+
+    
+    createMesh();
     
     vertexArray = new VertexArray();
     vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
@@ -54,12 +60,17 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->globalPositionY = terrainPatch.globalPositionY;
         this->globalPositionZ = terrainPatch.globalPositionZ;
         this->width = terrainPatch.width;
+        this->LOD = terrainPatch.LOD;
         this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
         
         this->direction = terrainPatch.direction;
         
         this->vertices = terrainPatch.vertices;
         this->indices = terrainPatch.indices;
+        
+        this->wasBuiltInTheLastSecond = terrainPatch.wasBuiltInTheLastSecond;
+        this->timeOfBuildCall = terrainPatch.timeOfBuildCall;
+        this->incrementalTimeHeightMultiplier = terrainPatch.incrementalTimeHeightMultiplier; 
         
         this->vertexArray = new VertexArray();
         this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
@@ -75,8 +86,22 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
 }
 
 void TerrainPatch::Update(){
-    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
-    indexBuffer->Update(indices.data(), (unsigned int)indices.size());
+    if (wasBuiltInTheLastSecond){
+
+        long timeNow = Time::GetMillisecondsFromEpoch();
+        if (timeNow - timeOfBuildCall >= transitionTimeInMilliseconds){
+            wasBuiltInTheLastSecond = false;
+            return;
+        }
+        
+        incrementalTimeHeightMultiplier = ((float)(timeNow - timeOfBuildCall)) / transitionTimeInMilliseconds;
+        
+//        vertices = std::vector<Vertex>();
+//        calculateVertices();
+//
+//        vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+//        indexBuffer->Update(indices.data(), (unsigned int)indices.size());
+    }
 }
 
 void TerrainPatch::Render(){
@@ -84,27 +109,64 @@ void TerrainPatch::Render(){
 }
 
 
-void TerrainPatch::createMesh(int LOD){
+void TerrainPatch::createMesh(){
+    calculateVertices();
+    calculateIndices();
+    calculateNormals();
+}
+
+glm::vec3 TerrainPatch::computeVertexPosition(float x, float z, glm::mat3x3& axisRotationMatrix){
+    float globalX = x * distanceBetweenVertices + globalPositionX;
+    float globalZ = z * distanceBetweenVertices + globalPositionZ;
+
+    glm::vec3 vertex = glm::vec3(globalX, globalPositionY, globalZ);
+    vertex = axisRotationMatrix * vertex;
+    vertex = PointCubeToSphere(vertex);
+    vertex += MeshHeight::GetHeight(vertex.x ,vertex.y, vertex.z, LOD) * glm::normalize(vertex);
     
+    return vertex;
+}
+
+glm::vec3 TerrainPatch::computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
+    return glm::cross(b-a, c-a);
+}
+
+void TerrainPatch::calculateVertices(){
+
     glm::mat3x3 axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
 
     for (float z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
         for (float x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
-     
-            float globalX = x * distanceBetweenVertices + globalPositionX;
-            float globalZ = z * distanceBetweenVertices + globalPositionZ;
-            
+
             Vertex v = {};
-            v.position = glm::vec3(globalX, globalPositionY, globalZ);
-            v.position = axisRotationMatrix * v.position;
-            v.position = PointCubeToSphere(v.position);
-            v.position += MeshHeight::GetHeight(v.position.x ,v.position.y, v.position.z, LOD) * glm::normalize(v.position);
+            
+//            if (LOD > 6 && wasBuiltInTheLastSecond && ((int)x % 2 == 1 || (int)z % 2 == 1)){
+//
+//                glm::vec3 pos1 = computeVertexPosition(x-1, z, axisRotationMatrix);
+//                glm::vec3 pos2 = computeVertexPosition(x+1, z, axisRotationMatrix);
+//
+//                glm::vec3 previousLODVertexPosition = (pos1 + pos2) / 2.0f;
+//
+//                glm::vec3 finalPosition = computeVertexPosition(x, z, axisRotationMatrix);
+//
+//                glm::vec3 startToFinishDifference = previousLODVertexPosition - finalPosition;
+//                glm::vec3 startToFinishDifferenceForTimeStep = startToFinishDifference * incrementalTimeHeightMultiplier;
+//
+//                v.position = previousLODVertexPosition + startToFinishDifferenceForTimeStep;
+//
+//            } else {
+//
+                v.position = computeVertexPosition(x, z, axisRotationMatrix);
+                
+//            }
             
             vertices.push_back(v);
+
         }
     }
+}
 
-
+void TerrainPatch::calculateIndices(){
     int vertexIndex = 0;
     for (int z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
         for (int x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
@@ -131,13 +193,6 @@ void TerrainPatch::createMesh(int LOD){
         }
         vertexIndex++;
     }
-
-    calculateNormals();
-
-}
-
-glm::vec3 TerrainPatch::computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
-    return glm::cross(b-a, c-a);
 }
 
 void TerrainPatch::calculateNormals(){

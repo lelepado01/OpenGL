@@ -22,3 +22,7 @@ void Time::Count(){
     
     deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(newTime - oldTime).count() / 1000.0f;
 }
+
+long Time::GetMillisecondsFromEpoch(){
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+}

@@ -9,6 +9,8 @@
 #define TerrainPatch_h
 
 #include <stdio.h>
+#include <chrono>
+
 #include "../../buffers/VertexBuffer.h"
 #include "../../buffers/IndexBuffer.h"
 #include "../../buffers/VertexArray.h"
@@ -19,11 +21,13 @@
 #include "../Vertex.h"
 #include "../MeshHeight.h"
 #include "TerrainFaceUtils.h"
+#include "../../engine/Time.h"
 
 class TerrainPatch {
 private:
     int globalPositionX, globalPositionY, globalPositionZ, width;
     float distanceBetweenVertices;
+    int LOD; 
     
     TerrainFaceDirection direction;  
         
@@ -34,11 +38,21 @@ private:
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
     
+    bool wasBuiltInTheLastSecond;
+    float incrementalTimeHeightMultiplier;
+    long timeOfBuildCall;
+    const int transitionTimeInMilliseconds = 10000; 
+    
 private:
-    void createMesh(int LOD);
-    void calculateNormals();
     void copyData(const TerrainPatch& terrainPatch);
     
+    void createMesh();
+    
+    void calculateVertices(); 
+    void calculateIndices(); 
+    void calculateNormals();
+    
+    glm::vec3 computeVertexPosition(float x, float z, glm::mat3x3& axisRotationMatrix); 
     glm::vec3 computeVertexNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c);
     
 public:

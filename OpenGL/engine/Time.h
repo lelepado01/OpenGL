@@ -21,6 +21,8 @@ private:
 public:
     static float DeltaTime();
     static void Count();
+    
+    static long GetMillisecondsFromEpoch(); 
 };
 
 #endif /* Time_h */

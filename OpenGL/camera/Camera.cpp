@@ -12,7 +12,7 @@ Camera::Camera(int x, int y, int z){
     position = glm::vec3(x, y, z);
     front = glm::vec3(0.0f, 0.0f, 0.0f);
     up = glm::vec3(0.0f, 1.0f,  0.0f);
-    proj = glm::perspective(45.0f, (float)OpenGLEngine::WINDOW_WIDTH / OpenGLEngine::WINDOW_HEIGHT, 0.1f, 1000.0f);
+    proj = glm::perspective(45.0f, (float)OpenGLEngine::WINDOW_WIDTH / OpenGLEngine::WINDOW_HEIGHT, 0.1f, 10000.0f);
 
     recalculateCameraView();
     recalculateCameraDirection();
