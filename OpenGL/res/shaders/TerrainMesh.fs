@@ -15,15 +15,15 @@ vec3 getColorFromHeight(float height){
         if (blueColor > 1) blueColor = 1;
         if (blueColor < 0) blueColor = 0;
         return vec3(0,0,1);
-    } else if (height < 4097 ) {
+    } else if (height < 4097.7 ) {
         return vec3(0.3,0.3,1);
     } else if (height < 4098 ) {
         return vec3(1,1,0.1);
     }  else if (height < 4099 ) {
         return vec3(0,1,0);
-    }  else if (height < 4199 ) {
+    }  else if (height < 4149 ) {
         return vec3(0.1,0.7,0.1);
-    }  else if (height < 4204 ) {
+    }  else if (height < 4199 ) {
         return vec3(0.5,0.5,0.5);
     }
         

@@ -36,7 +36,8 @@ float MeshHeight::GetHeight(float x, float y, float z, int LOD){
             
             float noiseLevelHeight = noise.GetNoise(x * heightLevels[i].scale,
                                                     y * heightLevels[i].scale,
-                                                    z * heightLevels[i].scale) * heightLevels[i].multiplier;
+                                                    z * heightLevels[i].scale) * heightLevels[i].multiplier; //* (LOD - i) * 0.5;
+            
             height += noiseLevelHeight * noiseLevelHeight;
         }
     }
