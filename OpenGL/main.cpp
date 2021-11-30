@@ -42,7 +42,6 @@ int main( void ) {
 
     OpenGLEngine::ImguiInit();
 
-    float time = 0;
     while( OpenGLEngine::IsRunning() ){
         OpenGLEngine::Clear();
         OpenGLEngine::UpdateTime();
@@ -60,8 +59,7 @@ int main( void ) {
         glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) *  model;
         
         ActiveShaders::TerrainShader->Bind();
-        time += 1;
-        ActiveShaders::TerrainShader->SetUniform1f("u_Time", (float)time / 100);
+        ActiveShaders::TerrainShader->SetUniform1f("u_Time", Time::GetFrameCount() / 100.0f);
         ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);

@@ -14,6 +14,7 @@
 class Time {
 private:
     static float deltaTime; 
+    static long frameCount;
     
     static std::chrono::time_point<std::chrono::steady_clock> oldTime;
     static std::chrono::time_point<std::chrono::steady_clock> newTime;
@@ -22,7 +23,10 @@ public:
     static float DeltaTime();
     static void Count();
     
-    static long GetMillisecondsFromEpoch(); 
+    static long GetFrameCount();
+    static long GetMillisecondsFromEpoch();
+    static long GetMicrosecondsFromEpoch();
+
 };
 
 #endif /* Time_h */
