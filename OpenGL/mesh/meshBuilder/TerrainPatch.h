@@ -37,6 +37,8 @@ private:
     std::vector<Vertex> vertices = std::vector<Vertex>();
     std::vector<unsigned int> indices = std::vector<unsigned int>();
     
+    glm::mat3x3 axisRotationMatrix; 
+    
     glm::vec3 minVertex;
     glm::vec3 maxVertex;
     
@@ -55,7 +57,7 @@ private:
     void calculateNormals();
     void calculateMinMax(const glm::vec3& point); 
     
-    glm::vec3 computeVertexPosition(float x, float z, const glm::mat3x3& axisRotationMatrix);
+    glm::vec3 computeVertexPosition(float x, float z);
     glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c);
     
 public:

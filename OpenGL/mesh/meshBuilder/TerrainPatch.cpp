@@ -20,6 +20,8 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->wasBuiltInTheLastSecond = true;
     this->timeOfBuildCall = Time::GetMillisecondsFromEpoch();
     this->incrementalTimeHeightMultiplier = 1;
+    
+    this->axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
 
     this->minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
     this->maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
@@ -70,6 +72,8 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->vertices = terrainPatch.vertices;
         this->indices = terrainPatch.indices;
         
+        this->axisRotationMatrix = terrainPatch.axisRotationMatrix;
+        
         this->wasBuiltInTheLastSecond = terrainPatch.wasBuiltInTheLastSecond;
         this->timeOfBuildCall = terrainPatch.timeOfBuildCall;
         this->incrementalTimeHeightMultiplier = terrainPatch.incrementalTimeHeightMultiplier; 
@@ -119,7 +123,7 @@ void TerrainPatch::createMesh(){
     calculateNormals();
 }
 
-glm::vec3 TerrainPatch::computeVertexPosition(float x, float z, const glm::mat3x3& axisRotationMatrix){
+glm::vec3 TerrainPatch::computeVertexPosition(float x, float z){
     float globalX = x * distanceBetweenVertices + globalPositionX;
     float globalZ = z * distanceBetweenVertices + globalPositionZ;
 
@@ -138,9 +142,6 @@ glm::vec3 TerrainPatch::computeVertexNormal(const glm::vec3& a, const glm::vec3&
 
 
 void TerrainPatch::calculateVertices(){
-
-    glm::mat3x3 axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
-
     for (float z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
         for (float x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
 
@@ -162,7 +163,7 @@ void TerrainPatch::calculateVertices(){
 //
 //            } else {
 //
-                v.position = computeVertexPosition(x, z, axisRotationMatrix);
+                v.position = computeVertexPosition(x, z);
                 
 //            }
             

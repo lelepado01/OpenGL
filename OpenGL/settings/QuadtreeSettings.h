@@ -10,7 +10,7 @@
 
 class QuadtreeSettings {
 public:
-    static const int MaxSubdivisions = 8;
+    static const int MaxSubdivisions = 10;
     static const int VerticesPerPatchSide = 50; // 100 ideally
     static const int InitialWidth = 4096;
     static const int SphereRadius = 1;

@@ -11,12 +11,14 @@
 #include <stdio.h>
 #include <vector>
 #include <optional>
+#include <cmath>
 
 #include "../../camera/Camera.h"
 #include "../../settings/QuadtreeSettings.h"
 #include "TerrainPatch.h"
 
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 class TerrainQuadtree {
 private:
@@ -24,7 +26,8 @@ private:
     int levelOfDetail;
     TerrainFaceDirection direction;
     
-    std::unordered_map<TerrainFaceDirection, std::vector<TerrainQuadtree*>> neighbours = std::unordered_map<TerrainFaceDirection, std::vector<TerrainQuadtree*>>(); 
+    TerrainQuadtree* root; 
+//    std::unordered_map<TerrainFaceDirection, std::vector<TerrainQuadtree*>> neighbours = std::unordered_map<TerrainFaceDirection, std::vector<TerrainQuadtree*>>();
 
     std::vector<TerrainQuadtree> subdivisions = std::vector<TerrainQuadtree>();
     std::optional<TerrainPatch> terrainPatch = {};
@@ -37,18 +40,21 @@ private:
     bool isVisible(const Camera& camera) const;
     bool isLeaf() const { return subdivisions.size() == 0; };
     
-    bool nodeHasToMerge(const Camera& camera);
-    bool nodeHasToSplit(const Camera& camera);
-    bool cameraIsCloseToTerrainPatch(const glm::vec3& cameraPosition);
+    bool nodeHasToMerge(const Camera& camera) const;
+    bool nodeHasToSplit(const Camera& camera) const;
+    bool cameraIsCloseToTerrainPatch(const glm::vec3& cameraPosition) const;
     
-    glm::vec3 getTerrainPatchCenter();
-    TerrainQuadtree* getCorrectNeighbourFor(TerrainQuadtree& terrain, TerrainFaceDirection dir); 
+    glm::vec3 getTerrainPatchCenter() const;
+//    TerrainQuadtree* getCorrectNeighbourFor(TerrainQuadtree& terrain, TerrainFaceDirection dir);
     
 //    TerrainQuadtree* getSubdivisionNeighbour(TerrainFaceDirection direction);
     
+    TerrainQuadtree* neighbourLookup(TerrainQuadtree& terrain, TerrainFaceDirection direction); 
+    
 public:
     TerrainQuadtree(int x, int y, TerrainFaceDirection dir);
-    TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int width, int LOD);
+    TerrainQuadtree(TerrainQuadtree* root, int x, int y, TerrainFaceDirection dir);
+    TerrainQuadtree(TerrainQuadtree* root, int x, int y, TerrainFaceDirection dir, int width, int LOD);
     TerrainQuadtree(const TerrainQuadtree& terrainQuadtree);
     TerrainQuadtree(TerrainQuadtree&& terrainQuadtree);
     ~TerrainQuadtree();
@@ -59,9 +65,9 @@ public:
     
     int GetVertexNumber(const Camera& camera) const;
     
-    void SetNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
-    void PairNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
-    void RemoveNeighbour(TerrainQuadtree *neigh, TerrainFaceDirection direction); 
+//    void SetNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
+//    void PairNeighbour(TerrainQuadtree* neigh, TerrainFaceDirection direction);
+//    void RemoveNeighbour(TerrainQuadtree *neigh, TerrainFaceDirection direction); 
 
 };
 
