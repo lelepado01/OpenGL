@@ -44,6 +44,8 @@ float MeshHeight::GetApproximateHeight(float x, float y, float z){
 }
 
 float MeshHeight::GetHeight(float x, float y, float z, int LOD){
+    float seaLevel = 1.4f;
+    
     float height = 0;
     
     for (int i = 0; i < LOD; i++) {
@@ -52,9 +54,9 @@ float MeshHeight::GetHeight(float x, float y, float z, int LOD){
             
             float noiseLevelHeight = noise.GetNoise(x * heightLevels[i].scale,
                                                     y * heightLevels[i].scale,
-                                                    z * heightLevels[i].scale) * heightLevels[i].multiplier; //* (LOD - i) * 0.5;
+                                                    z * heightLevels[i].scale) * heightLevels[i].multiplier;
             
-            if (height < 1.4 && i > 2){
+            if (height < seaLevel && i > 2){
                 continue;
             }
             

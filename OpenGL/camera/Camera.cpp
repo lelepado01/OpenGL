@@ -87,8 +87,9 @@ bool Camera::PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3
 }
 
 void Camera::recalculateSpeedFromHeight(){
-    float maxDist = 6000;
-    float dist = glm::distance(position, glm::vec3(0,0,0));
+    float maxDist = QuadtreeSettings::InitialWidth * 2;
+    float dist = glm::distance(position, glm::vec3(0,0,0)) - QuadtreeSettings::InitialWidth;
     if (dist > maxDist) dist = maxDist;
-    speedFromHeightModifier = dist / maxDist;
+    if (dist < 80) dist = 80;
+    speedFromHeightModifier = dist * 25 / maxDist;
 }

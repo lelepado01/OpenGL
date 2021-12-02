@@ -23,7 +23,7 @@ int main( void ) {
     ActiveShaders::Init();
     MeshHeight::Init();
 
-    Camera camera(0, QuadtreeSettings::InitialWidth, 0);
+    Camera camera(0, QuadtreeSettings::InitialWidth + 100, 0);
     
     PlanetaryMesh terrain;
     

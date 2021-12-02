@@ -12,6 +12,7 @@
 
 #include "../engine/OpenGLEngine.h"
 #include "../engine/Time.h"
+#include "../settings/QuadtreeSettings.h"
 #include "Frustum.h"
 
 #include "glm/glm.hpp"
