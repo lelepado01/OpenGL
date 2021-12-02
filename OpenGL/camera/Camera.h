@@ -26,7 +26,6 @@ private:
     
     float pitch = 0;
     float yaw = 0;
-    float roll = 0;
         
     bool directionHasChanged = false;
     bool hasMoved = false;

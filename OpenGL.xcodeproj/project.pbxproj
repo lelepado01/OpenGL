@@ -82,6 +82,8 @@
 		B61DE3F0274D8F1200A43A6D /* NatureFreePack1.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = NatureFreePack1.blend; sourceTree = "<group>"; };
 		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		B61FAB3F27369A7800D6DD56 /* Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.glsl; sourceTree = "<group>"; };
+		B62955372758E09300AA6836 /* SimpleAtmosphere.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SimpleAtmosphere.fsh; sourceTree = "<group>"; };
+		B62955382758E09300AA6836 /* SimpleAtmosphere.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SimpleAtmosphere.vsh; sourceTree = "<group>"; };
 		B630E9FB274D053C00446E63 /* TerrainFaceUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainFaceUtils.h; sourceTree = "<group>"; };
 		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
@@ -192,6 +194,8 @@
 		B617D9712734273B004FE945 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B62955372758E09300AA6836 /* SimpleAtmosphere.fsh */,
+				B62955382758E09300AA6836 /* SimpleAtmosphere.vsh */,
 				B61FAB3F27369A7800D6DD56 /* Common.glsl */,
 				B617D9722734273B004FE945 /* TerrainMesh.vs */,
 				B617D98127342FFD004FE945 /* TerrainMesh.fs */,
