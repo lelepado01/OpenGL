@@ -108,22 +108,13 @@ void TerrainPatch::Update(int lod){
         }
         
         incrementalTimeHeightMultiplier = ((float)(timeNow - timeOfBuildCall)) / transitionTimeInMilliseconds;
-        
-//        vertices = std::vector<Vertex>();
-//        calculateVertices();
-//
-//        vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
-//        indexBuffer->Update(indices.data(), (unsigned int)indices.size());
     }
     
     if (lod != levelOfDetail){
         levelOfDetail = lod;
         
         createMesh();
-
-        vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
-        indexBuffer->Update(indices.data(), (unsigned int)indices.size());
-
+        updateBuffers();
     }
 }
 
@@ -164,35 +155,19 @@ void TerrainPatch::calculateVertices(){
         for (float x = 0; x <= correctVerticesPerSide; x++) {
 
             Vertex v = {};
-            
-//            if (LOD > 6 && wasBuiltInTheLastSecond && ((int)x % 2 == 1 || (int)z % 2 == 1)){
-//
-//                glm::vec3 pos1 = computeVertexPosition(x-1, z, axisRotationMatrix);
-//                glm::vec3 pos2 = computeVertexPosition(x+1, z, axisRotationMatrix);
-//
-//                glm::vec3 previousLODVertexPosition = (pos1 + pos2) / 2.0f;
-//
-//                glm::vec3 finalPosition = computeVertexPosition(x, z, axisRotationMatrix);
-//
-//                glm::vec3 startToFinishDifference = previousLODVertexPosition - finalPosition;
-//                glm::vec3 startToFinishDifferenceForTimeStep = startToFinishDifference * incrementalTimeHeightMultiplier;
-//
-//                v.position = previousLODVertexPosition + startToFinishDifferenceForTimeStep;
-//
-//            } else {
-//
-                v.position = computeVertexPosition(x, z);
-                
-//            }
-            
-            calculateMinMax(v.position);
-
+            v.position = computeVertexPosition(x, z);
             vertices.push_back(v);
 
+            calculateMinMax(v.position);
         }
     }
 }
 
+
+void TerrainPatch::updateBuffers(){
+    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+    indexBuffer->Update(indices.data(), (unsigned int)indices.size());
+}
 
 void TerrainPatch::calculateMinMax(const glm::vec3& point){
     minVertex.x = fmin(minVertex.x, point.x);

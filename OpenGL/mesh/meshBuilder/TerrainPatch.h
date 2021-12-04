@@ -42,7 +42,7 @@ private:
     
     glm::vec3 minVertex;
     glm::vec3 maxVertex;
-    
+        
     bool wasBuiltInTheLastSecond;
     float incrementalTimeHeightMultiplier;
     long timeOfBuildCall;
@@ -53,11 +53,13 @@ private:
     
     void createMesh();
     
-    void calculateVertices(); 
-    void calculateIndices(); 
+    void calculateVertices();
+    void calculateIndices();
     void calculateNormals();
     void calculateMinMax(const glm::vec3& point); 
     
+    void updateBuffers();
+
     glm::vec3 computeVertexPosition(float x, float z) const;
     glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const;
     
