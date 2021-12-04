@@ -18,7 +18,7 @@
 #include "../../shaders/ActiveShaders.h"
 #include "../../settings/QuadtreeSettings.h"
 #include "../Vertex.h"
-#include "../MeshHeight.h"
+#include "../MeshHeightHandler.h"
 #include "TerrainFaceUtils.h"
 #include "../../engine/Time.h"
 
@@ -57,8 +57,8 @@ private:
     void calculateNormals();
     void calculateMinMax(const glm::vec3& point); 
     
-    glm::vec3 computeVertexPosition(float x, float z);
-    glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c);
+    glm::vec3 computeVertexPosition(float x, float z) const;
+    glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const;
     
 public:
     TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD);
@@ -67,10 +67,10 @@ public:
     ~TerrainPatch();
     TerrainPatch& operator=(const TerrainPatch& terrainPatch);
     
-    void Update(); 
+    void Update(int lod); 
     void Render();
     
-    int GetVertexNumber() const { return (int)vertices.size(); };
+    long GetVertexNumber() const { return vertices.size(); };
     
     const glm::vec3& GetMinPoint() const { return minVertex; };
     const glm::vec3& GetMaxPoint() const { return maxVertex; };

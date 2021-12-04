@@ -22,7 +22,7 @@ struct MeshHeightLevel {
     float scale;
 };
 
-class MeshHeight {
+class MeshHeightHandler {
 private:
     static FastNoiseLite noise;
     static std::vector<MeshHeightLevel> heightLevels;

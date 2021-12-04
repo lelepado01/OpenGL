@@ -23,7 +23,7 @@ public:
     void Update(const Camera& camera);
     void Render(const Camera& camera);
     
-    int GetVertexNumber(const Camera& camera) const;
+    long GetVertexNumber(const Camera& camera) const;
 };
 
 #endif /* PlanetaryMesh_h */

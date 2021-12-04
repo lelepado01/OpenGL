@@ -61,7 +61,7 @@ public:
     bool HasMoved() const { return hasMoved; };
     bool HasRotated() const { return directionHasChanged; };
     
-    bool PointIsVisibleFromCamera(const glm::vec3& minPoint, const glm::vec3& maxPoint) const;
+    bool RectAABBIsFrustumCulled(const glm::vec3& minPoint, const glm::vec3& maxPoint) const;
 };
 
 #endif /* Camera_hpp */

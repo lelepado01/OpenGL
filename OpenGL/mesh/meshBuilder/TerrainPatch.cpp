@@ -26,6 +26,9 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
     this->maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
     
+    this->vertices = std::vector<Vertex>();
+    this->indices = std::vector<unsigned int>();
+    
     createMesh();
     
     vertexArray = new VertexArray();
@@ -93,7 +96,7 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
     }
 }
 
-void TerrainPatch::Update(){
+void TerrainPatch::Update(int lod){
     if (wasBuiltInTheLastSecond){
 
         long timeNow = Time::GetMillisecondsFromEpoch();
@@ -110,6 +113,16 @@ void TerrainPatch::Update(){
 //        vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
 //        indexBuffer->Update(indices.data(), (unsigned int)indices.size());
     }
+    
+    if (lod != levelOfDetail){
+        levelOfDetail = lod;
+        
+        createMesh();
+
+        vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+        indexBuffer->Update(indices.data(), (unsigned int)indices.size());
+
+    }
 }
 
 void TerrainPatch::Render(){
@@ -118,25 +131,28 @@ void TerrainPatch::Render(){
 
 
 void TerrainPatch::createMesh(){
+    vertices.clear();
+    indices.clear();
+    
     calculateVertices();
     calculateIndices();
     calculateNormals();
 }
 
-glm::vec3 TerrainPatch::computeVertexPosition(float x, float z){
+glm::vec3 TerrainPatch::computeVertexPosition(float x, float z) const {
     float globalX = x * distanceBetweenVertices + globalPositionX;
     float globalZ = z * distanceBetweenVertices + globalPositionZ;
 
     glm::vec3 vertex = glm::vec3(globalX, globalPositionY, globalZ);
     vertex = axisRotationMatrix * vertex;
     vertex = PointCubeToSphere(vertex);
-    vertex += MeshHeight::GetHeight(vertex.x ,vertex.y, vertex.z, levelOfDetail) * glm::normalize(vertex);
+    vertex += MeshHeightHandler::GetHeight(vertex.x ,vertex.y, vertex.z, levelOfDetail) * glm::normalize(vertex);
     
     return vertex;
 }
 
 
-glm::vec3 TerrainPatch::computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c){
+glm::vec3 TerrainPatch::computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const {
     return glm::cross(b-a, c-a);
 }
 

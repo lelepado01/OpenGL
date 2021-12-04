@@ -12,6 +12,7 @@
 #include "shaders/Shader.h"
 #include "shaders/ActiveShaders.h"
 #include "mesh/meshBuilder/PlanetaryMesh.h"
+#include "mesh/LODHandler.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -21,7 +22,8 @@
 int main( void ) {
     OpenGLEngine::Init();
     ActiveShaders::Init();
-    MeshHeight::Init();
+    MeshHeightHandler::Init();
+    LODHandler::Init(); 
 
     Camera camera(0, QuadtreeSettings::InitialWidth + 100, 0);
     
@@ -67,9 +69,9 @@ int main( void ) {
                     
         terrain.Update(camera);
         terrain.Render(camera);
-
+        
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
-        ImGui::Text("%.1d Vertices Displayed)", terrain.GetVertexNumber(camera));
+        ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode());
 
         OpenGLEngine::ImguiDraw();

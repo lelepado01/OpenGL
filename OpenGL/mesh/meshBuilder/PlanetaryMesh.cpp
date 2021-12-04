@@ -28,9 +28,9 @@ void PlanetaryMesh::Render(const Camera& camera){
     }
 }
 
-int PlanetaryMesh::GetVertexNumber(const Camera& camera) const {
+long PlanetaryMesh::GetVertexNumber(const Camera& camera) const {
     
-    int vertexNumber = 0;
+    long vertexNumber = 0;
     for (int i = 0; i < faces.size(); i++) {
         vertexNumber += faces.at(i).GetVertexNumber(camera);
     }

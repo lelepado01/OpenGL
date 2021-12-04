@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B60F833A275B745E0084B120 /* LODHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60F8338275B745E0084B120 /* LODHandler.cpp */; };
 		B617D9742734273B004FE945 /* VertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D94F2734273A004FE945 /* VertexArray.cpp */; };
 		B617D9752734273B004FE945 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9512734273A004FE945 /* main.cpp */; };
 		B617D9762734273B004FE945 /* IndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9532734273A004FE945 /* IndexBuffer.cpp */; };
@@ -27,7 +28,7 @@
 		B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */; };
 		B6BFF5E726F8EE22002ECA4B /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */; };
 		B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ED0F682746CB4900459069 /* Time.cpp */; };
-		B6F13526273EE44D00DF29E4 /* MeshHeight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F13524273EE44D00DF29E4 /* MeshHeight.cpp */; };
+		B6F13526273EE44D00DF29E4 /* MeshHeightHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F13524273EE44D00DF29E4 /* MeshHeightHandler.cpp */; };
 		B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6FDF28B2735A27200DEBCB9 /* Camera.cpp */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		B60A8004273C27DF002DBAEA /* FastNoiseLite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastNoiseLite.h; sourceTree = "<group>"; };
+		B60F8338275B745E0084B120 /* LODHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LODHandler.cpp; sourceTree = "<group>"; };
+		B60F8339275B745E0084B120 /* LODHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LODHandler.h; sourceTree = "<group>"; };
 		B617D94E2734273A004FE945 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		B617D94F2734273A004FE945 /* VertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexArray.cpp; sourceTree = "<group>"; };
 		B617D9502734273A004FE945 /* VertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexBuffer.h; sourceTree = "<group>"; };
@@ -106,8 +109,8 @@
 		B6C0EEAF27563F36005FB4F6 /* Frustum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Frustum.h; sourceTree = "<group>"; };
 		B6ED0F682746CB4900459069 /* Time.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Time.cpp; sourceTree = "<group>"; };
 		B6ED0F692746CB4900459069 /* Time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Time.h; sourceTree = "<group>"; };
-		B6F13524273EE44D00DF29E4 /* MeshHeight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshHeight.cpp; sourceTree = "<group>"; };
-		B6F13525273EE44D00DF29E4 /* MeshHeight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshHeight.h; sourceTree = "<group>"; };
+		B6F13524273EE44D00DF29E4 /* MeshHeightHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshHeightHandler.cpp; sourceTree = "<group>"; };
+		B6F13525273EE44D00DF29E4 /* MeshHeightHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshHeightHandler.h; sourceTree = "<group>"; };
 		B6FDF28B2735A27200DEBCB9 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		B6FDF28C2735A27200DEBCB9 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -279,8 +282,10 @@
 			children = (
 				B653E7162746A47A0042B4B8 /* meshBuilder */,
 				B63A99712737240000CA007E /* Vertex.h */,
-				B6F13524273EE44D00DF29E4 /* MeshHeight.cpp */,
-				B6F13525273EE44D00DF29E4 /* MeshHeight.h */,
+				B6F13524273EE44D00DF29E4 /* MeshHeightHandler.cpp */,
+				B6F13525273EE44D00DF29E4 /* MeshHeightHandler.h */,
+				B60F8338275B745E0084B120 /* LODHandler.cpp */,
+				B60F8339275B745E0084B120 /* LODHandler.h */,
 			);
 			path = mesh;
 			sourceTree = "<group>";
@@ -415,9 +420,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */,
-				B6F13526273EE44D00DF29E4 /* MeshHeight.cpp in Sources */,
+				B6F13526273EE44D00DF29E4 /* MeshHeightHandler.cpp in Sources */,
 				B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */,
 				B68A8D5E274BED4900B1022C /* PlanetaryMesh.cpp in Sources */,
+				B60F833A275B745E0084B120 /* LODHandler.cpp in Sources */,
 				B617D9752734273B004FE945 /* main.cpp in Sources */,
 				B617D97A2734273B004FE945 /* imgui_draw.cpp in Sources */,
 				B617D9772734273B004FE945 /* imgui.cpp in Sources */,

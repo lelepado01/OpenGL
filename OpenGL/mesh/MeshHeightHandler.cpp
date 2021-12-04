@@ -5,12 +5,12 @@
 //  Created by Gabriele Padovani on 12/11/21.
 //
 
-#include "MeshHeight.h"
+#include "MeshHeightHandler.h"
 
-FastNoiseLite MeshHeight::noise = FastNoiseLite();
-std::vector<MeshHeightLevel> MeshHeight::heightLevels = std::vector<MeshHeightLevel>(QuadtreeSettings::MaxSubdivisions);
+FastNoiseLite MeshHeightHandler::noise = FastNoiseLite();
+std::vector<MeshHeightLevel> MeshHeightHandler::heightLevels = std::vector<MeshHeightLevel>(QuadtreeSettings::MaxSubdivisions);
 
-void MeshHeight::Init(){
+void MeshHeightHandler::Init(){
     
     for (int i = 0; i < heightLevels.size(); i++) {
         heightLevels[i].enabled = false;
@@ -37,13 +37,13 @@ void MeshHeight::Init(){
     heightLevels[3].scale = 0.5f;
 }
 
-float MeshHeight::GetApproximateHeight(float x, float y, float z){
+float MeshHeightHandler::GetApproximateHeight(float x, float y, float z){
     float height = noise.GetNoise(x * heightLevels[0].scale, y * heightLevels[0].scale, z * heightLevels[0].scale) * heightLevels[0].multiplier;
     if (height < 0) height = 0;
     return height;
 }
 
-float MeshHeight::GetHeight(float x, float y, float z, int LOD){
+float MeshHeightHandler::GetHeight(float x, float y, float z, int LOD){
     float seaLevel = 1.4f;
     
     float height = 0;
@@ -63,7 +63,6 @@ float MeshHeight::GetHeight(float x, float y, float z, int LOD){
             height += noiseLevelHeight * noiseLevelHeight;
         }
     }
-    
     
     if (height < 0) height = 0;
     return height;
