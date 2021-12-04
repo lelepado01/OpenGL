@@ -26,7 +26,8 @@ class TerrainPatch {
 private:
     int globalPositionX, globalPositionY, globalPositionZ, width;
     float distanceBetweenVertices;
-    int levelOfDetail; 
+    int levelOfDetail;
+    int correctVerticesPerSide; 
     
     TerrainFaceDirection direction;  
         

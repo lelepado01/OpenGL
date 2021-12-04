@@ -14,6 +14,7 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->width = width;
     this->levelOfDetail = LOD;
     this->distanceBetweenVertices = (float)width / QuadtreeSettings::VerticesPerPatchSide;
+    this->correctVerticesPerSide = QuadtreeSettings::VerticesPerPatchSide + 2;
     
     this->direction = dir;
     
@@ -69,6 +70,7 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->width = terrainPatch.width;
         this->levelOfDetail = terrainPatch.levelOfDetail;
         this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
+        this->correctVerticesPerSide = terrainPatch.correctVerticesPerSide;
         
         this->direction = terrainPatch.direction;
         
@@ -158,8 +160,8 @@ glm::vec3 TerrainPatch::computeVertexNormal(const glm::vec3& a, const glm::vec3&
 
 
 void TerrainPatch::calculateVertices(){
-    for (float z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
-        for (float x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
+    for (float z = 0; z <= correctVerticesPerSide; z++) {
+        for (float x = 0; x <= correctVerticesPerSide; x++) {
 
             Vertex v = {};
             
@@ -205,25 +207,25 @@ void TerrainPatch::calculateMinMax(const glm::vec3& point){
 
 void TerrainPatch::calculateIndices(){
     int vertexIndex = 0;
-    for (int z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
-        for (int x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
-            if (x < QuadtreeSettings::VerticesPerPatchSide && z < QuadtreeSettings::VerticesPerPatchSide){
+    for (int z = 0; z <= correctVerticesPerSide; z++) {
+        for (int x = 0; x <= correctVerticesPerSide; x++) {
+            if (x < correctVerticesPerSide && z < correctVerticesPerSide){
                 if (TerrainFace::IsBackFace(direction)){
                     indices.push_back(vertexIndex + 1);
-                    indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1);
+                    indices.push_back(vertexIndex + correctVerticesPerSide + 1);
                     indices.push_back(vertexIndex);
                     
-                    indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2);
-                    indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1);
+                    indices.push_back(vertexIndex + correctVerticesPerSide + 2);
+                    indices.push_back(vertexIndex + correctVerticesPerSide + 1);
                     indices.push_back(vertexIndex + 1);
                 } else {
                     indices.push_back(vertexIndex);
-                    indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1);
+                    indices.push_back(vertexIndex + correctVerticesPerSide + 1);
                     indices.push_back(vertexIndex + 1);
                     
                     indices.push_back(vertexIndex + 1);
-                    indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1);
-                    indices.push_back(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2);
+                    indices.push_back(vertexIndex + correctVerticesPerSide + 1);
+                    indices.push_back(vertexIndex + correctVerticesPerSide + 2);
                 }
                 vertexIndex++;
             }
