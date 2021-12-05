@@ -15,6 +15,10 @@ enum TerrainFaceDirection {
     Top, Bottom, Front, Back, Left, Right
 };
 
+enum TerrainPatchTransition {
+    Upscale, Downscale
+};
+
 class TerrainFace {
 public:
     

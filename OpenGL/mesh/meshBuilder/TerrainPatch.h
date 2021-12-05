@@ -19,8 +19,9 @@
 #include "../../settings/QuadtreeSettings.h"
 #include "../Vertex.h"
 #include "../MeshHeightHandler.h"
-#include "TerrainFaceUtils.h"
+#include "TerrainUtils.h"
 #include "../../engine/Time.h"
+
 
 class TerrainPatch {
 private:
@@ -29,7 +30,8 @@ private:
     int levelOfDetail;
     int correctVerticesPerSide; 
     
-    TerrainFaceDirection direction;  
+    TerrainFaceDirection direction;
+    TerrainPatchTransition transition; 
         
     VertexArray* vertexArray = nullptr;
     VertexBuffer* vertexBuffer = nullptr;
@@ -46,13 +48,12 @@ private:
     bool wasBuiltInTheLastSecond;
     float incrementalTimeHeightMultiplier;
     long timeOfBuildCall;
-    const int transitionTimeInMilliseconds = 10000; 
+    const int transitionTimeInMilliseconds = 1000; 
     
 private:
     void copyData(const TerrainPatch& terrainPatch);
     
     void createMesh();
-    
     void calculateVertices();
     void calculateIndices();
     void calculateNormals();
@@ -64,7 +65,7 @@ private:
     glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const;
     
 public:
-    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD);
+    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchTransition transition);
     TerrainPatch(const TerrainPatch& terrainPatch);
     TerrainPatch(TerrainPatch&& terrainPatch);
     ~TerrainPatch();

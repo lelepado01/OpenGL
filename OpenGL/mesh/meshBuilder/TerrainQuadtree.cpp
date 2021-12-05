@@ -69,7 +69,7 @@ void TerrainQuadtree::Update(Camera camera){
 
     if (!hasTerrain() && isLeaf()){
         int lod = LODHandler::GetLevelOfDetail(distanceFromCamera);
-        terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, lod);
+        terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, lod, TerrainPatchTransition::Upscale);
     }
     
     if (nodeHasToMerge(camera)){
@@ -121,7 +121,7 @@ void TerrainQuadtree::merge(){
     int childSplitLevel = subdivisions[0].splitLevel;
     subdivisions = std::vector<TerrainQuadtree>();
     
-    terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, childSplitLevel-1);
+    terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, childSplitLevel-1, TerrainPatchTransition::Downscale);
 }
 
 bool TerrainQuadtree::isVisible(const Camera& camera) const {

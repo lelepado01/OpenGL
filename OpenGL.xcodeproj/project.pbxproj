@@ -87,7 +87,7 @@
 		B61FAB3F27369A7800D6DD56 /* Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.glsl; sourceTree = "<group>"; };
 		B62955372758E09300AA6836 /* SimpleAtmosphere.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SimpleAtmosphere.fsh; sourceTree = "<group>"; };
 		B62955382758E09300AA6836 /* SimpleAtmosphere.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SimpleAtmosphere.vsh; sourceTree = "<group>"; };
-		B630E9FB274D053C00446E63 /* TerrainFaceUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainFaceUtils.h; sourceTree = "<group>"; };
+		B630E9FB274D053C00446E63 /* TerrainUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainUtils.h; sourceTree = "<group>"; };
 		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 				B66E1138274933BE00E7E9F4 /* TerrainPatch.h */,
 				B68A8D5C274BED4900B1022C /* PlanetaryMesh.cpp */,
 				B68A8D5D274BED4900B1022C /* PlanetaryMesh.h */,
-				B630E9FB274D053C00446E63 /* TerrainFaceUtils.h */,
+				B630E9FB274D053C00446E63 /* TerrainUtils.h */,
 			);
 			path = meshBuilder;
 			sourceTree = "<group>";

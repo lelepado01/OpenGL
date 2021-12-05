@@ -7,7 +7,7 @@
 
 #include "TerrainPatch.h"
 
-TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD){
+TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchTransition transition){
     this->globalPositionX = x;
     this->globalPositionZ = z;
     this->globalPositionY = QuadtreeSettings::InitialWidth / 2;
@@ -17,6 +17,7 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->correctVerticesPerSide = QuadtreeSettings::VerticesPerPatchSide + 2;
     
     this->direction = dir;
+    this->transition = transition;
     
     this->wasBuiltInTheLastSecond = true;
     this->timeOfBuildCall = Time::GetMillisecondsFromEpoch();
@@ -37,6 +38,7 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
     
     VertexBufferLayout layout;
+    layout.AddFloat(3);
     layout.AddFloat(3);
     layout.AddFloat(3);
 
@@ -73,6 +75,7 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->correctVerticesPerSide = terrainPatch.correctVerticesPerSide;
         
         this->direction = terrainPatch.direction;
+        this->transition = terrainPatch.transition;
         
         this->vertices = terrainPatch.vertices;
         this->indices = terrainPatch.indices;
@@ -93,6 +96,7 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         VertexBufferLayout layout;
         layout.AddFloat(3);
         layout.AddFloat(3);
+        layout.AddFloat(3);
 
         this->vertexArray->AddBuffer(*vertexBuffer, layout);
     }
@@ -111,7 +115,11 @@ void TerrainPatch::Update(int lod){
     }
     
     if (lod != levelOfDetail){
+        if (lod > levelOfDetail) transition = TerrainPatchTransition::Upscale;
+        else transition = TerrainPatchTransition::Downscale;
+
         levelOfDetail = lod;
+        
         
         createMesh();
         updateBuffers();
@@ -119,6 +127,13 @@ void TerrainPatch::Update(int lod){
 }
 
 void TerrainPatch::Render(){
+    
+    if (wasBuiltInTheLastSecond){
+        ActiveShaders::TerrainShader->SetUniform1f("u_IncrementalHeightMultiplier", incrementalTimeHeightMultiplier);
+    } else {
+        ActiveShaders::TerrainShader->SetUniform1f("u_IncrementalHeightMultiplier", -1.0f);
+    }
+    
     OpenGLEngine::Draw(*vertexArray, *indexBuffer, *ActiveShaders::TerrainShader);
 }
 
@@ -153,9 +168,17 @@ glm::vec3 TerrainPatch::computeVertexNormal(const glm::vec3& a, const glm::vec3&
 void TerrainPatch::calculateVertices(){
     for (float z = 0; z <= correctVerticesPerSide; z++) {
         for (float x = 0; x <= correctVerticesPerSide; x++) {
-
+            
+            float offsettedX = x -1;
+            float offsettedZ = z -1;
+            
             Vertex v = {};
-            v.position = computeVertexPosition(x, z);
+            v.position = computeVertexPosition(offsettedX, offsettedZ);
+            if ((int)x % 2 == 0 || (int)z % 2 == 0){
+                v.oldPosition = (computeVertexPosition(offsettedX-1, offsettedZ) + computeVertexPosition(offsettedX+1, offsettedZ)) / 2.0f;
+            } else {
+                v.oldPosition = v.position;
+            }
             vertices.push_back(v);
 
             calculateMinMax(v.position);

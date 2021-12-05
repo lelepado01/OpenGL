@@ -48,7 +48,7 @@ float MeshHeightHandler::GetHeight(float x, float y, float z, int LOD){
     
     float height = 0;
     
-    for (int i = 0; i < LOD; i++) {
+    for (int i = 0; i < heightLevels.size(); i++) {
         if (heightLevels[i].enabled){
             noise.SetFrequency(heightLevels[i].frequency);
             
