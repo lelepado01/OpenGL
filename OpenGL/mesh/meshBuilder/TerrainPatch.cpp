@@ -177,7 +177,7 @@ void TerrainPatch::calculateVertices(){
             if ((int)x % 2 == 0 || (int)z % 2 == 0){
                 v.oldPosition = (computeVertexPosition(offsettedX-1, offsettedZ) + computeVertexPosition(offsettedX+1, offsettedZ)) / 2.0f;
             } else {
-                v.oldPosition = v.position;
+                v.oldPosition = v.position; //(computeVertexPosition(offsettedX-1, offsettedZ) + computeVertexPosition(offsettedX+1, offsettedZ)) / 2.0f;
             }
             vertices.push_back(v);
 

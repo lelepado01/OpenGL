@@ -49,7 +49,7 @@ void main() {
     gl_Position = u_MVP * vec4(position, 1);
 
     if (u_IncrementalHeightMultiplier != -1){
-        gl_Position = u_MVP * vec4( oldPosition + (oldPosition - position) * u_IncrementalHeightMultiplier, 1);
+        gl_Position = u_MVP * vec4( oldPosition + (position - oldPosition) * u_IncrementalHeightMultiplier, 1);
     }
     
     if (distance(fragPos, vec3(0,0,0)) < 4096.8){

@@ -48,8 +48,6 @@ private:
     
     glm::vec3 getTerrainPatchCenter() const;
     
-//    TerrainQuadtree* neighbourLookup(TerrainQuadtree& terrain, TerrainFaceDirection direction);
-    
 public:
     TerrainQuadtree(int x, int y, TerrainFaceDirection dir);
     TerrainQuadtree(TerrainQuadtree* root, int x, int y, TerrainFaceDirection dir);
