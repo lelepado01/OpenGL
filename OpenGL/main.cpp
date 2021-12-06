@@ -37,7 +37,7 @@ int main( void ) {
     material.shininess = 0.2f;
 
     Light light = {};
-    light.direction = glm::vec3(0.8f, -1.0f, 0.8f);
+    light.direction = glm::vec3(0.0f, -1.0f, 0.0f);
     light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
@@ -53,10 +53,7 @@ int main( void ) {
         
         camera.UpdateDirection();
         camera.UpdatePosition();
-        
-        long div = 36000000000;
-        light.direction.y = ((double)(std::chrono::high_resolution_clock::now().time_since_epoch().count() % div)) / (div/6)-3;
-
+    
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) *  model;
         

@@ -62,6 +62,7 @@ private:
     void updateBuffers();
 
     glm::vec3 computeVertexPosition(float x, float z) const;
+    glm::vec3 computeVertexPosition(float x, float z, int lod) const;
     glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const;
     
 public:

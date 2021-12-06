@@ -144,7 +144,7 @@ vec3 getFaceNormal(vec3 position) {
 
 void main() {
 
-    vec3 norm = normalize(-objectNormal); //mix(getFaceNormal(fragPos), normalize(-objectNormal), 0.5f);
+    vec3 norm = mix(getFaceNormal(fragPos), normalize(-objectNormal), 0.5f);
 
     vec3 lightDir = normalize(-light.direction);
 

@@ -159,6 +159,17 @@ glm::vec3 TerrainPatch::computeVertexPosition(float x, float z) const {
     return vertex;
 }
 
+glm::vec3 TerrainPatch::computeVertexPosition(float x, float z, int lod) const {
+    float globalX = x * distanceBetweenVertices + globalPositionX;
+    float globalZ = z * distanceBetweenVertices + globalPositionZ;
+
+    glm::vec3 vertex = glm::vec3(globalX, globalPositionY, globalZ);
+    vertex = axisRotationMatrix * vertex;
+    vertex = PointCubeToSphere(vertex);
+    vertex += MeshHeightHandler::GetHeight(vertex.x ,vertex.y, vertex.z, lod) * glm::normalize(vertex);
+    
+    return vertex;
+}
 
 glm::vec3 TerrainPatch::computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const {
     return glm::cross(b-a, c-a);
@@ -169,16 +180,12 @@ void TerrainPatch::calculateVertices(){
     for (float z = 0; z <= correctVerticesPerSide; z++) {
         for (float x = 0; x <= correctVerticesPerSide; x++) {
             
-            float offsettedX = x -1;
-            float offsettedZ = z -1;
+            float offsettedX = x - 1;
+            float offsettedZ = z - 1;
             
             Vertex v = {};
             v.position = computeVertexPosition(offsettedX, offsettedZ);
-            if ((int)x % 2 == 0 || (int)z % 2 == 0){
-                v.oldPosition = (computeVertexPosition(offsettedX-1, offsettedZ) + computeVertexPosition(offsettedX+1, offsettedZ)) / 2.0f;
-            } else {
-                v.oldPosition = v.position; //(computeVertexPosition(offsettedX-1, offsettedZ) + computeVertexPosition(offsettedX+1, offsettedZ)) / 2.0f;
-            }
+            v.oldPosition = computeVertexPosition(offsettedX, offsettedZ, levelOfDetail-1);
             vertices.push_back(v);
 
             calculateMinMax(v.position);

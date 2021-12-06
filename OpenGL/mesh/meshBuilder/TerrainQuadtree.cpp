@@ -158,7 +158,7 @@ glm::vec3 TerrainQuadtree::getTerrainPatchCenter() const {
     
     glm::vec3 planePoint = glm::vec3(centerX, QuadtreeSettings::InitialWidth/2, centerZ);
     planePoint = TerrainPatch::PointCubeToSphere(TerrainFace::GetAxisRotationMatrix(direction) * planePoint);
-    planePoint += MeshHeightHandler::GetApproximateHeight(planePoint.x, planePoint.y, planePoint.z) * glm::normalize(planePoint);
+    planePoint += MeshHeightHandler::GetHeight(planePoint.x, planePoint.y, planePoint.z, 2) * glm::normalize(planePoint);
     
     return planePoint;
 }

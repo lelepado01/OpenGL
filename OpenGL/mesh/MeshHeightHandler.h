@@ -29,7 +29,6 @@ private:
 
 public:
     static void Init();
-    static float GetApproximateHeight(float x, float y, float z);
     static float GetHeight(float x, float y, float z, int LOD);
 };
 

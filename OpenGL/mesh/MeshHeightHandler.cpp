@@ -37,18 +37,12 @@ void MeshHeightHandler::Init(){
     heightLevels[3].scale = 0.5f;
 }
 
-float MeshHeightHandler::GetApproximateHeight(float x, float y, float z){
-    float height = noise.GetNoise(x * heightLevels[0].scale, y * heightLevels[0].scale, z * heightLevels[0].scale) * heightLevels[0].multiplier;
-    if (height < 0) height = 0;
-    return height;
-}
-
 float MeshHeightHandler::GetHeight(float x, float y, float z, int LOD){
     float seaLevel = 1.4f;
     
     float height = 0;
     
-    for (int i = 0; i < heightLevels.size(); i++) {
+    for (int i = 0; i < LOD; i++) {
         if (heightLevels[i].enabled){
             noise.SetFrequency(heightLevels[i].frequency);
             
