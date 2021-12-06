@@ -13,6 +13,7 @@
 #include "shaders/ActiveShaders.h"
 #include "mesh/meshBuilder/PlanetaryMesh.h"
 #include "mesh/LODHandler.h"
+#include "models/ModelLoader.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -23,7 +24,8 @@ int main( void ) {
     OpenGLEngine::Init();
     ActiveShaders::Init();
     MeshHeightHandler::Init();
-    LODHandler::Init(); 
+    LODHandler::Init();
+    ModelLoader::Init();
 
     Camera camera(0, QuadtreeSettings::InitialWidth + 100, 0);
     
@@ -42,6 +44,8 @@ int main( void ) {
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
 
+    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/Cartoon_Trees.obj");
+    
     OpenGLEngine::ImguiInit();
 
     while( OpenGLEngine::IsRunning() ){
