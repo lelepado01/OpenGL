@@ -7,7 +7,7 @@
 
 #include "TerrainQuadtree.h"
 
-TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir) : root(nullptr) {
+TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir) {
     nodeX = x;
     nodeY = y;
     nodeWidth = QuadtreeSettings::InitialWidth;
@@ -16,16 +16,7 @@ TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir) : root(
     direction = dir;
 }
 
-TerrainQuadtree::TerrainQuadtree(TerrainQuadtree* root, int x, int y, TerrainFaceDirection dir) : root(root) {
-    nodeX = x;
-    nodeY = y;
-    nodeWidth = QuadtreeSettings::InitialWidth;
-    distanceFromCamera = 1000;
-    splitLevel = 1;
-    direction = dir;
-}
-
-TerrainQuadtree::TerrainQuadtree(TerrainQuadtree* root, int x, int y, TerrainFaceDirection dir, int width, int LOD) : root(root) {
+TerrainQuadtree::TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int width, int LOD) {
     nodeX = x;
     nodeY = y;
     nodeWidth = width;
@@ -34,11 +25,11 @@ TerrainQuadtree::TerrainQuadtree(TerrainQuadtree* root, int x, int y, TerrainFac
     direction = dir;
 }
 
-TerrainQuadtree::TerrainQuadtree(const TerrainQuadtree& terrainQuadtree) : root(terrainQuadtree.root) {
+TerrainQuadtree::TerrainQuadtree(const TerrainQuadtree& terrainQuadtree) {
     copyData(terrainQuadtree);
 }
 
-TerrainQuadtree::TerrainQuadtree(TerrainQuadtree&& terrainQuadtree) : root(terrainQuadtree.root) {
+TerrainQuadtree::TerrainQuadtree(TerrainQuadtree&& terrainQuadtree){
     copyData(terrainQuadtree);
 }
 
@@ -55,8 +46,6 @@ void TerrainQuadtree::copyData(const TerrainQuadtree& terrainQuadtree){
         this->distanceFromCamera = terrainQuadtree.distanceFromCamera;
         this->splitLevel = terrainQuadtree.splitLevel; 
         this->direction = terrainQuadtree.direction;
-
-        this->root = terrainQuadtree.root;
     }
 }
 
@@ -106,10 +95,10 @@ void TerrainQuadtree::Render(Camera camera){
 
 void TerrainQuadtree::split(){
     terrainPatch = {};
-    TerrainQuadtree topLeft = TerrainQuadtree(root == nullptr ? this : root, nodeX, nodeY, direction, nodeWidth / 2, splitLevel+1);
-    TerrainQuadtree topRight = TerrainQuadtree(root == nullptr ? this : root, nodeX + nodeWidth / 2, nodeY, direction, nodeWidth / 2, splitLevel+1);
-    TerrainQuadtree bottomLeft = TerrainQuadtree(root == nullptr ? this : root, nodeX, nodeY + nodeWidth / 2, direction, nodeWidth / 2, splitLevel+1);
-    TerrainQuadtree bottomRight = TerrainQuadtree(root == nullptr ? this : root, nodeX + nodeWidth / 2, nodeY + nodeWidth / 2, direction, nodeWidth / 2, splitLevel+1);
+    TerrainQuadtree topLeft = TerrainQuadtree(nodeX, nodeY, direction, nodeWidth / 2, splitLevel+1);
+    TerrainQuadtree topRight = TerrainQuadtree(nodeX + nodeWidth / 2, nodeY, direction, nodeWidth / 2, splitLevel+1);
+    TerrainQuadtree bottomLeft = TerrainQuadtree(nodeX, nodeY + nodeWidth / 2, direction, nodeWidth / 2, splitLevel+1);
+    TerrainQuadtree bottomRight = TerrainQuadtree(nodeX + nodeWidth / 2, nodeY + nodeWidth / 2, direction, nodeWidth / 2, splitLevel+1);
     
     subdivisions.push_back(topLeft);
     subdivisions.push_back(topRight);

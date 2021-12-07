@@ -28,8 +28,6 @@ private:
     float distanceFromCamera;
     TerrainFaceDirection direction;
     
-    TerrainQuadtree* root;
-
     std::vector<TerrainQuadtree> subdivisions = std::vector<TerrainQuadtree>();
     std::optional<TerrainPatch> terrainPatch = {};
 
@@ -50,8 +48,7 @@ private:
     
 public:
     TerrainQuadtree(int x, int y, TerrainFaceDirection dir);
-    TerrainQuadtree(TerrainQuadtree* root, int x, int y, TerrainFaceDirection dir);
-    TerrainQuadtree(TerrainQuadtree* root, int x, int y, TerrainFaceDirection dir, int width, int LOD);
+    TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int width, int LOD);
     TerrainQuadtree(const TerrainQuadtree& terrainQuadtree);
     TerrainQuadtree(TerrainQuadtree&& terrainQuadtree);
     ~TerrainQuadtree();

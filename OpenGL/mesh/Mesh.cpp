@@ -26,6 +26,8 @@ Mesh::Mesh(){
 }
 
 Mesh::~Mesh(){
+    Clear(); 
+    
     delete vertexArray;
     delete indexBuffer;
     delete vertexBuffer;
