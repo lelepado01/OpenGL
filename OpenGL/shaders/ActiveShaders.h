@@ -15,6 +15,7 @@
 class ActiveShaders {
 public:
     static Shader* TerrainShader;
+    static Shader* ModelShader;
     
 public:
     static void Init();

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B60F833A275B745E0084B120 /* LODHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60F8338275B745E0084B120 /* LODHandler.cpp */; };
 		B617D9742734273B004FE945 /* VertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D94F2734273A004FE945 /* VertexArray.cpp */; };
-		B617D9752734273B004FE945 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9512734273A004FE945 /* main.cpp */; };
 		B617D9762734273B004FE945 /* IndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9532734273A004FE945 /* IndexBuffer.cpp */; };
 		B617D9772734273B004FE945 /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D95C2734273A004FE945 /* imgui.cpp */; };
 		B617D9782734273B004FE945 /* imgui_impl_glfw_gl3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D95E2734273A004FE945 /* imgui_impl_glfw_gl3.cpp */; };
@@ -19,8 +18,9 @@
 		B617D97D2734273B004FE945 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9692734273B004FE945 /* Texture.cpp */; };
 		B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D96A2734273B004FE945 /* OpenGLEngine.cpp */; };
 		B617D97F2734273B004FE945 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9732734273B004FE945 /* Shader.cpp */; };
+		B62816EE275FAD2900F0998A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9512734273A004FE945 /* main.cpp */; };
+		B62816EF275FAD5100F0998A /* ModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6421356275E67D8004C6D1D /* ModelLoader.cpp */; };
 		B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9642734273A004FE945 /* stb_image.cpp */; };
-		B6421358275E67D8004C6D1D /* ModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6421356275E67D8004C6D1D /* ModelLoader.cpp */; };
 		B642135B275E6C91004C6D1D /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6421359275E6C91004C6D1D /* Mesh.cpp */; };
 		B66E113627492FB400E7E9F4 /* TerrainQuadtree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E113427492FB400E7E9F4 /* TerrainQuadtree.cpp */; };
 		B66E1139274933BE00E7E9F4 /* TerrainPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E1137274933BE00E7E9F4 /* TerrainPatch.cpp */; };
@@ -58,7 +58,6 @@
 		B617D9532734273A004FE945 /* IndexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IndexBuffer.cpp; sourceTree = "<group>"; };
 		B617D9562734273A004FE945 /* imgui_impl_glfw_gl3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui_impl_glfw_gl3.h; sourceTree = "<group>"; };
 		B617D9572734273A004FE945 /* imgui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui.h; sourceTree = "<group>"; };
-		B617D9582734273A004FE945 /* imgui-main.cpp_example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "imgui-main.cpp_example"; sourceTree = "<group>"; };
 		B617D9592734273A004FE945 /* imconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imconfig.h; sourceTree = "<group>"; };
 		B617D95A2734273A004FE945 /* stb_rect_pack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_rect_pack.h; sourceTree = "<group>"; };
 		B617D95B2734273A004FE945 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_truetype.h; sourceTree = "<group>"; };
@@ -80,13 +79,16 @@
 		B617D96C2734273B004FE945 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		B617D96F2734273B004FE945 /* gold-dollar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gold-dollar.png"; sourceTree = "<group>"; };
 		B617D9702734273B004FE945 /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
-		B617D9722734273B004FE945 /* TerrainMesh.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TerrainMesh.vs; sourceTree = "<group>"; };
+		B617D9722734273B004FE945 /* TerrainMeshShader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TerrainMeshShader.vs; sourceTree = "<group>"; };
 		B617D9732734273B004FE945 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
-		B617D98127342FFD004FE945 /* TerrainMesh.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = TerrainMesh.fs; sourceTree = "<group>"; };
-		B61DE3EF274D8F0900A43A6D /* Cartoon_Trees.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartoon_Trees.obj; sourceTree = "<group>"; };
-		B61DE3F0274D8F1200A43A6D /* NatureFreePack1.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = NatureFreePack1.blend; sourceTree = "<group>"; };
+		B617D98127342FFD004FE945 /* TerrainMeshShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = TerrainMeshShader.fs; sourceTree = "<group>"; };
 		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		B61FAB3F27369A7800D6DD56 /* Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.glsl; sourceTree = "<group>"; };
+		B62816ED275FA79600F0998A /* tiny_obj_loader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiny_obj_loader.h; sourceTree = "<group>"; };
+		B62816F0275FAE8E00F0998A /* Lowpoly_tree_sample.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lowpoly_tree_sample.obj; sourceTree = "<group>"; };
+		B62816F1275FB02A00F0998A /* ModelShader.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ModelShader.vs; sourceTree = "<group>"; };
+		B62816F2275FB03E00F0998A /* ModelShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ModelShader.fs; sourceTree = "<group>"; };
+		B62816F3275FB33D00F0998A /* Lowpoly_tree_sample.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lowpoly_tree_sample.mtl; sourceTree = "<group>"; };
 		B62955372758E09300AA6836 /* SimpleAtmosphere.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SimpleAtmosphere.fsh; sourceTree = "<group>"; };
 		B62955382758E09300AA6836 /* SimpleAtmosphere.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SimpleAtmosphere.vsh; sourceTree = "<group>"; };
 		B630E9FB274D053C00446E63 /* TerrainUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainUtils.h; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				B60A8005273C27E3002DBAEA /* fast_noise */,
 				B617D9552734273A004FE945 /* imgui */,
 				B617D9622734273A004FE945 /* stb_image */,
+				B62816ED275FA79600F0998A /* tiny_obj_loader.h */,
 			);
 			path = vendor;
 			sourceTree = "<group>";
@@ -158,7 +161,6 @@
 			children = (
 				B617D9562734273A004FE945 /* imgui_impl_glfw_gl3.h */,
 				B617D9572734273A004FE945 /* imgui.h */,
-				B617D9582734273A004FE945 /* imgui-main.cpp_example */,
 				B617D9592734273A004FE945 /* imconfig.h */,
 				B617D95A2734273A004FE945 /* stb_rect_pack.h */,
 				B617D95B2734273A004FE945 /* stb_truetype.h */,
@@ -206,8 +208,10 @@
 				B62955372758E09300AA6836 /* SimpleAtmosphere.fsh */,
 				B62955382758E09300AA6836 /* SimpleAtmosphere.vsh */,
 				B61FAB3F27369A7800D6DD56 /* Common.glsl */,
-				B617D9722734273B004FE945 /* TerrainMesh.vs */,
-				B617D98127342FFD004FE945 /* TerrainMesh.fs */,
+				B617D9722734273B004FE945 /* TerrainMeshShader.vs */,
+				B617D98127342FFD004FE945 /* TerrainMeshShader.fs */,
+				B62816F1275FB02A00F0998A /* ModelShader.vs */,
+				B62816F2275FB03E00F0998A /* ModelShader.fs */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -261,8 +265,8 @@
 		B61DE3EE274D8F0000A43A6D /* models */ = {
 			isa = PBXGroup;
 			children = (
-				B61DE3F0274D8F1200A43A6D /* NatureFreePack1.blend */,
-				B61DE3EF274D8F0900A43A6D /* Cartoon_Trees.obj */,
+				B62816F3275FB33D00F0998A /* Lowpoly_tree_sample.mtl */,
+				B62816F0275FAE8E00F0998A /* Lowpoly_tree_sample.obj */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -437,19 +441,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B62816EE275FAD2900F0998A /* main.cpp in Sources */,
+				B62816EF275FAD5100F0998A /* ModelLoader.cpp in Sources */,
 				B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */,
 				B6F13526273EE44D00DF29E4 /* MeshHeightHandler.cpp in Sources */,
 				B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */,
 				B68A8D5E274BED4900B1022C /* PlanetaryMesh.cpp in Sources */,
 				B60F833A275B745E0084B120 /* LODHandler.cpp in Sources */,
-				B617D9752734273B004FE945 /* main.cpp in Sources */,
 				B617D97A2734273B004FE945 /* imgui_draw.cpp in Sources */,
 				B617D9772734273B004FE945 /* imgui.cpp in Sources */,
 				B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */,
 				B617D9792734273B004FE945 /* imgui_demo.cpp in Sources */,
 				B642135B275E6C91004C6D1D /* Mesh.cpp in Sources */,
 				B66E113627492FB400E7E9F4 /* TerrainQuadtree.cpp in Sources */,
-				B6421358275E67D8004C6D1D /* ModelLoader.cpp in Sources */,
 				B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */,
 				B617D97D2734273B004FE945 /* Texture.cpp in Sources */,
 				B617D97C2734273B004FE945 /* VertexBuffer.cpp in Sources */,

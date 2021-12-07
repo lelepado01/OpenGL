@@ -16,4 +16,8 @@ struct Vertex {
     glm::vec3 oldPosition;
 };
 
+struct ModelVertex : Vertex {
+    glm::vec3 color;
+};
+
 #endif /* Vertex_h */

@@ -19,6 +19,7 @@ Mesh::Mesh(){
     layout.AddFloat(3);
     layout.AddFloat(3);
     layout.AddFloat(3);
+    layout.AddFloat(3); 
 
     vertexArray->AddBuffer(*vertexBuffer, layout);
     

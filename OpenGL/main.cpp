@@ -1,4 +1,6 @@
 
+#define TINYOBJLOADER_IMPLEMENTATION
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -25,7 +27,6 @@ int main( void ) {
     ActiveShaders::Init();
     MeshHeightHandler::Init();
     LODHandler::Init();
-    ModelLoader::Init();
 
     Camera camera(0, QuadtreeSettings::InitialWidth + 100, 0);
     
@@ -44,7 +45,8 @@ int main( void ) {
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
 
-    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/Cartoon_Trees.obj");
+    Mesh modelTree;
+    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/Lowpoly_tree_sample.obj", modelTree);
     
     OpenGLEngine::ImguiInit();
 
@@ -70,6 +72,7 @@ int main( void ) {
                     
         terrain.Update(camera);
         terrain.Render(camera);
+        modelTree.Render(*ActiveShaders::ModelShader);
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
         ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));
