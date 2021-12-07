@@ -21,18 +21,19 @@
 class TerrainPatch {
 private:
     int globalPositionX, globalPositionY, globalPositionZ, width;
-    float distanceBetweenVertices;
     int levelOfDetail;
+
+    float distanceBetweenVertices;
     int correctVerticesPerSide; 
     
     TerrainFaceDirection direction;
     TerrainPatchAnimation transition;
+    TerrainPopHandler terrainPopHandler;
+
     Mesh meshOfPatch;
     
     glm::mat3x3 axisRotationMatrix; 
-            
-    TerrainPopHandler terrainPopHandler; 
-    
+                
 private:
     void copyData(const TerrainPatch& terrainPatch);
     

@@ -12,8 +12,9 @@ Mesh::Mesh(){
     this->indices = std::vector<unsigned int>();
     
     vertexArray = new VertexArray();
-    UpdateBuffers();
-    
+    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+    indexBuffer = new IndexBuffer(indices.data(), (unsigned int)indices.size());
+
     VertexBufferLayout layout;
     layout.AddFloat(3);
     layout.AddFloat(3);
@@ -26,8 +27,6 @@ Mesh::Mesh(){
 }
 
 Mesh::~Mesh(){
-    Clear(); 
-    
     delete vertexArray;
     delete indexBuffer;
     delete vertexBuffer;
@@ -45,9 +44,14 @@ void Mesh::copyData(const Mesh &mesh){
     this->vertices = mesh.vertices;
     this->indices = mesh.indices;
     
-    vertexArray = new VertexArray();
-    UpdateBuffers();
+    delete vertexArray;
+    delete indexBuffer;
+    delete vertexBuffer;
     
+    vertexArray = new VertexArray();
+    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+    indexBuffer = new IndexBuffer(indices.data(), (unsigned int)indices.size());
+
     VertexBufferLayout layout;
     layout.AddFloat(3);
     layout.AddFloat(3);
@@ -65,8 +69,8 @@ Mesh& Mesh::operator=(const Mesh &mesh){
 }
 
 void Mesh::UpdateBuffers(){
-    vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
-    indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
+    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+    indexBuffer->Update(indices.data(), (unsigned int)indices.size()); 
 }
 
 void Mesh::Clear(){
