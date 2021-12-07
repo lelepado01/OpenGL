@@ -21,6 +21,7 @@
 		B617D97F2734273B004FE945 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9732734273B004FE945 /* Shader.cpp */; };
 		B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B617D9642734273A004FE945 /* stb_image.cpp */; };
 		B6421358275E67D8004C6D1D /* ModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6421356275E67D8004C6D1D /* ModelLoader.cpp */; };
+		B642135B275E6C91004C6D1D /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6421359275E6C91004C6D1D /* Mesh.cpp */; };
 		B66E113627492FB400E7E9F4 /* TerrainQuadtree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E113427492FB400E7E9F4 /* TerrainQuadtree.cpp */; };
 		B66E1139274933BE00E7E9F4 /* TerrainPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E1137274933BE00E7E9F4 /* TerrainPatch.cpp */; };
 		B66E113E27496A9F00E7E9F4 /* ActiveShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E113D27496A9F00E7E9F4 /* ActiveShaders.cpp */; };
@@ -92,6 +93,8 @@
 		B63A99712737240000CA007E /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		B6421356275E67D8004C6D1D /* ModelLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ModelLoader.cpp; sourceTree = "<group>"; };
 		B6421357275E67D8004C6D1D /* ModelLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelLoader.h; sourceTree = "<group>"; };
+		B6421359275E6C91004C6D1D /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		B642135A275E6C91004C6D1D /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
 		B66E113427492FB400E7E9F4 /* TerrainQuadtree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainQuadtree.cpp; sourceTree = "<group>"; };
@@ -289,6 +292,8 @@
 				B6F13525273EE44D00DF29E4 /* MeshHeightHandler.h */,
 				B60F8338275B745E0084B120 /* LODHandler.cpp */,
 				B60F8339275B745E0084B120 /* LODHandler.h */,
+				B6421359275E6C91004C6D1D /* Mesh.cpp */,
+				B642135A275E6C91004C6D1D /* Mesh.h */,
 			);
 			path = mesh;
 			sourceTree = "<group>";
@@ -442,6 +447,7 @@
 				B617D9772734273B004FE945 /* imgui.cpp in Sources */,
 				B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */,
 				B617D9792734273B004FE945 /* imgui_demo.cpp in Sources */,
+				B642135B275E6C91004C6D1D /* Mesh.cpp in Sources */,
 				B66E113627492FB400E7E9F4 /* TerrainQuadtree.cpp in Sources */,
 				B6421358275E67D8004C6D1D /* ModelLoader.cpp in Sources */,
 				B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */,

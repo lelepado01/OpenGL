@@ -24,32 +24,12 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->incrementalTimeHeightMultiplier = 1;
     
     this->axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
-
-    this->minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
-    this->maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
     
-    this->vertices = std::vector<Vertex>();
-    this->indices = std::vector<unsigned int>();
-    
+    this->meshOfPatch = Mesh();
     createMesh();
-    
-    vertexArray = new VertexArray();
-    vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
-    indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
-    
-    VertexBufferLayout layout;
-    layout.AddFloat(3);
-    layout.AddFloat(3);
-    layout.AddFloat(3);
-
-    vertexArray->AddBuffer(*vertexBuffer, layout);
 }
 
-TerrainPatch::~TerrainPatch(){
-    delete vertexArray;
-    delete indexBuffer;
-    delete vertexBuffer;
-}
+TerrainPatch::~TerrainPatch(){}
 
 TerrainPatch::TerrainPatch(const TerrainPatch& terrainPatch) {
     copyData(terrainPatch);
@@ -77,28 +57,13 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->direction = terrainPatch.direction;
         this->transition = terrainPatch.transition;
         
-        this->vertices = terrainPatch.vertices;
-        this->indices = terrainPatch.indices;
-        
         this->axisRotationMatrix = terrainPatch.axisRotationMatrix;
         
         this->wasBuiltInTheLastSecond = terrainPatch.wasBuiltInTheLastSecond;
         this->timeOfBuildCall = terrainPatch.timeOfBuildCall;
         this->incrementalTimeHeightMultiplier = terrainPatch.incrementalTimeHeightMultiplier; 
         
-        this->vertexArray = new VertexArray();
-        this->vertexBuffer = new VertexBuffer(vertices.data(), (int)vertices.size() * sizeof(Vertex));
-        this->indexBuffer = new IndexBuffer(indices.data(), (int)indices.size());
-        
-        this->minVertex = terrainPatch.minVertex;
-        this->maxVertex = terrainPatch.maxVertex; 
-        
-        VertexBufferLayout layout;
-        layout.AddFloat(3);
-        layout.AddFloat(3);
-        layout.AddFloat(3);
-
-        this->vertexArray->AddBuffer(*vertexBuffer, layout);
+        this->meshOfPatch = terrainPatch.meshOfPatch;
     }
 }
 
@@ -120,9 +85,7 @@ void TerrainPatch::Update(int lod){
 
         levelOfDetail = lod;
         
-        
         createMesh();
-        updateBuffers();
     }
 }
 
@@ -134,17 +97,18 @@ void TerrainPatch::Render(){
         ActiveShaders::TerrainShader->SetUniform1f("u_IncrementalHeightMultiplier", -1.0f);
     }
     
-    OpenGLEngine::Draw(*vertexArray, *indexBuffer, *ActiveShaders::TerrainShader);
+    meshOfPatch.Render(*ActiveShaders::TerrainShader);
 }
 
 
 void TerrainPatch::createMesh(){
-    vertices.clear();
-    indices.clear();
+    meshOfPatch.Clear();
     
     calculateVertices();
     calculateIndices();
-    calculateNormals();
+    
+    meshOfPatch.RecalculateNormals();
+    meshOfPatch.UpdateBuffers();
 }
 
 glm::vec3 TerrainPatch::computeVertexPosition(float x, float z) const {
@@ -171,11 +135,6 @@ glm::vec3 TerrainPatch::computeVertexPosition(float x, float z, int lod) const {
     return vertex;
 }
 
-glm::vec3 TerrainPatch::computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const {
-    return glm::cross(b-a, c-a);
-}
-
-
 void TerrainPatch::calculateVertices(){
     for (float z = 0; z <= correctVerticesPerSide; z++) {
         for (float x = 0; x <= correctVerticesPerSide; x++) {
@@ -186,27 +145,10 @@ void TerrainPatch::calculateVertices(){
             Vertex v = {};
             v.position = computeVertexPosition(offsettedX, offsettedZ);
             v.oldPosition = computeVertexPosition(offsettedX, offsettedZ, levelOfDetail-1);
-            vertices.push_back(v);
-
-            calculateMinMax(v.position);
+            
+            meshOfPatch.AddVertex(v);
         }
     }
-}
-
-
-void TerrainPatch::updateBuffers(){
-    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
-    indexBuffer->Update(indices.data(), (unsigned int)indices.size());
-}
-
-void TerrainPatch::calculateMinMax(const glm::vec3& point){
-    minVertex.x = fmin(minVertex.x, point.x);
-    minVertex.y = fmin(minVertex.y, point.y);
-    minVertex.z = fmin(minVertex.z, point.z);
-
-    maxVertex.x = fmax(maxVertex.x, point.x);
-    maxVertex.y = fmax(maxVertex.y, point.y);
-    maxVertex.z = fmax(maxVertex.z, point.z);
 }
 
 
@@ -216,46 +158,20 @@ void TerrainPatch::calculateIndices(){
         for (int x = 0; x <= correctVerticesPerSide; x++) {
             if (x < correctVerticesPerSide && z < correctVerticesPerSide){
                 if (TerrainFace::IsBackFace(direction)){
-                    indices.push_back(vertexIndex + 1);
-                    indices.push_back(vertexIndex + correctVerticesPerSide + 1);
-                    indices.push_back(vertexIndex);
                     
-                    indices.push_back(vertexIndex + correctVerticesPerSide + 2);
-                    indices.push_back(vertexIndex + correctVerticesPerSide + 1);
-                    indices.push_back(vertexIndex + 1);
+                    meshOfPatch.AddTriangleIndices(vertexIndex+1, vertexIndex + correctVerticesPerSide + 1, vertexIndex);
+                    meshOfPatch.AddTriangleIndices(vertexIndex + correctVerticesPerSide + 2, vertexIndex + correctVerticesPerSide + 1, vertexIndex + 1);
+                
                 } else {
-                    indices.push_back(vertexIndex);
-                    indices.push_back(vertexIndex + correctVerticesPerSide + 1);
-                    indices.push_back(vertexIndex + 1);
                     
-                    indices.push_back(vertexIndex + 1);
-                    indices.push_back(vertexIndex + correctVerticesPerSide + 1);
-                    indices.push_back(vertexIndex + correctVerticesPerSide + 2);
+                    meshOfPatch.AddTriangleIndices(vertexIndex, vertexIndex + correctVerticesPerSide + 1, vertexIndex+1);
+                    meshOfPatch.AddTriangleIndices(vertexIndex + 1, vertexIndex + correctVerticesPerSide + 1, vertexIndex + correctVerticesPerSide + 2);
+                    
                 }
                 vertexIndex++;
             }
         }
         vertexIndex++;
-    }
-}
-
-void TerrainPatch::calculateNormals(){
-    for (int normalTriangleIndex = 0; normalTriangleIndex < indices.size(); normalTriangleIndex+=3) {
-        int vertexIndexA = indices.at(normalTriangleIndex);
-        int vertexIndexB = indices.at(normalTriangleIndex + 1);
-        int vertexIndexC = indices.at(normalTriangleIndex + 2);
-
-        glm::vec3 normal = computeVertexNormal(vertices.at(vertexIndexA).position,
-                                               vertices.at(vertexIndexB).position,
-                                               vertices.at(vertexIndexC).position);
-        
-        vertices[vertexIndexA].normal += normal;
-        vertices[vertexIndexB].normal += normal;
-        vertices[vertexIndexC].normal += normal;
-    }
-    
-    for (int i = 0; i < vertices.size(); i++) {
-        vertices[i].normal = glm::normalize(vertices[i].normal);
     }
 }
 

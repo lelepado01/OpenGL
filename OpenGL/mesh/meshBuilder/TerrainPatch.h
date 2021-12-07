@@ -10,17 +10,12 @@
 
 #include <stdio.h>
 
-#include "../../buffers/VertexBuffer.h"
-#include "../../buffers/IndexBuffer.h"
-#include "../../buffers/VertexArray.h"
-#include "../../buffers/VertexBufferLayout.h"
-#include "../../engine/OpenGLEngine.h"
 #include "../../shaders/ActiveShaders.h"
 #include "../../settings/QuadtreeSettings.h"
-#include "../Vertex.h"
-#include "../MeshHeightHandler.h"
-#include "TerrainUtils.h"
 #include "../../engine/Time.h"
+#include "../MeshHeightHandler.h"
+#include "../Mesh.h"
+#include "TerrainUtils.h"
 
 
 class TerrainPatch {
@@ -31,20 +26,11 @@ private:
     int correctVerticesPerSide; 
     
     TerrainFaceDirection direction;
-    TerrainPatchTransition transition; 
-        
-    VertexArray* vertexArray = nullptr;
-    VertexBuffer* vertexBuffer = nullptr;
-    IndexBuffer* indexBuffer = nullptr;
-    
-    std::vector<Vertex> vertices = std::vector<Vertex>();
-    std::vector<unsigned int> indices = std::vector<unsigned int>();
+    TerrainPatchTransition transition;
+    Mesh meshOfPatch;
     
     glm::mat3x3 axisRotationMatrix; 
-    
-    glm::vec3 minVertex;
-    glm::vec3 maxVertex;
-        
+            
     bool wasBuiltInTheLastSecond;
     float incrementalTimeHeightMultiplier;
     long timeOfBuildCall;
@@ -56,14 +42,9 @@ private:
     void createMesh();
     void calculateVertices();
     void calculateIndices();
-    void calculateNormals();
-    void calculateMinMax(const glm::vec3& point); 
-    
-    void updateBuffers();
 
     glm::vec3 computeVertexPosition(float x, float z) const;
     glm::vec3 computeVertexPosition(float x, float z, int lod) const;
-    glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const;
     
 public:
     TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchTransition transition);
@@ -75,10 +56,9 @@ public:
     void Update(int lod); 
     void Render();
     
-    long GetVertexNumber() const { return vertices.size(); };
-    
-    const glm::vec3& GetMinPoint() const { return minVertex; };
-    const glm::vec3& GetMaxPoint() const { return maxVertex; };
+    long GetVertexNumber() const { return meshOfPatch.GetVertexNumber(); };
+    const glm::vec3& GetMinPoint() const { return meshOfPatch.GetMinPoint(); };
+    const glm::vec3& GetMaxPoint() const { return meshOfPatch.GetMaxPoint(); };
 
     static glm::vec3 PointCubeToSphere(const glm::vec3& point);
 
