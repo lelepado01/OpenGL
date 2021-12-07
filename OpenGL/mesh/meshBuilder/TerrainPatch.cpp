@@ -7,7 +7,7 @@
 
 #include "TerrainPatch.h"
 
-TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchTransition transition){
+TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchAnimation transition){
     this->globalPositionX = x;
     this->globalPositionZ = z;
     this->globalPositionY = QuadtreeSettings::InitialWidth / 2;
@@ -18,11 +18,7 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     
     this->direction = dir;
     this->transition = transition;
-    
-    this->wasBuiltInTheLastSecond = true;
-    this->timeOfBuildCall = Time::GetMillisecondsFromEpoch();
-    this->incrementalTimeHeightMultiplier = 1;
-    
+        
     this->axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
     
     this->meshOfPatch = Mesh();
@@ -58,30 +54,19 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->transition = terrainPatch.transition;
         
         this->axisRotationMatrix = terrainPatch.axisRotationMatrix;
-        
-        this->wasBuiltInTheLastSecond = terrainPatch.wasBuiltInTheLastSecond;
-        this->timeOfBuildCall = terrainPatch.timeOfBuildCall;
-        this->incrementalTimeHeightMultiplier = terrainPatch.incrementalTimeHeightMultiplier; 
-        
+                
         this->meshOfPatch = terrainPatch.meshOfPatch;
     }
 }
 
 void TerrainPatch::Update(int lod){
-    if (wasBuiltInTheLastSecond){
-
-        long timeNow = Time::GetMillisecondsFromEpoch();
-        if (timeNow - timeOfBuildCall >= transitionTimeInMilliseconds){
-            wasBuiltInTheLastSecond = false;
-            return;
-        }
-        
-        incrementalTimeHeightMultiplier = ((float)(timeNow - timeOfBuildCall)) / transitionTimeInMilliseconds;
+    if (terrainPopHandler.TerrainIsBeingAnimated()){
+        terrainPopHandler.Update();
     }
     
     if (lod != levelOfDetail){
-        if (lod > levelOfDetail) transition = TerrainPatchTransition::Upscale;
-        else transition = TerrainPatchTransition::Downscale;
+        if (lod > levelOfDetail) transition = TerrainPatchAnimation::Upscale;
+        else transition = TerrainPatchAnimation::Downscale;
 
         levelOfDetail = lod;
         
@@ -90,13 +75,7 @@ void TerrainPatch::Update(int lod){
 }
 
 void TerrainPatch::Render(){
-    
-    if (wasBuiltInTheLastSecond){
-        ActiveShaders::TerrainShader->SetUniform1f("u_IncrementalHeightMultiplier", incrementalTimeHeightMultiplier);
-    } else {
-        ActiveShaders::TerrainShader->SetUniform1f("u_IncrementalHeightMultiplier", -1.0f);
-    }
-    
+    ActiveShaders::TerrainShader->SetUniform1f("u_TerrainAnimationPercentage", terrainPopHandler.GetAnimationPercentage());
     meshOfPatch.Render(*ActiveShaders::TerrainShader);
 }
 

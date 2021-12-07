@@ -19,7 +19,7 @@ uniform float u_Time;
 
 
 // Terrain Geomorphing Parameters
-uniform float u_IncrementalHeightMultiplier;
+uniform float u_TerrainAnimationPercentage;
 
 
 out vec3 objectNormal;
@@ -48,8 +48,8 @@ void main() {
     
     gl_Position = u_MVP * vec4(position, 1);
 
-    if (u_IncrementalHeightMultiplier != -1){
-        gl_Position = u_MVP * vec4( oldPosition + (position - oldPosition) * (u_IncrementalHeightMultiplier), 1);
+    if (u_TerrainAnimationPercentage != -1){
+        gl_Position = u_MVP * vec4( oldPosition + (position - oldPosition) * (u_TerrainAnimationPercentage), 1);
     }
     
     if (distance(fragPos, vec3(0,0,0)) < 4096.8){

@@ -26,15 +26,12 @@ private:
     int correctVerticesPerSide; 
     
     TerrainFaceDirection direction;
-    TerrainPatchTransition transition;
+    TerrainPatchAnimation transition;
     Mesh meshOfPatch;
     
     glm::mat3x3 axisRotationMatrix; 
             
-    bool wasBuiltInTheLastSecond;
-    float incrementalTimeHeightMultiplier;
-    long timeOfBuildCall;
-    const int transitionTimeInMilliseconds = 1000; 
+    TerrainPopHandler terrainPopHandler; 
     
 private:
     void copyData(const TerrainPatch& terrainPatch);
@@ -47,7 +44,7 @@ private:
     glm::vec3 computeVertexPosition(float x, float z, int lod) const;
     
 public:
-    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchTransition transition);
+    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchAnimation transition);
     TerrainPatch(const TerrainPatch& terrainPatch);
     TerrainPatch(TerrainPatch&& terrainPatch);
     ~TerrainPatch();
