@@ -10,12 +10,12 @@
 
 #include <stdio.h>
 
-#include "../../shaders/ActiveShaders.h"
-#include "../../settings/QuadtreeSettings.h"
-#include "../../engine/Time.h"
-#include "../MeshHeightHandler.h"
-#include "../Mesh.h"
-#include "TerrainUtils.h"
+#include "../shaders/ActiveShaders.h"
+#include "../settings/QuadtreeSettings.h"
+#include "../engine/Time.h"
+#include "../mesh/Mesh.h"
+#include "utils/MeshHeightHandler.h"
+#include "utils/TerrainUtils.h"
 
 
 class TerrainPatch {

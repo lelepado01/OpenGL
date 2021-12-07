@@ -12,8 +12,8 @@
 #include <iostream>
 #include <vector>
 
-#include "../vendor/fast_noise/FastNoiseLite.h"
-#include "../settings/QuadtreeSettings.h"
+#include "../../vendor/fast_noise/FastNoiseLite.h"
+#include "../../settings/QuadtreeSettings.h"
 
 struct MeshHeightLevel {
     bool enabled; 

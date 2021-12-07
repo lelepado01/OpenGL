@@ -11,9 +11,9 @@
 #include "materials/Material.h"
 #include "shaders/Shader.h"
 #include "shaders/ActiveShaders.h"
-#include "mesh/meshBuilder/PlanetaryMesh.h"
-#include "mesh/LODHandler.h"
-#include "models/ModelLoader.h"
+#include "terrain/PlanetaryMesh.h"
+#include "terrain/utils/LODHandler.h"
+#include "mesh/ModelLoader.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"

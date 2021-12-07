@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <vector>
 
-#include "../settings/QuadtreeSettings.h"
+#include "../../settings/QuadtreeSettings.h"
 
 class LODHandler {
 private:

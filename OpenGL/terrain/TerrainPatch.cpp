@@ -25,9 +25,7 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     createMesh();
 }
 
-TerrainPatch::~TerrainPatch(){
-    
-}
+TerrainPatch::~TerrainPatch(){}
 
 TerrainPatch::TerrainPatch(const TerrainPatch& terrainPatch) {
     copyData(terrainPatch);

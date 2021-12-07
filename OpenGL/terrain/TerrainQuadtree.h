@@ -11,12 +11,11 @@
 #include <stdio.h>
 #include <vector>
 #include <optional>
-#include <cmath>
 
-#include "../../camera/Camera.h"
-#include "../../settings/QuadtreeSettings.h"
+#include "../camera/Camera.h"
+#include "../settings/QuadtreeSettings.h"
 #include "TerrainPatch.h"
-#include "../LODHandler.h"
+#include "utils/LODHandler.h"
 
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtx/vector_angle.hpp>
