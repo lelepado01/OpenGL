@@ -19,10 +19,7 @@ TerrainMesh::TerrainMesh(){
     layout.AddFloat(3);
     layout.AddFloat(3);
 
-    vertexArray->AddBuffer(*vertexBuffer, layout);
-    
-    this->minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
-    this->maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+    vertexArray->AddBuffer(*vertexBuffer, layout);    
 }
 
 TerrainMesh::~TerrainMesh(){
@@ -77,24 +74,10 @@ void TerrainMesh::Clear(){
     indices = std::vector<unsigned int>();
 }
 
-//void TerrainMesh::Render(const Shader &shader){
-//    OpenGLEngine::Draw(*vertexArray, *indexBuffer, shader);
-//}
-
 void TerrainMesh::AddVertex(TerrainVertex v){
     vertices.push_back(v);
     calculateMinMax(v.position);
 }
-
-//void TerrainMesh::AddIndex(unsigned int index){
-//    indices.push_back(index);
-//}
-
-//void TerrainMesh::AddTriangleIndices(unsigned int ind1, unsigned int ind2, unsigned int ind3){
-//    indices.push_back(ind1);
-//    indices.push_back(ind2);
-//    indices.push_back(ind3);
-//}
 
 void TerrainMesh::RecalculateNormals(){
     for (int normalTriangleIndex = 0; normalTriangleIndex < indices.size(); normalTriangleIndex+=3) {
@@ -116,16 +99,3 @@ void TerrainMesh::RecalculateNormals(){
     }
 }
 
-glm::vec3 TerrainMesh::computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const {
-    return glm::cross(b-a, c-a);
-}
-
-void TerrainMesh::calculateMinMax(const glm::vec3& point){
-    minVertex.x = fmin(minVertex.x, point.x);
-    minVertex.y = fmin(minVertex.y, point.y);
-    minVertex.z = fmin(minVertex.z, point.z);
-
-    maxVertex.x = fmax(maxVertex.x, point.x);
-    maxVertex.y = fmax(maxVertex.y, point.y);
-    maxVertex.z = fmax(maxVertex.z, point.z);
-}

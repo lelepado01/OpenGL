@@ -9,7 +9,6 @@
 
 ModelMesh::ModelMesh(){
     this->vertices = std::vector<ModelVertex>();
-    this->indices = std::vector<unsigned int>();
     
     vertexArray = new VertexArray();
     vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * sizeof(ModelVertex));

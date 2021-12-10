@@ -35,7 +35,6 @@ public:
     
     void UpdateBuffers();
     void Clear();
-    
     void AddVertex(ModelVertex v);
 }; 
 

@@ -14,15 +14,9 @@
 class TerrainMesh : public Mesh {
 private:
     std::vector<TerrainVertex> vertices = std::vector<TerrainVertex>();
-    
-    glm::vec3 minVertex;
-    glm::vec3 maxVertex;
-    
+        
 protected:
     void copyData(const TerrainMesh& mesh);
-    void calculateMinMax(const glm::vec3& point);
-
-    glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const;
 
 public:
     TerrainMesh();
@@ -35,10 +29,7 @@ public:
     void Clear();
     void RecalculateNormals();
     
-    virtual void AddVertex(TerrainVertex v);
-    
-    const glm::vec3& GetMinPoint() const { return minVertex; };
-    const glm::vec3& GetMaxPoint() const { return maxVertex; };    
+    virtual void AddVertex(TerrainVertex v);    
 };
 
 #endif /* TerrainMesh_h */
