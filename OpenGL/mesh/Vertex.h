@@ -14,8 +14,6 @@ struct Vertex {
     glm::vec3 position;
     glm::vec3 normal;
     glm::vec3 oldPosition;
-    
-    unsigned int GetSize() { return sizeof(Vertex); };
 };
 
 struct ModelVertex {
@@ -23,12 +21,12 @@ struct ModelVertex {
     glm::vec3 normal;
     glm::vec3 oldPosition;
     glm::vec3 color;
-    
-    unsigned int GetSize() { return sizeof(ModelVertex); };
 };
 
-struct TerrainVertex : Vertex {
-    unsigned int GetSize() { return sizeof(TerrainVertex); };
+struct TerrainVertex {
+    glm::vec3 position;
+    glm::vec3 normal;
+    glm::vec3 oldPosition;
 };
 
 #endif /* Vertex_h */

@@ -30,7 +30,6 @@ protected:
     
     glm::vec3 minVertex;
     glm::vec3 maxVertex;
-
     
 protected:
     void copyData(const Mesh& mesh);
@@ -38,28 +37,29 @@ protected:
 
     glm::vec3 computeVertexNormal(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c) const;
 
-public:
+protected:
     Mesh();
     ~Mesh();
     Mesh(const Mesh& mesh);
     Mesh(Mesh&& mesh);
     Mesh& operator=(const Mesh& mesh);
-    
+
+public:
     void UpdateBuffers();
-    void Clear(); 
+    void Clear();
+    void RecalculateNormals();
     void Render(const Shader& shader);
-    void RecalculateNormals(); 
     
     virtual void AddVertex(Vertex v);
     void AddIndex(unsigned int index);
     void AddTriangleIndices(unsigned int ind1, unsigned int ind2, unsigned int ind3);
     
-    long GetVertexNumber() const { return vertices.size(); };
     long GetNumberOfIndices() const { return indices.size(); };
-    
+    long GetVertexNumber() const { return vertices.size(); };
+
     const glm::vec3& GetMinPoint() const { return minVertex; };
     const glm::vec3& GetMaxPoint() const { return maxVertex; };
-
+    
 };
 
 #endif /* Mesh_h */

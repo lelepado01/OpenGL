@@ -12,7 +12,7 @@ Mesh::Mesh(){
     this->indices = std::vector<unsigned int>();
     
     vertexArray = new VertexArray();
-    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * vertices[0].GetSize());
+    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
     indexBuffer = new IndexBuffer(indices.data(), (unsigned int)indices.size());
 
     VertexBufferLayout layout;
@@ -26,11 +26,7 @@ Mesh::Mesh(){
     this->maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 }
 
-Mesh::~Mesh(){
-    delete vertexArray;
-    delete indexBuffer;
-    delete vertexBuffer;
-}
+Mesh::~Mesh(){}
 
 Mesh::Mesh(const Mesh& mesh){
     copyData(mesh);
@@ -49,7 +45,7 @@ void Mesh::copyData(const Mesh &mesh){
     delete vertexBuffer;
     
     vertexArray = new VertexArray();
-    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * vertices[0].GetSize());
+    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
     indexBuffer = new IndexBuffer(indices.data(), (unsigned int)indices.size());
 
     VertexBufferLayout layout;
@@ -69,7 +65,7 @@ Mesh& Mesh::operator=(const Mesh &mesh){
 }
 
 void Mesh::UpdateBuffers(){
-    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * vertices[0].GetSize());
+    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
     indexBuffer->Update(indices.data(), (unsigned int)indices.size()); 
 }
 

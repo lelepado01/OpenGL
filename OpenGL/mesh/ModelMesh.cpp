@@ -54,6 +54,7 @@ void ModelMesh::copyData(const ModelMesh &mesh){
     layout.AddFloat(3);
     layout.AddFloat(3);
     layout.AddFloat(3);
+    layout.AddFloat(3);
 
     vertexArray->AddBuffer(*vertexBuffer, layout);
 }
@@ -73,14 +74,6 @@ void ModelMesh::Clear(){
     indices = std::vector<unsigned int>();
 }
 
-void ModelMesh::Render(const Shader &shader){
-    OpenGLEngine::Draw(*vertexArray, *indexBuffer, shader);
-}
-
 void ModelMesh::AddVertex(ModelVertex v){
     vertices.push_back(v);
-}
-
-void ModelMesh::AddIndex(unsigned int index){
-    indices.push_back(index);
 }

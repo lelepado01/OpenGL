@@ -28,7 +28,7 @@ int main( void ) {
     MeshHeightHandler::Init();
     LODHandler::Init();
 
-    Camera camera(0, 0, 0);
+    Camera camera(0, 5000, 0);
     
     PlanetaryMesh terrain;
     
@@ -65,13 +65,13 @@ int main( void ) {
         
         ActiveShaders::TerrainShader->Bind();
         ActiveShaders::TerrainShader->SetUniform1f("u_Time", Time::GetFrameCount() / 100.0f);
-//        ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
+        ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
                     
-//        terrain.Update(camera);
-//        terrain.Render(camera);
+        terrain.Update(camera);
+        terrain.Render(camera);
         
         ActiveShaders::ModelShader->Bind();
         ActiveShaders::ModelShader->SetUniformMat4f("u_MVP", mvp);

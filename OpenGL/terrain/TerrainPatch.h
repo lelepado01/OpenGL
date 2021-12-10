@@ -13,7 +13,7 @@
 #include "../shaders/ActiveShaders.h"
 #include "../settings/QuadtreeSettings.h"
 #include "../engine/Time.h"
-#include "../mesh/Mesh.h"
+#include "../mesh/TerrainMesh.h"
 #include "utils/MeshHeightHandler.h"
 #include "utils/TerrainUtils.h"
 
@@ -30,7 +30,7 @@ private:
     TerrainPatchAnimation transition;
     TerrainPopHandler terrainPopHandler;
 
-    Mesh meshOfPatch;
+    TerrainMesh meshOfPatch;
     
     glm::mat3x3 axisRotationMatrix; 
                 

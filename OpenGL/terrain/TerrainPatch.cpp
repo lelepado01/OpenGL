@@ -21,7 +21,7 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
         
     this->axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
     
-    this->meshOfPatch = Mesh();
+    this->meshOfPatch = TerrainMesh();
     createMesh();
 }
 
@@ -121,7 +121,7 @@ void TerrainPatch::calculateVertices(){
             float offsettedX = x - 1;
             float offsettedZ = z - 1;
             
-            Vertex v = {};
+            TerrainVertex v = {};
             v.position = computeVertexPosition(offsettedX, offsettedZ);
             v.oldPosition = computeVertexPosition(offsettedX, offsettedZ, levelOfDetail-1);
             
