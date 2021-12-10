@@ -12,14 +12,13 @@ Mesh::Mesh(){
     this->indices = std::vector<unsigned int>();
     
     vertexArray = new VertexArray();
-    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * vertices[0].GetSize());
     indexBuffer = new IndexBuffer(indices.data(), (unsigned int)indices.size());
 
     VertexBufferLayout layout;
     layout.AddFloat(3);
     layout.AddFloat(3);
     layout.AddFloat(3);
-    layout.AddFloat(3); 
 
     vertexArray->AddBuffer(*vertexBuffer, layout);
     
@@ -50,7 +49,7 @@ void Mesh::copyData(const Mesh &mesh){
     delete vertexBuffer;
     
     vertexArray = new VertexArray();
-    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+    vertexBuffer = new VertexBuffer(vertices.data(), (unsigned int)vertices.size() * vertices[0].GetSize());
     indexBuffer = new IndexBuffer(indices.data(), (unsigned int)indices.size());
 
     VertexBufferLayout layout;
@@ -70,7 +69,7 @@ Mesh& Mesh::operator=(const Mesh &mesh){
 }
 
 void Mesh::UpdateBuffers(){
-    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * sizeof(Vertex));
+    vertexBuffer->Update(vertices.data(), (unsigned int)vertices.size() * vertices[0].GetSize());
     indexBuffer->Update(indices.data(), (unsigned int)indices.size()); 
 }
 
@@ -84,8 +83,12 @@ void Mesh::Render(const Shader &shader){
 }
 
 void Mesh::AddVertex(Vertex v){
-    vertices.push_back(v); 
+    vertices.push_back(v);
     calculateMinMax(v.position);
+}
+
+void Mesh::AddIndex(unsigned int index){
+    indices.push_back(index); 
 }
 
 void Mesh::AddTriangleIndices(unsigned int ind1, unsigned int ind2, unsigned int ind3){

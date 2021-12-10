@@ -20,7 +20,7 @@
 #include "Vertex.h"
 
 class Mesh {
-private:
+protected:
     VertexArray* vertexArray = nullptr;
     VertexBuffer* vertexBuffer = nullptr;
     IndexBuffer* indexBuffer = nullptr;
@@ -32,7 +32,7 @@ private:
     glm::vec3 maxVertex;
 
     
-private:
+protected:
     void copyData(const Mesh& mesh);
     void calculateMinMax(const glm::vec3& point);
 
@@ -50,10 +50,13 @@ public:
     void Render(const Shader& shader);
     void RecalculateNormals(); 
     
-    void AddVertex(Vertex v);
+    virtual void AddVertex(Vertex v);
+    void AddIndex(unsigned int index);
     void AddTriangleIndices(unsigned int ind1, unsigned int ind2, unsigned int ind3);
     
     long GetVertexNumber() const { return vertices.size(); };
+    long GetNumberOfIndices() const { return indices.size(); };
+    
     const glm::vec3& GetMinPoint() const { return minVertex; };
     const glm::vec3& GetMaxPoint() const { return maxVertex; };
 

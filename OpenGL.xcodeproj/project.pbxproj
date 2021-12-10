@@ -26,6 +26,8 @@
 		B66E1139274933BE00E7E9F4 /* TerrainPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E1137274933BE00E7E9F4 /* TerrainPatch.cpp */; };
 		B66E113E27496A9F00E7E9F4 /* ActiveShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B66E113D27496A9F00E7E9F4 /* ActiveShaders.cpp */; };
 		B68A8D5E274BED4900B1022C /* PlanetaryMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B68A8D5C274BED4900B1022C /* PlanetaryMesh.cpp */; };
+		B690DCA527623BD600468540 /* TerrainMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B690DCA327623BD600468540 /* TerrainMesh.cpp */; };
+		B690DCA827623BE100468540 /* ModelMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B690DCA627623BE100468540 /* ModelMesh.cpp */; };
 		B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */; };
 		B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */; };
 		B6BFF5E726F8EE22002ECA4B /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */; };
@@ -84,11 +86,11 @@
 		B617D98127342FFD004FE945 /* TerrainMeshShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = TerrainMeshShader.fs; sourceTree = "<group>"; };
 		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		B61FAB3F27369A7800D6DD56 /* Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.glsl; sourceTree = "<group>"; };
+		B623BA3C27639649001E3093 /* Lowpoly_tree_sample.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lowpoly_tree_sample.obj; sourceTree = "<group>"; };
+		B623BA3D27639649001E3093 /* Lowpoly_tree_sample.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lowpoly_tree_sample.mtl; sourceTree = "<group>"; };
 		B62816ED275FA79600F0998A /* tiny_obj_loader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiny_obj_loader.h; sourceTree = "<group>"; };
-		B62816F0275FAE8E00F0998A /* Lowpoly_tree_sample.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lowpoly_tree_sample.obj; sourceTree = "<group>"; };
 		B62816F1275FB02A00F0998A /* ModelShader.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ModelShader.vs; sourceTree = "<group>"; };
 		B62816F2275FB03E00F0998A /* ModelShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ModelShader.fs; sourceTree = "<group>"; };
-		B62816F3275FB33D00F0998A /* Lowpoly_tree_sample.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lowpoly_tree_sample.mtl; sourceTree = "<group>"; };
 		B62955372758E09300AA6836 /* SimpleAtmosphere.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SimpleAtmosphere.fsh; sourceTree = "<group>"; };
 		B62955382758E09300AA6836 /* SimpleAtmosphere.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SimpleAtmosphere.vsh; sourceTree = "<group>"; };
 		B630E9FB274D053C00446E63 /* TerrainUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainUtils.h; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		B642135A275E6C91004C6D1D /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
+		B64F535F27636C4000E437BF /* plyLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = plyLoader.h; sourceTree = "<group>"; };
 		B66E113427492FB400E7E9F4 /* TerrainQuadtree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainQuadtree.cpp; sourceTree = "<group>"; };
 		B66E113527492FB400E7E9F4 /* TerrainQuadtree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainQuadtree.h; sourceTree = "<group>"; };
 		B66E1137274933BE00E7E9F4 /* TerrainPatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainPatch.cpp; sourceTree = "<group>"; };
@@ -108,6 +111,10 @@
 		B66E6422274AB359002C9D54 /* QuadtreeSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuadtreeSettings.h; sourceTree = "<group>"; };
 		B68A8D5C274BED4900B1022C /* PlanetaryMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlanetaryMesh.cpp; sourceTree = "<group>"; };
 		B68A8D5D274BED4900B1022C /* PlanetaryMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlanetaryMesh.h; sourceTree = "<group>"; };
+		B690DCA327623BD600468540 /* TerrainMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainMesh.cpp; sourceTree = "<group>"; };
+		B690DCA427623BD600468540 /* TerrainMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainMesh.h; sourceTree = "<group>"; };
+		B690DCA627623BE100468540 /* ModelMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ModelMesh.cpp; sourceTree = "<group>"; };
+		B690DCA727623BE100468540 /* ModelMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelMesh.h; sourceTree = "<group>"; };
 		B6BFF5D226F8EDC6002ECA4B /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B6BFF5E026F8EDF9002ECA4B /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.dylib; sourceTree = "<group>"; };
@@ -152,6 +159,7 @@
 				B617D9552734273A004FE945 /* imgui */,
 				B617D9622734273A004FE945 /* stb_image */,
 				B62816ED275FA79600F0998A /* tiny_obj_loader.h */,
+				B64F535F27636C4000E437BF /* plyLoader.h */,
 			);
 			path = vendor;
 			sourceTree = "<group>";
@@ -265,8 +273,8 @@
 		B61DE3EE274D8F0000A43A6D /* models */ = {
 			isa = PBXGroup;
 			children = (
-				B62816F3275FB33D00F0998A /* Lowpoly_tree_sample.mtl */,
-				B62816F0275FAE8E00F0998A /* Lowpoly_tree_sample.obj */,
+				B623BA3D27639649001E3093 /* Lowpoly_tree_sample.mtl */,
+				B623BA3C27639649001E3093 /* Lowpoly_tree_sample.obj */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -321,6 +329,10 @@
 				B63A99712737240000CA007E /* Vertex.h */,
 				B6421359275E6C91004C6D1D /* Mesh.cpp */,
 				B642135A275E6C91004C6D1D /* Mesh.h */,
+				B690DCA327623BD600468540 /* TerrainMesh.cpp */,
+				B690DCA427623BD600468540 /* TerrainMesh.h */,
+				B690DCA627623BE100468540 /* ModelMesh.cpp */,
+				B690DCA727623BE100468540 /* ModelMesh.h */,
 			);
 			path = mesh;
 			sourceTree = "<group>";
@@ -445,6 +457,7 @@
 				B62816EF275FAD5100F0998A /* ModelLoader.cpp in Sources */,
 				B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */,
 				B6F13526273EE44D00DF29E4 /* MeshHeightHandler.cpp in Sources */,
+				B690DCA827623BE100468540 /* ModelMesh.cpp in Sources */,
 				B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */,
 				B68A8D5E274BED4900B1022C /* PlanetaryMesh.cpp in Sources */,
 				B60F833A275B745E0084B120 /* LODHandler.cpp in Sources */,
@@ -460,6 +473,7 @@
 				B66E1139274933BE00E7E9F4 /* TerrainPatch.cpp in Sources */,
 				B617D9742734273B004FE945 /* VertexArray.cpp in Sources */,
 				B617D9782734273B004FE945 /* imgui_impl_glfw_gl3.cpp in Sources */,
+				B690DCA527623BD600468540 /* TerrainMesh.cpp in Sources */,
 				B617D97F2734273B004FE945 /* Shader.cpp in Sources */,
 				B66E113E27496A9F00E7E9F4 /* ActiveShaders.cpp in Sources */,
 				B617D9762734273B004FE945 /* IndexBuffer.cpp in Sources */,
