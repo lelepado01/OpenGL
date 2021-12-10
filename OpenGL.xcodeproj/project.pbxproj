@@ -101,7 +101,6 @@
 		B642135A275E6C91004C6D1D /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		B64E5E2E26F8EEA500CC7383 /* OpenGL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenGL.entitlements; sourceTree = "<group>"; };
 		B64E5E2F26F8EEBE00CC7383 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.3.dylib; sourceTree = "<group>"; };
-		B64F535F27636C4000E437BF /* plyLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = plyLoader.h; sourceTree = "<group>"; };
 		B66E113427492FB400E7E9F4 /* TerrainQuadtree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainQuadtree.cpp; sourceTree = "<group>"; };
 		B66E113527492FB400E7E9F4 /* TerrainQuadtree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainQuadtree.h; sourceTree = "<group>"; };
 		B66E1137274933BE00E7E9F4 /* TerrainPatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainPatch.cpp; sourceTree = "<group>"; };
@@ -155,11 +154,10 @@
 		B617D9542734273A004FE945 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B623BA3E2763995C001E3093 /* tiny_obj_loader */,
 				B60A8005273C27E3002DBAEA /* fast_noise */,
 				B617D9552734273A004FE945 /* imgui */,
 				B617D9622734273A004FE945 /* stb_image */,
-				B62816ED275FA79600F0998A /* tiny_obj_loader.h */,
-				B64F535F27636C4000E437BF /* plyLoader.h */,
 			);
 			path = vendor;
 			sourceTree = "<group>";
@@ -285,6 +283,14 @@
 				B61FAB3E2736994A00D6DD56 /* Material.h */,
 			);
 			path = materials;
+			sourceTree = "<group>";
+		};
+		B623BA3E2763995C001E3093 /* tiny_obj_loader */ = {
+			isa = PBXGroup;
+			children = (
+				B62816ED275FA79600F0998A /* tiny_obj_loader.h */,
+			);
+			path = tiny_obj_loader;
 			sourceTree = "<group>";
 		};
 		B625C5A027457DC800F90B2C /* settings */ = {
