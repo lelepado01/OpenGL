@@ -46,7 +46,7 @@ int main( void ) {
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
 
     ModelMesh modelTree;
-    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/pine.obj", modelTree);
+    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/pin.obj", modelTree);
     
     OpenGLEngine::ImguiInit();
 

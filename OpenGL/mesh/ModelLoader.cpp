@@ -17,18 +17,19 @@ void ModelLoader::Load(const std::string& path, ModelMesh& mesh){
     std::string err;
 
     bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str());
+    
+    if (!warn.empty()) {
+        std::cout << "---\nWARNING: " << warn << "---\n" << std::endl;
+    }
+
+    if (!err.empty()) {
+        std::cerr << "---\nERROR: " << err << "---\n" << std::endl;
+    }
+
     if (!ret) {
         exit(1);
     }
     
-    if (!warn.empty()) {
-        std::cout << warn << std::endl;
-    }
-
-    if (!err.empty()) {
-        std::cerr << err << std::endl;
-    }
-
     for (const auto& shape : shapes) {
         unsigned int vertexIndex = 0;
         for (const auto& index : shape.mesh.indices) {
