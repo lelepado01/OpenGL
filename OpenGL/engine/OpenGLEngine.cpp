@@ -102,6 +102,13 @@ void OpenGLEngine::Draw(const VertexArray &va, const IndexBuffer &ib, const Shad
     GLCall( glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr) );
 }
 
+void OpenGLEngine::DrawInstanced(const VertexArray &va, const IndexBuffer &ib, const Shader &shader, const unsigned int amount){
+    shader.Bind();
+    va.Bind();
+    ib.Bind();
+    GLCall( glDrawElementsInstanced(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, 0, amount) );
+}
+
 void OpenGLEngine::SwapBuffers(){
     GLCall( glfwSwapBuffers(window) );
 }

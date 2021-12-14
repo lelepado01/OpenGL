@@ -86,8 +86,8 @@
 		B617D98127342FFD004FE945 /* TerrainMeshShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = TerrainMeshShader.fs; sourceTree = "<group>"; };
 		B61FAB3E2736994A00D6DD56 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		B61FAB3F27369A7800D6DD56 /* Common.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Common.glsl; sourceTree = "<group>"; };
-		B623BA3C27639649001E3093 /* Lowpoly_tree_sample.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lowpoly_tree_sample.obj; sourceTree = "<group>"; };
-		B623BA3D27639649001E3093 /* Lowpoly_tree_sample.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lowpoly_tree_sample.mtl; sourceTree = "<group>"; };
+		B623BA3C27639649001E3093 /* tree.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = tree.obj; sourceTree = "<group>"; };
+		B623BA3D27639649001E3093 /* tree.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = tree.mtl; sourceTree = "<group>"; };
 		B62816ED275FA79600F0998A /* tiny_obj_loader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiny_obj_loader.h; sourceTree = "<group>"; };
 		B62816F1275FB02A00F0998A /* ModelShader.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ModelShader.vs; sourceTree = "<group>"; };
 		B62816F2275FB03E00F0998A /* ModelShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ModelShader.fs; sourceTree = "<group>"; };
@@ -110,6 +110,8 @@
 		B66E6422274AB359002C9D54 /* QuadtreeSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuadtreeSettings.h; sourceTree = "<group>"; };
 		B68A8D5C274BED4900B1022C /* PlanetaryMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlanetaryMesh.cpp; sourceTree = "<group>"; };
 		B68A8D5D274BED4900B1022C /* PlanetaryMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlanetaryMesh.h; sourceTree = "<group>"; };
+		B68BC0E12768B187009E7F15 /* pine.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = pine.mtl; sourceTree = "<group>"; };
+		B68BC0E22768B187009E7F15 /* pine.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = pine.obj; sourceTree = "<group>"; };
 		B690DCA327623BD600468540 /* TerrainMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TerrainMesh.cpp; sourceTree = "<group>"; };
 		B690DCA427623BD600468540 /* TerrainMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainMesh.h; sourceTree = "<group>"; };
 		B690DCA627623BE100468540 /* ModelMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ModelMesh.cpp; sourceTree = "<group>"; };
@@ -271,8 +273,10 @@
 		B61DE3EE274D8F0000A43A6D /* models */ = {
 			isa = PBXGroup;
 			children = (
-				B623BA3D27639649001E3093 /* Lowpoly_tree_sample.mtl */,
-				B623BA3C27639649001E3093 /* Lowpoly_tree_sample.obj */,
+				B68BC0E12768B187009E7F15 /* pine.mtl */,
+				B68BC0E22768B187009E7F15 /* pine.obj */,
+				B623BA3D27639649001E3093 /* tree.mtl */,
+				B623BA3C27639649001E3093 /* tree.obj */,
 			);
 			path = models;
 			sourceTree = "<group>";

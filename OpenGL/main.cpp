@@ -28,7 +28,7 @@ int main( void ) {
     MeshHeightHandler::Init();
     LODHandler::Init();
 
-    Camera camera(0, 5000, 0);
+    Camera camera(0, 0, 0);
     
     PlanetaryMesh terrain;
     
@@ -46,7 +46,7 @@ int main( void ) {
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
 
     ModelMesh modelTree;
-    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/Lowpoly_tree_sample.obj", modelTree);
+    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/pine.obj", modelTree);
     
     OpenGLEngine::ImguiInit();
 
@@ -70,13 +70,13 @@ int main( void ) {
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
                     
-        terrain.Update(camera);
-        terrain.Render(camera);
+//        terrain.Update(camera);
+//        terrain.Render(camera);
         
         ActiveShaders::ModelShader->Bind();
         ActiveShaders::ModelShader->SetUniformMat4f("u_MVP", mvp);
         
-        modelTree.Render(*ActiveShaders::ModelShader);
+        modelTree.Render(*ActiveShaders::ModelShader, 1000);
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
 //        ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));

@@ -48,7 +48,7 @@ public:
     void UpdateBuffers();
     void Clear();
     void RecalculateNormals();
-    void Render(const Shader& shader);
+    virtual void Render(const Shader& shader);
     
     virtual void AddVertex(Vertex v);
     void AddIndex(unsigned int index);

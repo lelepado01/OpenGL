@@ -76,3 +76,7 @@ void ModelMesh::Clear(){
 void ModelMesh::AddVertex(ModelVertex v){
     vertices.push_back(v);
 }
+
+void ModelMesh::Render(const Shader &shader, const unsigned int amount){
+    OpenGLEngine::DrawInstanced(*vertexArray, *indexBuffer, shader, amount);
+}
