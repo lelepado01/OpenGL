@@ -15,6 +15,7 @@ public:
     static const int InitialWidth = 4096;
     static const int SphereRadius = 1;
 
+    constexpr static float SeaLevel = InitialWidth+0.5;
     constexpr static float MinDistanceToTerrain = 2;
 };
 

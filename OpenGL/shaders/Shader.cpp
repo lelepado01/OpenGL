@@ -111,6 +111,11 @@ void Shader::SetUniformLight(const std::string &name, Light light){
     SetUniform3f(name + ".ambient", light.ambient.x, light.ambient.y, light.ambient.z);
 }
 
+
+void Shader::SetUniform3fv(const std::string &name, const float *data, unsigned int count){
+    GLCall( glUniform3fv(getUniformLocation(name), count, data) );
+}
+
 std::string Shader::parseShader(const std::string& filepath) {
 
     std::ifstream stream(filepath);
@@ -221,6 +226,6 @@ unsigned int Shader::createShader(const std::string& vertexShader, const std::st
 
     GLCall( glDeleteShader(vs) );
     GLCall( glDeleteShader(fs) );
-
+    
     return program;
 }

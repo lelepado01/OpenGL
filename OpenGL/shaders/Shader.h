@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "glm/glm.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 #include "../materials/Material.h"
 
@@ -40,7 +41,8 @@ public:
     void SetUniform4f(const std::string& name, float f0, float f1, float f2, float f3);
     void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
     void SetUniformMaterial(const std::string& name, Material material);
-    void SetUniformLight(const std::string& name, Light light); 
+    void SetUniformLight(const std::string& name, Light light);
+    void SetUniform3fv(const std::string &name, const float *data, unsigned int count); 
 
     Shader& operator=(Shader &shader);
 };

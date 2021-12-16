@@ -15,20 +15,24 @@
 #include "shaders/ActiveShaders.h"
 #include "terrain/PlanetaryMesh.h"
 #include "terrain/utils/LODHandler.h"
-#include "mesh/ModelLoader.h"
+#include "forest/ForestHandler.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "imgui.h"
-
 
 int main( void ) {
     OpenGLEngine::Init();
     ActiveShaders::Init();
     MeshHeightHandler::Init();
     LODHandler::Init();
+    ForestHandler::Init();
 
-    Camera camera(0, 0, 0);
+    Camera camera(0, 5000, 0);
+    
+    ModelMesh modelTree;
+    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/tree.obj", modelTree);
+
     
     PlanetaryMesh terrain;
     
@@ -44,9 +48,6 @@ int main( void ) {
     light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
-
-    ModelMesh modelTree;
-    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/pin.obj", modelTree);
     
     OpenGLEngine::ImguiInit();
 
@@ -70,13 +71,14 @@ int main( void ) {
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
                     
-//        terrain.Update(camera);
-//        terrain.Render(camera);
+        terrain.Update(camera);
+        terrain.Render(camera);
         
         ActiveShaders::ModelShader->Bind();
         ActiveShaders::ModelShader->SetUniformMat4f("u_MVP", mvp);
         
-        modelTree.Render(*ActiveShaders::ModelShader, 1000);
+        ForestHandler::Update(camera);
+        ForestHandler::Render(modelTree);
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
 //        ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));

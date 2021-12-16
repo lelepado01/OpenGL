@@ -31,6 +31,7 @@
 		B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */; };
 		B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */; };
 		B6BFF5E726F8EE22002ECA4B /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */; };
+		B6E023EC276A06E30007BC9C /* ForestHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E023EA276A06E30007BC9C /* ForestHandler.cpp */; };
 		B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ED0F682746CB4900459069 /* Time.cpp */; };
 		B6F13526273EE44D00DF29E4 /* MeshHeightHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F13524273EE44D00DF29E4 /* MeshHeightHandler.cpp */; };
 		B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6FDF28B2735A27200DEBCB9 /* Camera.cpp */; };
@@ -123,6 +124,8 @@
 		B6BFF5E426F8EE22002ECA4B /* libGLEW.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.dylib; path = ../../../../../../usr/local/Cellar/glew/2.2.0_1/lib/libGLEW.dylib; sourceTree = "<group>"; };
 		B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.2.0.dylib; path = ../../../../../../usr/local/Cellar/glew/2.2.0_1/lib/libGLEW.2.2.0.dylib; sourceTree = "<group>"; };
 		B6C0EEAF27563F36005FB4F6 /* Frustum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Frustum.h; sourceTree = "<group>"; };
+		B6E023EA276A06E30007BC9C /* ForestHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ForestHandler.cpp; sourceTree = "<group>"; };
+		B6E023EB276A06E30007BC9C /* ForestHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForestHandler.h; sourceTree = "<group>"; };
 		B6ED0F682746CB4900459069 /* Time.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Time.cpp; sourceTree = "<group>"; };
 		B6ED0F692746CB4900459069 /* Time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Time.h; sourceTree = "<group>"; };
 		B6F13524273EE44D00DF29E4 /* MeshHeightHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshHeightHandler.cpp; sourceTree = "<group>"; };
@@ -367,6 +370,7 @@
 		B6BFF5D426F8EDC6002ECA4B /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				B6E023E9276A06910007BC9C /* forest */,
 				B62816EB275FA45700F0998A /* terrain */,
 				B625C5A027457DC800F90B2C /* settings */,
 				B63A996D273723E100CA007E /* mesh */,
@@ -395,6 +399,15 @@
 				B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B6E023E9276A06910007BC9C /* forest */ = {
+			isa = PBXGroup;
+			children = (
+				B6E023EA276A06E30007BC9C /* ForestHandler.cpp */,
+				B6E023EB276A06E30007BC9C /* ForestHandler.h */,
+			);
+			path = forest;
 			sourceTree = "<group>";
 		};
 		B6FDF28A2735A26500DEBCB9 /* camera */ = {
@@ -466,6 +479,7 @@
 				B62816EE275FAD2900F0998A /* main.cpp in Sources */,
 				B62816EF275FAD5100F0998A /* ModelLoader.cpp in Sources */,
 				B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */,
+				B6E023EC276A06E30007BC9C /* ForestHandler.cpp in Sources */,
 				B6F13526273EE44D00DF29E4 /* MeshHeightHandler.cpp in Sources */,
 				B690DCA827623BE100468540 /* ModelMesh.cpp in Sources */,
 				B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */,
