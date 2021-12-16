@@ -154,12 +154,6 @@ void TerrainPatch::calculateIndices(){
     }
 }
 
-
-glm::vec3 TerrainPatch::ComputePositionOnSphere(glm::vec3 pointOnRadius){
-    glm::vec3 pointHeight = MeshHeightHandler::GetHeight(pointOnRadius.x ,pointOnRadius.y, pointOnRadius.z, 1) * glm::normalize(pointOnRadius);    
-    return pointOnRadius + pointHeight;
-}
-
 glm::vec3 TerrainPatch::PointCubeToSphere(const glm::vec3& point) {
         
     glm::vec3 normalizedPoint = point / ((float)QuadtreeSettings::InitialWidth / 2);

@@ -117,6 +117,7 @@
 		B690DCA427623BD600468540 /* TerrainMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TerrainMesh.h; sourceTree = "<group>"; };
 		B690DCA627623BE100468540 /* ModelMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ModelMesh.cpp; sourceTree = "<group>"; };
 		B690DCA727623BE100468540 /* ModelMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelMesh.h; sourceTree = "<group>"; };
+		B6AC145C276B7BD40025B4B1 /* PlanetSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlanetSettings.h; sourceTree = "<group>"; };
 		B6BFF5D226F8EDC6002ECA4B /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B6BFF5E026F8EDF9002ECA4B /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.dylib; sourceTree = "<group>"; };
@@ -304,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				B66E6422274AB359002C9D54 /* QuadtreeSettings.h */,
+				B6AC145C276B7BD40025B4B1 /* PlanetSettings.h */,
 			);
 			path = settings;
 			sourceTree = "<group>";

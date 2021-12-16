@@ -58,7 +58,6 @@ public:
     const glm::vec3& GetMinPoint() const { return meshOfPatch.GetMinPoint(); };
     const glm::vec3& GetMaxPoint() const { return meshOfPatch.GetMaxPoint(); };
 
-    static glm::vec3 ComputePositionOnSphere(glm::vec3 pointOnRadius);
     static glm::vec3 PointCubeToSphere(const glm::vec3& point);
 
 };

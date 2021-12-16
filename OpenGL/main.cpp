@@ -30,10 +30,6 @@ int main( void ) {
 
     Camera camera(0, 5000, 0);
     
-    ModelMesh modelTree;
-    ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/tree.obj", modelTree);
-
-    
     PlanetaryMesh terrain;
     
     Material material = {};
@@ -62,7 +58,7 @@ int main( void ) {
         camera.UpdatePosition();
     
         glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) *  model;
+        glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) * model;
         
         ActiveShaders::TerrainShader->Bind();
         ActiveShaders::TerrainShader->SetUniform1f("u_Time", Time::GetFrameCount() / 100.0f);
@@ -78,10 +74,10 @@ int main( void ) {
         ActiveShaders::ModelShader->SetUniformMat4f("u_MVP", mvp);
         
         ForestHandler::Update(camera);
-        ForestHandler::Render(modelTree);
+        ForestHandler::Render();
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
-//        ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));
+        ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode());
 
         OpenGLEngine::ImguiDraw();
