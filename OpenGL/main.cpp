@@ -16,6 +16,7 @@
 #include "terrain/PlanetaryMesh.h"
 #include "terrain/utils/LODHandler.h"
 #include "forest/ForestHandler.h"
+#include "grass/GrassHandler.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -26,8 +27,10 @@ int main( void ) {
     ActiveShaders::Init();
     MeshHeightHandler::Init();
     LODHandler::Init();
+    
     ForestHandler::Init();
-
+//    GrassHandler::Init();
+    
     Camera camera(0, 5000, 0);
     
     PlanetaryMesh terrain;
@@ -70,11 +73,16 @@ int main( void ) {
         terrain.Update(camera);
         terrain.Render(camera);
         
-        ActiveShaders::ModelShader->Bind();
-        ActiveShaders::ModelShader->SetUniformMat4f("u_MVP", mvp);
-        
+        ActiveShaders::TreeModelShader->Bind();
+        ActiveShaders::TreeModelShader->SetUniformMat4f("u_MVP", mvp);
+
         ForestHandler::Update(camera);
         ForestHandler::Render();
+
+//        ActiveShaders::GrassModelShader->Bind();
+//        ActiveShaders::GrassModelShader->SetUniformMat4f("u_MVP", mvp);
+//        GrassHandler::Update(camera);
+//        GrassHandler::Render();
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
         ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));

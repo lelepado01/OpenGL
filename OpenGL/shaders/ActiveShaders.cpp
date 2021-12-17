@@ -10,12 +10,17 @@
 #include "ActiveShaders.h"
 
 Shader* ActiveShaders::TerrainShader;
-Shader* ActiveShaders::ModelShader;
+Shader* ActiveShaders::TreeModelShader;
+Shader* ActiveShaders::GrassModelShader;
 
 void ActiveShaders::Init(){
     TerrainShader = new Shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/TerrainMeshShader.vs",
                                "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/TerrainMeshShader.fs");
     
-    ModelShader = new Shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/ModelShader.vs",
-                             "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/ModelShader.fs");
+    TreeModelShader = new Shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/TreeModelShader.vs",
+                                 "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/TreeModelShader.fs");
+    
+    GrassModelShader = new Shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/GrassModelShader.vs",
+                                 "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/GrassModelShader.fs");
+
 }
