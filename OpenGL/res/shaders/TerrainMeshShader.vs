@@ -4,8 +4,10 @@ layout(location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 oldPosition;
 
+layout (std140) uniform Matrices {
+    mat4 u_MVP;
+};
 
-uniform mat4 u_MVP;
 uniform vec3 u_cameraPos;
 
 uniform Material u_Material;

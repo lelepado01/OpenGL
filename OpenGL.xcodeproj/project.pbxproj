@@ -29,6 +29,7 @@
 		B690DCA527623BD600468540 /* TerrainMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B690DCA327623BD600468540 /* TerrainMesh.cpp */; };
 		B690DCA827623BE100468540 /* ModelMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B690DCA627623BE100468540 /* ModelMesh.cpp */; };
 		B6AC1460276B7FD80025B4B1 /* GrassHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AC145E276B7FD80025B4B1 /* GrassHandler.cpp */; };
+		B6BAD23E276D0A4800E26667 /* UniformBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6BAD23C276D0A4800E26667 /* UniformBuffer.cpp */; };
 		B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */; };
 		B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */; };
 		B6BFF5E726F8EE22002ECA4B /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */; };
@@ -125,6 +126,8 @@
 		B6AC145F276B7FD80025B4B1 /* GrassHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GrassHandler.h; sourceTree = "<group>"; };
 		B6AC1461276B816E0025B4B1 /* GrassModelShader.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = GrassModelShader.vs; sourceTree = "<group>"; };
 		B6AC1462276B817C0025B4B1 /* GrassModelShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = GrassModelShader.fs; sourceTree = "<group>"; };
+		B6BAD23C276D0A4800E26667 /* UniformBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UniformBuffer.cpp; sourceTree = "<group>"; };
+		B6BAD23D276D0A4800E26667 /* UniformBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UniformBuffer.h; sourceTree = "<group>"; };
 		B6BFF5D226F8EDC6002ECA4B /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B6BFF5E026F8EDF9002ECA4B /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.dylib; sourceTree = "<group>"; };
@@ -247,6 +250,8 @@
 				B617D9652734273A004FE945 /* VertexBuffer.cpp */,
 				B617D9502734273A004FE945 /* VertexBuffer.h */,
 				B617D96B2734273B004FE945 /* VertexBufferLayout.h */,
+				B6BAD23C276D0A4800E26667 /* UniformBuffer.cpp */,
+				B6BAD23D276D0A4800E26667 /* UniformBuffer.h */,
 			);
 			path = buffers;
 			sourceTree = "<group>";
@@ -503,6 +508,7 @@
 				B62816EF275FAD5100F0998A /* ModelLoader.cpp in Sources */,
 				B63C0CB12735EF1E00CD2D30 /* stb_image.cpp in Sources */,
 				B6E023EC276A06E30007BC9C /* ForestHandler.cpp in Sources */,
+				B6BAD23E276D0A4800E26667 /* UniformBuffer.cpp in Sources */,
 				B6F13526273EE44D00DF29E4 /* MeshHeightHandler.cpp in Sources */,
 				B690DCA827623BE100468540 /* ModelMesh.cpp in Sources */,
 				B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */,

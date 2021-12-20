@@ -17,6 +17,7 @@
 #include "terrain/utils/LODHandler.h"
 #include "forest/ForestHandler.h"
 #include "grass/GrassHandler.h"
+#include "buffers/UniformBuffer.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -48,6 +49,11 @@ int main( void ) {
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
     
+    UniformBuffer uniformBuffer(sizeof(glm::mat4x4));
+    uniformBuffer.BindUniformBlock(*ActiveShaders::TerrainShader, "Matrices", 0);
+    uniformBuffer.BindUniformBlock(*ActiveShaders::TreeModelShader, "Matrices", 0);
+//    uniformBuffer.BindUniformBlock(*ActiveShaders::GrassModelShader, "Matrices", 0);
+
     OpenGLEngine::ImguiInit();
 
     while( OpenGLEngine::IsRunning() ){
@@ -60,12 +66,12 @@ int main( void ) {
         camera.UpdateDirection();
         camera.UpdatePosition();
     
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 mvp = (camera.GetProjection()) * (camera.GetView()) * model;
-        
+        glm::mat4 mvp = camera.GetMVP();
+        uniformBuffer.SetUniformBlockMat4x4f("u_MVP", mvp);
+
         ActiveShaders::TerrainShader->Bind();
         ActiveShaders::TerrainShader->SetUniform1f("u_Time", Time::GetFrameCount() / 100.0f);
-        ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
+//        ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
@@ -73,8 +79,8 @@ int main( void ) {
         terrain.Update(camera);
         terrain.Render(camera);
         
-        ActiveShaders::TreeModelShader->Bind();
-        ActiveShaders::TreeModelShader->SetUniformMat4f("u_MVP", mvp);
+//        ActiveShaders::TreeModelShader->Bind();
+//        ActiveShaders::TreeModelShader->SetUniformMat4f("u_MVP", mvp);
 
         ForestHandler::Update(camera);
         ForestHandler::Render();

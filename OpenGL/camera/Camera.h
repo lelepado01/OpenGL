@@ -57,6 +57,7 @@ public:
     glm::mat4 GetView() const { return view; };
     glm::vec3 GetPosition() const { return position; };
     glm::vec3 GetDirection() const { return direction; };
+    glm::mat4 GetMVP() const { return GetProjection() * GetView() * glm::mat4(1.0f); }; 
 
     bool HasMoved() const { return hasMoved; };
     bool HasRotated() const { return directionHasChanged; };

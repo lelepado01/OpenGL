@@ -44,5 +44,7 @@ public:
     void SetUniformLight(const std::string& name, Light light);
     void SetUniform3fv(const std::string &name, const float *data, unsigned int count); 
 
+    inline unsigned int GetID() const { return m_RendererID; }; 
+    
     Shader& operator=(Shader &shader);
 };
