@@ -1,17 +1,12 @@
 
 #define TINYOBJLOADER_IMPLEMENTATION
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include <iostream>
-#include <chrono>
 
 #include "engine/OpenGLEngine.h"
 #include "engine/Time.h"
 #include "camera/Camera.h"
 #include "materials/Material.h"
-#include "shaders/Shader.h"
 #include "shaders/ActiveShaders.h"
 #include "terrain/PlanetaryMesh.h"
 #include "terrain/utils/LODHandler.h"
@@ -19,17 +14,14 @@
 #include "grass/GrassHandler.h"
 #include "buffers/UniformBuffer.h"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "imgui.h"
-
 int main( void ) {
+    
     OpenGLEngine::Init();
     ActiveShaders::Init();
     MeshHeightHandler::Init();
     LODHandler::Init();
     
-    ForestHandler::Init();
+    ForestHandler forest;
 //    GrassHandler::Init();
     
     Camera camera(0, 5000, 0);
@@ -49,9 +41,9 @@ int main( void ) {
     light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
     
-    UniformBuffer uniformBuffer(sizeof(glm::mat4x4));
-    uniformBuffer.BindUniformBlock(*ActiveShaders::TerrainShader, "Matrices", 0);
-    uniformBuffer.BindUniformBlock(*ActiveShaders::TreeModelShader, "Matrices", 0);
+    UniformBuffer uniformBuffer;
+    uniformBuffer.BindUniformBlock(*ActiveShaders::TerrainShader, "Matrices", 0, sizeof(glm::mat4x4));
+    uniformBuffer.BindUniformBlock(*ActiveShaders::TreeModelShader, "Matrices", 0, sizeof(glm::mat4x4));
 //    uniformBuffer.BindUniformBlock(*ActiveShaders::GrassModelShader, "Matrices", 0);
 
     OpenGLEngine::ImguiInit();
@@ -71,7 +63,6 @@ int main( void ) {
 
         ActiveShaders::TerrainShader->Bind();
         ActiveShaders::TerrainShader->SetUniform1f("u_Time", Time::GetFrameCount() / 100.0f);
-//        ActiveShaders::TerrainShader->SetUniformMat4f("u_MVP", mvp);
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
         ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
@@ -82,8 +73,8 @@ int main( void ) {
 //        ActiveShaders::TreeModelShader->Bind();
 //        ActiveShaders::TreeModelShader->SetUniformMat4f("u_MVP", mvp);
 
-        ForestHandler::Update(camera);
-        ForestHandler::Render();
+        forest.Update(camera);
+        forest.Render();
 
 //        ActiveShaders::GrassModelShader->Bind();
 //        ActiveShaders::GrassModelShader->SetUniformMat4f("u_MVP", mvp);

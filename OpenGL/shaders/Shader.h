@@ -42,7 +42,8 @@ public:
     void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
     void SetUniformMaterial(const std::string& name, Material material);
     void SetUniformLight(const std::string& name, Light light);
-    void SetUniform3fv(const std::string &name, const float *data, unsigned int count); 
+    void SetUniform3fv(const std::string &name, const float *data, unsigned int count);
+    void SetUniform1fv(const std::string &name, const float *data, unsigned int count);
 
     inline unsigned int GetID() const { return m_RendererID; }; 
     

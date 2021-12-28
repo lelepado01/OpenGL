@@ -9,12 +9,9 @@
 #include "../engine/Debug.h"
 
 
-UniformBuffer::UniformBuffer(unsigned int size) {
-    m_Size = size;
-    
+UniformBuffer::UniformBuffer() {
     GLCall( glGenBuffers(1, &m_RendererID) );
     GLCall( glBindBuffer(GL_UNIFORM_BUFFER, m_RendererID) );
-//    GLCall( glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW) );
 }
 
 UniformBuffer::~UniformBuffer() {
@@ -30,20 +27,39 @@ void UniformBuffer::Unbind() const {
 }
 
 void UniformBuffer::SetUniformBlock3f(const std::string &name, glm::vec3 value) const {
+    Bind();
     GLCall( glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec3), glm::value_ptr(value)) );
 }
 
 void UniformBuffer::SetUniformBlock1f(const std::string &name, float f) const {
+    Bind();
     GLCall( glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(float), (void*)&f) );
 }
 
 void UniformBuffer::SetUniformBlockMat4x4f(const std::string &name, glm::mat4x4& value) const {
+    Bind();
     GLCall( glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(value)) );
 }
 
-void UniformBuffer::BindUniformBlock(const Shader& shader, const std::string &name, unsigned int bindingPoint){
+void UniformBuffer::SetUniformBlock3fv(const std::string& name, const float *data, unsigned int count) const {
     Bind();
-    
+    GLCall( glBufferData(GL_UNIFORM_BUFFER, count * 3 * sizeof(float), data, GL_DYNAMIC_DRAW) );
+}
+
+void UniformBuffer::SetUniformBlock1fv(const std::string& name, const float *data, unsigned int count) const {
+    Bind();
+    GLCall( glBufferData(GL_UNIFORM_BUFFER, count * sizeof(float), data, GL_DYNAMIC_DRAW) );
+}
+
+void UniformBuffer::SetUniformBlock4fv(const std::string& name, const float *data, unsigned int count) const {
+    Bind();
+    GLCall( glBufferData(GL_UNIFORM_BUFFER, count * 4 * sizeof(float), data, GL_DYNAMIC_DRAW) );
+}
+
+void UniformBuffer::BindUniformBlock(const Shader& shader, const std::string &name, unsigned int bindingPoint, unsigned int size){
+    Bind();
+    m_Size = size;
+
     unsigned int blockIndex = glGetUniformBlockIndex(shader.GetID(), name.c_str());
     GLCall( glUniformBlockBinding(shader.GetID(), blockIndex, bindingPoint) );
     

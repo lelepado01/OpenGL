@@ -116,6 +116,10 @@ void Shader::SetUniform3fv(const std::string &name, const float *data, unsigned 
     GLCall( glUniform3fv(getUniformLocation(name), count, data) );
 }
 
+void Shader::SetUniform1fv(const std::string &name, const float *data, unsigned int count){
+    GLCall( glUniform1fv(getUniformLocation(name), count, data) );
+}
+
 std::string Shader::parseShader(const std::string& filepath) {
 
     std::ifstream stream(filepath);
