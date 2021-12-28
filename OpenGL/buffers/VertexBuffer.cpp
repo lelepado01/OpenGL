@@ -26,3 +26,7 @@ void VertexBuffer::Update(const void *data, unsigned int size){
     m_Size = size; 
     GLCall( glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW) );
 }
+
+void VertexBuffer::SetAttribDivisor(const unsigned int attribIndex, const unsigned int instanceIndex) const {
+    GLCall( glVertexAttribDivisor(attribIndex, instanceIndex) );
+}

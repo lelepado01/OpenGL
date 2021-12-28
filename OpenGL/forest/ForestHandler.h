@@ -19,7 +19,6 @@
 #include "../terrain/TerrainPatch.h"
 #include "../terrain/utils/MeshHeightHandler.h"
 #include "../settings/PlanetSettings.h"
-#include "../buffers/UniformBuffer.h"
 
 struct TreeAttribute {
     glm::vec3 position;
@@ -37,15 +36,12 @@ private:
     int treeNumber;
     
     std::default_random_engine generator;
-    
-//    UniformBuffer treeAttributesPosition;
-//    UniformBuffer treeAttributesSize;
 
 public:
     ForestHandler();
     ~ForestHandler();
     
-    void Update(Camera camera);
+    void Update(const Camera& camera);
     void Render();
 };
 

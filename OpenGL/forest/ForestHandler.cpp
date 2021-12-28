@@ -24,16 +24,10 @@ ForestHandler::ForestHandler(){
     treeAttributesBuffer->Bind();
     
     VertexBufferLayout instanceLayout;
-    instanceLayout.AddFloat(3);
-    instanceLayout.AddFloat(1);
-    
-    glVertexAttribDivisor(4, 1);
-    glVertexAttribDivisor(5, 1);
+    instanceLayout.AddFloat(3, true);
+    instanceLayout.AddFloat(1, true);
 
     modelTree->AddBufferLayout(*treeAttributesBuffer, instanceLayout);
-    
-//    treeAttributesPosition.BindUniformBlock(*ActiveShaders::TreeModelShader, "TreeAttributePosition", 0, treeNumber * 3 * sizeof(float));
-//    treeAttributesSize.BindUniformBlock(*ActiveShaders::TreeModelShader, "TreeAttributeSize", 0, treeNumber * sizeof(glm::vec4));
 }
 
 ForestHandler::~ForestHandler(){
@@ -41,7 +35,7 @@ ForestHandler::~ForestHandler(){
     delete treeAttributesBuffer;
 }
 
-void ForestHandler::Update(Camera camera){
+void ForestHandler::Update(const Camera& camera){
     glm::vec3 cameraPos = camera.GetPosition();
 
     std::uniform_real_distribution<float> distributionForX(0, areaRadius);
@@ -67,8 +61,6 @@ void ForestHandler::Update(Camera camera){
             if (glm::distance(newTreePosition, cameraPos) < areaRadius &&
                 glm::distance(newTreePosition, glm::vec3()) > PlanetSettings::SeaLevel) {
                 treeAttributes[i].position = newTreePosition;
-//                std::cout << camera.GetPosition().x << ", " << camera.GetPosition().y << ", " << camera.GetPosition().z << "\n";
-//                treeAttributes.size[i] = ((float)(rand() % 5)) / 10 + 0.1;
                 treeAttributes[i].size = 0.01;
 
             } else {
@@ -83,10 +75,5 @@ void ForestHandler::Update(Camera camera){
 
 void ForestHandler::Render(){
     ActiveShaders::TreeModelShader->Bind();
-    
-//    ActiveShaders::TreeModelShader->SetUniform3fv("TreeAttributePosition", glm::value_ptr(treeAttributes[i].position[0]), treeNumber);
-//    treeAttributesPosition.SetUniformBlock3fv("TreeAttributePosition", glm::value_ptr(treeAttributes.position[0]), treeNumber);
-//    treeAttributesSize.SetUniformBlock4fv("TreeAttributeSize", glm::value_ptr(treeAttributes.position[0]), treeNumber);
-
     modelTree->Render(*ActiveShaders::TreeModelShader, treeNumber);
 }

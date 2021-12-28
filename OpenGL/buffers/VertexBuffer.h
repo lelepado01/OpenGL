@@ -13,5 +13,7 @@ public:
     void Bind() const;
     void Unbind() const;
     
-    void Update(const void* data, unsigned int size); 
+    void Update(const void* data, unsigned int size);
+    
+    void SetAttribDivisor(const unsigned int attribIndex, const unsigned int instanceIndex) const;
 };

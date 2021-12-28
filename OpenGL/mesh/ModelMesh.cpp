@@ -20,7 +20,7 @@ ModelMesh::ModelMesh(){
     layout.AddFloat(3);
     layout.AddFloat(3); 
 
-    vertexArray->AddBuffer(*vertexBuffer, layout);
+    AddBufferLayout(*vertexBuffer, layout);
 }
 
 ModelMesh::~ModelMesh(){
@@ -77,7 +77,7 @@ void ModelMesh::AddVertex(ModelVertex v){
     vertices.push_back(v);
 }
 
-void ModelMesh::AddBufferLayout(VertexBuffer& vertexBuffer, VertexBufferLayout& layout){
+void ModelMesh::AddBufferLayout(const VertexBuffer& vertexBuffer, const VertexBufferLayout& layout){
     vertexArray->AddBuffer(vertexBuffer, layout);
 }
 

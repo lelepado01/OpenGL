@@ -8,7 +8,8 @@ struct VertexBufferElement {
     unsigned int type;
     unsigned int count;
     unsigned char normalized;
-
+    bool isInstanced;
+    
     static unsigned int GetSizeOfType(unsigned int type) {
         switch (type) {
             case GL_FLOAT         : return sizeof(GLfloat);
@@ -28,7 +29,9 @@ private:
 public:
     VertexBufferLayout() : m_Stride(0) { };
 
-    void AddFloat(unsigned int count)        { Push(GL_FLOAT, count, GL_FALSE);        };
+    void AddFloat(unsigned int count, bool isInstanced = false) {
+        Push(GL_FLOAT, count, GL_FALSE, isInstanced);
+    };
     void AddUnsignedInt(unsigned int count)  { Push(GL_UNSIGNED_INT, count, GL_FALSE); };
     void AddUnsignedByte(unsigned int count) { Push(GL_UNSIGNED_BYTE, count, GL_TRUE); };
 
@@ -36,8 +39,8 @@ public:
     inline unsigned int GetStride() const { return m_Stride; };
 
 private:
-    void Push(unsigned int type, unsigned int count, unsigned char normalized) {
-        struct VertexBufferElement vbe = {type, count, normalized};
+    void Push(unsigned int type, unsigned int count, unsigned char normalized, bool instanced = false) {
+        struct VertexBufferElement vbe = {type, count, normalized, instanced};
         m_Elements.push_back(vbe);
         m_Stride += count * VertexBufferElement::GetSizeOfType(type);
     };

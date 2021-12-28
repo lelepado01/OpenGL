@@ -36,7 +36,7 @@ public:
     void UpdateBuffers();
     void Clear();
     void AddVertex(ModelVertex v);
-    void AddBufferLayout(VertexBuffer& vertexBuffer, VertexBufferLayout& layout);
+    void AddBufferLayout(const VertexBuffer& vertexBuffer, const VertexBufferLayout& layout);
     void Render(const Shader &shader, const unsigned int amount); 
 }; 
 

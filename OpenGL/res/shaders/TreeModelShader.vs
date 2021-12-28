@@ -12,21 +12,11 @@ layout (std140) uniform Matrices {
     mat4 u_MVP;
 };
 
-//layout (std140) uniform TreeAttributePosition {
-//    vec3 treePosition[1000];
-//};
-
-//uniform vec3 TreeAttributePosition[1000];
-//
-//layout (std140) uniform TreeAttributeSize {
-//    vec4 treeSize[1000];
-//};
-
 out vec3 vertexColor;
 
 void main() {
     vertexColor = color;
     
-    vec3 offset = instanceOffset; //TreeAttributePosition[gl_InstanceID];
-    gl_Position = u_MVP * vec4(offset + position * instanceSize, 1); //treeSize[gl_InstanceID].x, 1); //
+    vec3 offset = instanceOffset;
+    gl_Position = u_MVP * vec4(offset + position * instanceSize, 1); 
 }
