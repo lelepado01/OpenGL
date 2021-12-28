@@ -44,7 +44,6 @@ int main( void ) {
     UniformBuffer uniformBuffer;
     uniformBuffer.BindUniformBlock(*ActiveShaders::TerrainShader, "Matrices", 0, sizeof(glm::mat4x4));
     uniformBuffer.BindUniformBlock(*ActiveShaders::TreeModelShader, "Matrices", 0, sizeof(glm::mat4x4));
-//    uniformBuffer.BindUniformBlock(*ActiveShaders::GrassModelShader, "Matrices", 0);
 
     OpenGLEngine::ImguiInit();
 
@@ -69,15 +68,10 @@ int main( void ) {
                     
         terrain.Update(camera);
         terrain.Render(camera);
-        
-//        ActiveShaders::TreeModelShader->Bind();
-//        ActiveShaders::TreeModelShader->SetUniformMat4f("u_MVP", mvp);
 
         forest.Update(camera);
         forest.Render();
-
-//        ActiveShaders::GrassModelShader->Bind();
-//        ActiveShaders::GrassModelShader->SetUniformMat4f("u_MVP", mvp);
+        
 //        GrassHandler::Update(camera);
 //        GrassHandler::Render();
         

@@ -61,7 +61,7 @@ void ForestHandler::Update(const Camera& camera){
             if (glm::distance(newTreePosition, cameraPos) < areaRadius &&
                 glm::distance(newTreePosition, glm::vec3()) > PlanetSettings::SeaLevel) {
                 treeAttributes[i].position = newTreePosition;
-                treeAttributes[i].size = 0.01;
+                treeAttributes[i].size = 0.005 + ((float)(rand() % 4)) / 500;
 
             } else {
                 treeAttributes[i].position = glm::vec3(0,0,0);
