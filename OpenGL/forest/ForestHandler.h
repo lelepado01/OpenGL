@@ -23,12 +23,14 @@
 struct TreeAttribute {
     glm::vec3 position;
     float size;
+    float rotation;
 }; 
 
 class ForestHandler {
 private:
     std::vector<TreeAttribute> treeAttributes = std::vector<TreeAttribute>();
-    
+    std::vector<glm::mat4> treeModelMatrices = std::vector<glm::mat4>();
+
     ModelMesh* modelTree;
     VertexBuffer* treeAttributesBuffer; 
     

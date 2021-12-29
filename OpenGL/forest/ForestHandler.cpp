@@ -17,15 +17,17 @@ ForestHandler::ForestHandler(){
     ModelLoader::Load("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/models/tree.obj", *modelTree);
 
     for (int i = 0; i < treeNumber; i++) {
-        treeAttributes.push_back(TreeAttribute{glm::vec3(), 1});
+        treeAttributes.push_back(TreeAttribute{glm::vec3(),1, 0});
+        treeModelMatrices.push_back(glm::mat4());
     }
     
-    treeAttributesBuffer = new VertexBuffer(&treeAttributes[0], treeNumber * sizeof(TreeAttribute));
+    treeAttributesBuffer = new VertexBuffer(treeAttributes.data(), treeNumber * sizeof(TreeAttribute));
     treeAttributesBuffer->Bind();
     
     VertexBufferLayout instanceLayout;
-    instanceLayout.AddFloat(3, true);
-    instanceLayout.AddFloat(1, true);
+//    instanceLayout.AddFloat(3, true);
+//    instanceLayout.AddFloat(1, true);
+    instanceLayout.AddMat4x4(1, true);
 
     modelTree->AddBufferLayout(*treeAttributesBuffer, instanceLayout);
 }
@@ -45,6 +47,8 @@ void ForestHandler::Update(const Camera& camera){
     for (int i = 0; i < treeNumber; i++) {
         if (glm::distance(treeAttributes[i].position, cameraPos) > areaRadius){
             
+            srand((unsigned int)time(NULL));
+
             float xrand = distributionForX(generator);
             float yrand = distributionForY(generator);
             float zrand = distributionForZ(generator);
@@ -56,21 +60,30 @@ void ForestHandler::Update(const Camera& camera){
                                                                  cameraPointOnSurface.z,
                                                                  5) * glm::normalize(cameraPointOnSurface);
             glm::vec3 newTreePosition = cameraPointOnSurface + pointHeight;
-
             
             if (glm::distance(newTreePosition, cameraPos) < areaRadius &&
                 glm::distance(newTreePosition, glm::vec3()) > PlanetSettings::SeaLevel) {
                 treeAttributes[i].position = newTreePosition;
                 treeAttributes[i].size = 0.005 + ((float)(rand() % 4)) / 500;
+                treeAttributes[i].rotation = (float)(rand() % 360);
+                
+                glm::mat4 translate = glm::translate(glm::mat4(1.0f), treeAttributes[i].position);
+                glm::vec3 center = glm::normalize(glm::abs(modelTree->GetCenter()));
+                glm::mat4 rotate =  glm::rotate(glm::mat4(1.0f), treeAttributes[i].rotation, center);
+                glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(treeAttributes[i].size));
+                treeModelMatrices[i] = translate * scale * rotate;
 
             } else {
                 treeAttributes[i].position = glm::vec3(0,0,0);
                 treeAttributes[i].size = 1;
+                treeAttributes[i].rotation = 0;
+                treeModelMatrices[i] = glm::mat4(); 
             }
         }
     }
     
-    treeAttributesBuffer->Update(&treeAttributes[0], treeNumber * sizeof(TreeAttribute));
+    treeAttributesBuffer->Bind(); 
+    treeAttributesBuffer->Update(treeModelMatrices.data(), treeNumber * sizeof(glm::mat4));
 }
 
 void ForestHandler::Render(){

@@ -32,6 +32,12 @@ public:
     void AddFloat(unsigned int count, bool isInstanced = false) {
         Push(GL_FLOAT, count, GL_FALSE, isInstanced);
     };
+    void AddMat4x4(unsigned int count, bool isInstanced = false) {
+        Push(GL_FLOAT, count * 4, GL_FALSE, isInstanced);
+        Push(GL_FLOAT, count * 4, GL_FALSE, isInstanced);
+        Push(GL_FLOAT, count * 4, GL_FALSE, isInstanced);
+        Push(GL_FLOAT, count * 4, GL_FALSE, isInstanced);
+    };
     void AddUnsignedInt(unsigned int count)  { Push(GL_UNSIGNED_INT, count, GL_FALSE); };
     void AddUnsignedByte(unsigned int count) { Push(GL_UNSIGNED_BYTE, count, GL_TRUE); };
 

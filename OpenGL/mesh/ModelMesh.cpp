@@ -84,3 +84,16 @@ void ModelMesh::AddBufferLayout(const VertexBuffer& vertexBuffer, const VertexBu
 void ModelMesh::Render(const Shader &shader, const unsigned int amount){
     OpenGLEngine::DrawInstanced(*vertexArray, *indexBuffer, shader, amount);
 }
+
+glm::vec3 ModelMesh::GetCenter() {
+    if (!center.has_value()){
+        glm::vec3 c;
+        for (int i = 0; i < vertices.size(); i++) {
+            c += vertices[i].position;
+        }
+        
+        center = c / (float)vertices.size();
+    }
+    
+    return center.value();
+}
