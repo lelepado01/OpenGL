@@ -55,6 +55,7 @@
 		B60A8004273C27DF002DBAEA /* FastNoiseLite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastNoiseLite.h; sourceTree = "<group>"; };
 		B60F8338275B745E0084B120 /* LODHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LODHandler.cpp; sourceTree = "<group>"; };
 		B60F8339275B745E0084B120 /* LODHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LODHandler.h; sourceTree = "<group>"; };
+		B611263F277E644D0072871D /* NoiseUtils.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = NoiseUtils.glsl; sourceTree = "<group>"; };
 		B617D94E2734273A004FE945 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		B617D94F2734273A004FE945 /* VertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexArray.cpp; sourceTree = "<group>"; };
 		B617D9502734273A004FE945 /* VertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexBuffer.h; sourceTree = "<group>"; };
@@ -236,6 +237,7 @@
 				B62816F2275FB03E00F0998A /* TreeModelShader.fs */,
 				B6AC1461276B816E0025B4B1 /* GrassModelShader.vs */,
 				B6AC1462276B817C0025B4B1 /* GrassModelShader.fs */,
+				B611263F277E644D0072871D /* NoiseUtils.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

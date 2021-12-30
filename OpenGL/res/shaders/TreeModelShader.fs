@@ -1,5 +1,7 @@
 #version 410 core
 
+#include "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Common.glsl"
+
 in vec3 vertexColor;
 
 out vec4 fragColor;

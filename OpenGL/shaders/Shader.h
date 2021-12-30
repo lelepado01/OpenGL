@@ -16,8 +16,6 @@ private:
     std::string m_GeometryPath; 
     std::unordered_map<std::string, int> m_UniformLocationCache;
     
-    std::string commonShaderSource; 
-
 private:
     int getUniformLocation(const std::string& name);
     std::string parseShader(const std::string& filepath);

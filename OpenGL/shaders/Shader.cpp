@@ -10,9 +10,7 @@ Shader::Shader(const std::string& vertexpath, const std::string& fragmentPath) :
     
     m_VertexPath = vertexpath;
     m_FragmentPath = fragmentPath;
-    
-    commonShaderSource = parseShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Common.glsl");
-    
+        
     std::string vertexSource = parseShader(vertexpath);
     std::string fragmentSource = parseShader(fragmentPath);
     
@@ -27,8 +25,6 @@ Shader::Shader(const std::string& vertexpath, const std::string& geometryPath, c
     m_GeometryPath = geometryPath;
     m_FragmentPath = fragmentPath;
     
-    commonShaderSource = parseShader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/Common.shader");
-
     std::string vertexSource = parseShader(vertexpath);
     std::string geometrySource = parseShader(geometryPath);
     std::string fragmentSource = parseShader(fragmentPath);
@@ -126,15 +122,18 @@ std::string Shader::parseShader(const std::string& filepath) {
     std::string line;
     std::stringstream ss;
 
-    int lineIndex = 0;
     while (getline(stream, line)) {
         
-        if (lineIndex == 1 && commonShaderSource != ""){
-            ss << commonShaderSource << '\n';
+        if (line.find("#include") != std::string::npos){
+            std::string path = line.substr(line.find("\"")+1, line.size());
+            path = path.substr(0, path.size()-1); 
+            std::cout << path << "\n";
+            std::string includeSource = parseShader(path);
+            
+            ss << includeSource << '\n';
+        }  else {
+            ss << line << '\n';
         }
-        lineIndex++;
-        
-        ss << line << '\n';
     }
 
     return ss.str();
