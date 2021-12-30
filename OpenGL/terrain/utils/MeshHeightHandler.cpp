@@ -38,7 +38,7 @@ void MeshHeightHandler::Init(){
 }
 
 float MeshHeightHandler::GetHeight(float x, float y, float z, int LOD){
-    float seaLevel = 1.4f;
+    float seaLevel = 1.2f;
     
     float height = 0;
     
@@ -58,6 +58,6 @@ float MeshHeightHandler::GetHeight(float x, float y, float z, int LOD){
         }
     }
     
-    if (height < 0) height = 0;
+    if (height < seaLevel) height = seaLevel;
     return height;
 }

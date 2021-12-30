@@ -55,10 +55,4 @@ void main() {
     if (u_TerrainAnimationPercentage != -1){
         gl_Position = u_MVP * vec4( oldPosition + (position - oldPosition) * (u_TerrainAnimationPercentage), 1);
     }
-    
-    if (distance(fragPos, vec3(0,0,0)) < 4096.8){
-        vec3 wave = vec3(1,1,1) * waveHeight(position);
-        vec3 seaLevel = normalize(fragPos) * 4097;
-        gl_Position = u_MVP * vec4(seaLevel + wave, 1);
-    }
 }

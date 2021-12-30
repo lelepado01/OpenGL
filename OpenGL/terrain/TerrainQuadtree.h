@@ -42,9 +42,10 @@ private:
     bool nodeHasToMerge(const Camera& camera) const;
     bool nodeHasToSplit(const Camera& camera) const;
     bool cameraIsCloseToTerrainPatch(const glm::vec3& cameraPosition) const;
-    
+    bool cameraIsCloseToTerrainSubPatch(const glm::vec3& cameraPosition) const;
+
     glm::vec3 getTerrainPatchCenter() const;
-    
+
 public:
     TerrainQuadtree(int x, int y, TerrainFaceDirection dir);
     TerrainQuadtree(int x, int y, TerrainFaceDirection dir, int width, int LOD);

@@ -63,15 +63,6 @@ void TerrainPatch::Update(int lod){
     if (terrainPopHandler.TerrainIsBeingAnimated()){
         terrainPopHandler.Update();
     }
-    
-    if (lod != levelOfDetail){
-        if (lod > levelOfDetail) transition = TerrainPatchAnimation::Upscale;
-        else transition = TerrainPatchAnimation::Downscale;
-
-        levelOfDetail = lod;
-        
-        createMesh();
-    }
 }
 
 void TerrainPatch::Render(){
