@@ -36,14 +36,15 @@ int main( void ) {
     material.shininess = 0.2f;
 
     Light light = {};
-    light.direction = glm::vec3(0.0f, -1.0f, 0.0f);
-    light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
-    light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
-    light.ambient = glm::vec3(0.8f, 0.8f, 0.8f);
+    light.direction = glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+    light.specular = glm::vec4(1.0f, 1.0f, 1.0f, 0.0f);
+    light.diffuse = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+    light.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 0.0f);
     
     UniformBuffer uniformBuffer;
-    uniformBuffer.BindUniformBlock(*ActiveShaders::TerrainShader, "CameraMatrices", 0, sizeof(glm::mat4x4) * 3);
-    uniformBuffer.BindUniformBlock(*ActiveShaders::TreeModelShader, "CameraMatrices", 0, sizeof(glm::mat4x4) * 3);
+    unsigned int bufferSize = sizeof(glm::mat4x4) * 3 + sizeof(Light) + sizeof(float);
+    uniformBuffer.BindUniformBlock(*ActiveShaders::TerrainShader, "SharedResources", 0, bufferSize);
+    uniformBuffer.BindUniformBlock(*ActiveShaders::TreeModelShader, "SharedResources", 0, bufferSize);
 
     OpenGLEngine::ImguiInit();
 
@@ -64,12 +65,12 @@ int main( void ) {
         uniformBuffer.SetUniformBlockMat4x4f("u_MVP", mvp);
         uniformBuffer.SetUniformBlockMat4x4f("u_View", view);
         uniformBuffer.SetUniformBlockMat4x4f("u_Projection", projection);
+        uniformBuffer.SetUniformBlockLight("u_Light", light);
+        uniformBuffer.SetUniformBlock1f("u_Time", Time::GetFrameCount() / 100.0f);
 
         ActiveShaders::TerrainShader->Bind();
-        ActiveShaders::TerrainShader->SetUniform1f("u_Time", Time::GetFrameCount() / 100.0f);
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-        ActiveShaders::TerrainShader->SetUniformLight("u_Light", light);
                     
         terrain.Update(camera);
         terrain.Render(camera);

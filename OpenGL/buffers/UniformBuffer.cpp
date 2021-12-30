@@ -28,6 +28,15 @@ void UniformBuffer::Unbind() const {
     GLCall( glBindBuffer(GL_UNIFORM_BUFFER, 0) );
 }
 
+void UniformBuffer::SetUniformBlockLight(const std::string &name, Light light){
+    Bind();
+    if (!blockOffset.contains(name)){
+        blockOffset[name] = globalOffset;
+        globalOffset += sizeof(Light);
+    }
+    GLCall( glBufferSubData(GL_UNIFORM_BUFFER, blockOffset[name], sizeof(Light), (void*)&light.direction.x) );
+}
+
 void UniformBuffer::SetUniformBlock3f(const std::string &name, glm::vec3 value) {
     Bind();
     if (!blockOffset.contains(name)){
@@ -62,7 +71,6 @@ void UniformBuffer::SetUniformBlock3fv(const std::string& name, const float *dat
         globalOffset += count * 3 * sizeof(float);
     }
     GLCall( glBufferSubData(GL_UNIFORM_BUFFER, blockOffset[name], count * 3 * sizeof(float), data) );
-//    GLCall( glBufferData(GL_UNIFORM_BUFFER, count * 3 * sizeof(float), data, GL_DYNAMIC_DRAW) );
 }
 
 void UniformBuffer::SetUniformBlock1fv(const std::string& name, const float *data, unsigned int count) {
@@ -72,7 +80,6 @@ void UniformBuffer::SetUniformBlock1fv(const std::string& name, const float *dat
         globalOffset += count * sizeof(float);
     }
     GLCall( glBufferSubData(GL_UNIFORM_BUFFER, blockOffset[name], count * sizeof(float), data) );
-//    GLCall( glBufferData(GL_UNIFORM_BUFFER, count * sizeof(float), data, GL_DYNAMIC_DRAW) );
 }
 
 void UniformBuffer::BindUniformBlock(const Shader& shader, const std::string &name, unsigned int bindingPoint, unsigned int size){
@@ -82,7 +89,7 @@ void UniformBuffer::BindUniformBlock(const Shader& shader, const std::string &na
     unsigned int blockIndex = glGetUniformBlockIndex(shader.GetID(), name.c_str());
     GLCall( glUniformBlockBinding(shader.GetID(), blockIndex, bindingPoint) );
     
-    GLCall( glBufferData(GL_UNIFORM_BUFFER, m_Size, NULL, GL_STATIC_DRAW) );
+    GLCall( glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_STATIC_DRAW) );
     GLCall( glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_RendererID, 0, m_Size) );
 }
 

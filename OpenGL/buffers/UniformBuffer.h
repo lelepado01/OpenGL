@@ -13,6 +13,7 @@
 #include <unordered_map>
 
 #include "../shaders/Shader.h"
+#include "../materials/Material.h"
 
 class UniformBuffer {
 private:
@@ -36,7 +37,8 @@ public:
     void SetUniformBlock3fv(const std::string& name, const float *data, unsigned int count);
     void SetUniformBlock1fv(const std::string& name, const float *data, unsigned int count);
     void SetUniformBlock1f(const std::string& name, float f);
-    
+    void SetUniformBlockLight(const std::string& name, Light light);
+
     void Update(const void* data, unsigned int size);
 };
 

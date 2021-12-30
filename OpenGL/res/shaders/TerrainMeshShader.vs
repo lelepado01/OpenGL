@@ -4,34 +4,24 @@ layout(location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 oldPosition;
 
-layout (std140) uniform CameraMatrices {
+layout (std140) uniform SharedResources {
     mat4 u_MVP;
     mat4 u_View;
     mat4 u_Projection;
+    Light u_Light;
+    float u_Time;
 };
 
 uniform vec3 u_cameraPos;
-
 uniform Material u_Material;
-uniform Light u_Light;
-
-
-// Wave Motion Parameters
-const float pi = 3.14159;
-
-uniform float u_Time;
-
-
-// Terrain Geomorphing Parameters
-uniform float u_TerrainAnimationPercentage;
-
 
 out vec3 objectNormal;
 out vec3 fragPos;
 out vec3 cameraPos;
- 
 out Material material;
-out Light light;
+
+// Wave Motion Parameters
+const float pi = 3.14159;
 
 // Wave Motion Functions
 float waveHeight(vec3 pos) {
@@ -41,6 +31,9 @@ float waveHeight(vec3 pos) {
     return sin(theta * frequency + u_Time * phase) * 0.1;
 }
 
+// Terrain Geomorphing Parameters
+uniform float u_TerrainAnimationPercentage;
+
 // Terrain Geomorphing Functions
 
 void main() {
@@ -48,7 +41,6 @@ void main() {
     objectNormal = normal;
     fragPos = position;
     cameraPos = u_cameraPos;
-    light = u_Light;
     
     gl_Position = u_MVP * vec4(position, 1);
 

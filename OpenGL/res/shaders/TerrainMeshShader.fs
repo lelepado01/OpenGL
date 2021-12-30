@@ -1,11 +1,18 @@
 #version 410 core
 
+layout (std140) uniform SharedResources {
+    mat4 u_MVP;
+    mat4 u_View;
+    mat4 u_Projection;
+    Light u_Light;
+    float u_Time;
+};
+
 in vec3 objectNormal;
 in vec3 fragPos;
 in vec3 cameraPos;
 
 in Material material;
-in Light light;
 
 out vec4 fragColor;
 
@@ -34,10 +41,9 @@ vec3 getFaceNormal(vec3 position) {
 }
 
 void main() {
-
     vec3 norm = mix(getFaceNormal(fragPos), normalize(-objectNormal), 0.5f);
 
-    vec3 lightDir = normalize(-light.direction);
+    vec3 lightDir = normalize(-u_Light.direction.xyz);
 
     vec3 viewDir = normalize(cameraPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
@@ -45,9 +51,9 @@ void main() {
 
     float diff = max(dot(norm, lightDir), 0.0);
 
-    vec3 specular = light.specular * (spec * material.specular);
-    vec3 ambient = light.ambient * material.ambient;
-    vec3 diffuse = light.diffuse * (diff * material.diffuse);
+    vec3 specular = u_Light.specular.xyz * (spec * material.specular);
+    vec3 ambient = u_Light.ambient.xyz * material.ambient;
+    vec3 diffuse = u_Light.diffuse.xyz * (diff * material.diffuse);
 
     vec3 result = (ambient + diffuse + specular) * getColorFromHeight(distance(fragPos, vec3(0,0,0)));
     fragColor = vec4(result, 1.0);
