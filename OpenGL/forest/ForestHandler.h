@@ -20,6 +20,8 @@
 #include "../terrain/utils/MeshHeightHandler.h"
 #include "../settings/PlanetSettings.h"
 
+#include <glm/gtx/rotate_vector.hpp>
+
 struct TreeAttribute {
     glm::vec3 position;
     float size;
@@ -38,6 +40,12 @@ private:
     int treeNumber;
     
     std::default_random_engine generator;
+    
+    FastNoiseLite treeGenerator; 
+    
+private:
+    glm::vec3 getPointAtEdgeOfVision(const glm::vec3& camera);
+    bool isSuitable(const glm::vec3& pos, const glm::vec3& cameraPosition);
 
 public:
     ForestHandler();
