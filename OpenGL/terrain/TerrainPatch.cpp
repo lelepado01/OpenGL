@@ -7,7 +7,7 @@
 
 #include "TerrainPatch.h"
 
-TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchAnimation transition){
+TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD){
     this->globalPositionX = x;
     this->globalPositionZ = z;
     this->globalPositionY = QuadtreeSettings::InitialWidth / 2;
@@ -17,7 +17,6 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->correctVerticesPerSide = QuadtreeSettings::VerticesPerPatchSide + 2;
     
     this->direction = dir;
-    this->transition = transition;
         
     this->axisRotationMatrix = TerrainFace::GetAxisRotationMatrix(direction);
     
@@ -51,22 +50,23 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->correctVerticesPerSide = terrainPatch.correctVerticesPerSide;
         
         this->direction = terrainPatch.direction;
-        this->transition = terrainPatch.transition;
         
         this->axisRotationMatrix = terrainPatch.axisRotationMatrix;
                 
         this->meshOfPatch = terrainPatch.meshOfPatch;
+        
+        this->geomorphHandler.Reset();
     }
 }
 
-void TerrainPatch::Update(int lod){
-    if (terrainPopHandler.TerrainIsBeingAnimated()){
-        terrainPopHandler.Update();
+void TerrainPatch::Update(){
+    if (geomorphHandler.TerrainIsBeingAnimated()){
+        geomorphHandler.Update();
     }
 }
 
 void TerrainPatch::Render(){
-    ActiveShaders::TerrainShader->SetUniform1f("u_TerrainAnimationPercentage", terrainPopHandler.GetAnimationPercentage());
+    ActiveShaders::TerrainShader->SetUniform1f("u_TerrainAnimationPercentage", geomorphHandler.GetAnimationPercentage());
     meshOfPatch.Render(*ActiveShaders::TerrainShader);
 }
 
@@ -105,6 +105,14 @@ glm::vec3 TerrainPatch::computeVertexPosition(float x, float z, int lod) const {
     return vertex;
 }
 
+bool TerrainPatch::geomorphingIsEnabled() const {
+    return levelOfDetail > QuadtreeSettings::MaxSubdivisions-3;
+}
+
+bool TerrainPatch::pointIsOnBorder(const int x, const int y) const {
+    return x == 0 || y == 0 || x == correctVerticesPerSide || y == correctVerticesPerSide;
+}
+
 void TerrainPatch::calculateVertices(){
     for (float z = 0; z <= correctVerticesPerSide; z++) {
         for (float x = 0; x <= correctVerticesPerSide; x++) {
@@ -114,7 +122,31 @@ void TerrainPatch::calculateVertices(){
             
             TerrainVertex v = {};
             v.position = computeVertexPosition(offsettedX, offsettedZ);
-            v.oldPosition = computeVertexPosition(offsettedX, offsettedZ, levelOfDetail-1);
+            if (!geomorphingIsEnabled() || pointIsOnBorder(x, z)) {
+                v.deltaPosition = glm::vec3();
+            } else {
+                if ((int)offsettedX % 2 == 0 && (int)offsettedZ % 2 == 0) {
+                    v.deltaPosition = v.position - computeVertexPosition(offsettedX, offsettedZ, levelOfDetail-1);
+                } else {
+                    if ((int)offsettedZ % 2 == 0 && (int)offsettedX % 2 != 0){
+                        glm::vec3 v1 = computeVertexPosition(offsettedX, offsettedZ + 1, levelOfDetail-1);
+                        glm::vec3 v2 = computeVertexPosition(offsettedX, offsettedZ - 1, levelOfDetail-1);
+                        v.deltaPosition = v.position - (v1 + v2) / 2.0f;
+                    } else if((int)offsettedZ % 2 != 0 && (int)offsettedX % 2 == 0) {
+                        glm::vec3 v1 = computeVertexPosition(offsettedX + 1, offsettedZ, levelOfDetail-1);
+                        glm::vec3 v2 = computeVertexPosition(offsettedX - 1, offsettedZ, levelOfDetail-1);
+                        v.deltaPosition = v.position - (v1 + v2) / 2.0f;
+                    } else {
+                        glm::vec3 v1 = computeVertexPosition(offsettedX + 1, offsettedZ + 1, levelOfDetail-1);
+                        glm::vec3 v2 = computeVertexPosition(offsettedX - 1, offsettedZ - 1, levelOfDetail-1);
+                        v.deltaPosition = v.position - (v1 + v2) / 2.0f;
+                    }
+//                    glm::vec3 v1 = computeVertexPosition(offsettedX, offsettedZ + 1, levelOfDetail-1);
+//                    glm::vec3 v2 = computeVertexPosition(offsettedX - 1, offsettedZ, levelOfDetail-1);
+//
+//                    v.deltaPosition = v.position - (v1 + v2) / 2.0f;
+                }
+            }
             
             meshOfPatch.AddVertex(v);
         }

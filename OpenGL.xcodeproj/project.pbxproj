@@ -30,6 +30,7 @@
 		B690DCA827623BE100468540 /* ModelMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B690DCA627623BE100468540 /* ModelMesh.cpp */; };
 		B6AC1460276B7FD80025B4B1 /* GrassHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AC145E276B7FD80025B4B1 /* GrassHandler.cpp */; };
 		B6BAD23E276D0A4800E26667 /* UniformBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6BAD23C276D0A4800E26667 /* UniformBuffer.cpp */; };
+		B6BC0BEC2780CE9900C56349 /* GeomorphHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6BC0BEA2780CE9900C56349 /* GeomorphHandler.cpp */; };
 		B6BFF5DF26F8EDD4002ECA4B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */; };
 		B6BFF5E326F8EDF9002ECA4B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E126F8EDF9002ECA4B /* libglfw.3.3.dylib */; };
 		B6BFF5E726F8EE22002ECA4B /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BFF5E526F8EE22002ECA4B /* libGLEW.2.2.0.dylib */; };
@@ -131,6 +132,8 @@
 		B6BAD23D276D0A4800E26667 /* UniformBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UniformBuffer.h; sourceTree = "<group>"; };
 		B6BC0BE72780577000C56349 /* MathUtils.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = MathUtils.glsl; sourceTree = "<group>"; };
 		B6BC0BE92780585000C56349 /* TerrainUtils.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainUtils.glsl; sourceTree = "<group>"; };
+		B6BC0BEA2780CE9900C56349 /* GeomorphHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GeomorphHandler.cpp; sourceTree = "<group>"; };
+		B6BC0BEB2780CE9900C56349 /* GeomorphHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeomorphHandler.h; sourceTree = "<group>"; };
 		B6BFF5D226F8EDC6002ECA4B /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B6BFF5E026F8EDF9002ECA4B /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.dylib; sourceTree = "<group>"; };
@@ -351,6 +354,8 @@
 				B6F13525273EE44D00DF29E4 /* MeshHeightHandler.h */,
 				B60F8338275B745E0084B120 /* LODHandler.cpp */,
 				B60F8339275B745E0084B120 /* LODHandler.h */,
+				B6BC0BEA2780CE9900C56349 /* GeomorphHandler.cpp */,
+				B6BC0BEB2780CE9900C56349 /* GeomorphHandler.h */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -384,9 +389,9 @@
 			isa = PBXGroup;
 			children = (
 				B611263F277E644D0072871D /* NoiseUtils.glsl */,
-				B6BC0BE72780577000C56349 /* MathUtils.glsl */,
 				B61FAB3F27369A7800D6DD56 /* Common.glsl */,
 				B6BC0BE92780585000C56349 /* TerrainUtils.glsl */,
+				B6BC0BE72780577000C56349 /* MathUtils.glsl */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -529,6 +534,7 @@
 				B68A8D5E274BED4900B1022C /* PlanetaryMesh.cpp in Sources */,
 				B60F833A275B745E0084B120 /* LODHandler.cpp in Sources */,
 				B617D97A2734273B004FE945 /* imgui_draw.cpp in Sources */,
+				B6BC0BEC2780CE9900C56349 /* GeomorphHandler.cpp in Sources */,
 				B617D9772734273B004FE945 /* imgui.cpp in Sources */,
 				B617D97E2734273B004FE945 /* OpenGLEngine.cpp in Sources */,
 				B617D9792734273B004FE945 /* imgui_demo.cpp in Sources */,

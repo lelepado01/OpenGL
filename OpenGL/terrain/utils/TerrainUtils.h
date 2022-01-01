@@ -17,10 +17,6 @@ enum TerrainFaceDirection {
     Top, Bottom, Front, Back, Left, Right
 };
 
-enum TerrainPatchAnimation {
-    Upscale, Downscale
-};
-
 class TerrainFace {
 public:
     
@@ -47,39 +43,5 @@ public:
     }
 
 };
-
-class TerrainPopHandler {
-public:
-    bool isBeingAnimated;
-    float incrementalTimeHeightMultiplier;
-    long timeOfBuildCall;
-    const int transitionTimeInMilliseconds = 1000;
-    
-public:
-    bool TerrainIsBeingAnimated(){
-        return isBeingAnimated; 
-    }
-    
-    void Update(){
-        long timeNow = Time::GetMillisecondsFromEpoch();
-        if (timeNow - timeOfBuildCall >= transitionTimeInMilliseconds){
-            isBeingAnimated = false;
-            return;
-        }
-        
-        incrementalTimeHeightMultiplier = ((float)(timeNow - timeOfBuildCall)) / transitionTimeInMilliseconds;
-    }
-    
-    float GetAnimationPercentage(){
-        if (isBeingAnimated){
-            return incrementalTimeHeightMultiplier;
-        } else {
-            return -1.0f;
-        }
-    };
-};
-
-
-
 
 #endif /* TerrainFaceUtils_h */

@@ -13,20 +13,20 @@
 struct Vertex {
     glm::vec3 position;
     glm::vec3 normal;
-    glm::vec3 oldPosition;
+    glm::vec3 deltaPosition;
 };
 
 struct ModelVertex {
     glm::vec3 position;
     glm::vec3 normal;
-    glm::vec3 oldPosition;
+    glm::vec3 deltaPosition;
     glm::vec3 color;
 };
 
 struct TerrainVertex {
     glm::vec3 position;
     glm::vec3 normal;
-    glm::vec3 oldPosition;
+    glm::vec3 deltaPosition;
 };
 
 #endif /* Vertex_h */

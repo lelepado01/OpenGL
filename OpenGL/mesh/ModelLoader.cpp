@@ -42,7 +42,7 @@ void ModelLoader::Load(const std::string& path, ModelMesh& mesh){
 
             ModelVertex v = {};
             v.position = position;
-            v.oldPosition = position;
+            v.deltaPosition = glm::vec3(0.0f);
 
             if (index.normal_index >= 0) {
                 tinyobj::real_t nx = attrib.normals[3*size_t(index.normal_index)+0];

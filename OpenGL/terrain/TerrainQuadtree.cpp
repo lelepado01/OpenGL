@@ -57,9 +57,8 @@ void TerrainQuadtree::Update(Camera camera){
     distanceFromCamera = glm::distance(camera.GetPosition(), getTerrainPatchCenter());
 
     if (!hasTerrain() && isLeaf()){
-        int lod = LODHandler::GetLevelOfDetail(distanceFromCamera);
-        terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, lod, TerrainPatchAnimation::Upscale);
-//        terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, splitLevel, TerrainPatchAnimation::Upscale);
+//        int lod = LODHandler::GetLevelOfDetail(distanceFromCamera);
+        terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, splitLevel);
     }
     
     if (nodeHasToMerge(camera)){
@@ -70,17 +69,13 @@ void TerrainQuadtree::Update(Camera camera){
         split();
     }
     
-    for (int i = 0; i < subdivisions.size(); i++) {
-        subdivisions[i].Update(camera);
+    if (isLeaf()){
+        terrainPatch.value().Update();
+    } else {
+        for (int i = 0; i < subdivisions.size(); i++) {
+            subdivisions[i].Update(camera);
+        }
     }
-//    if (isLeaf()){
-//        int lod = LODHandler::GetLevelOfDetail(distanceFromCamera);
-//        terrainPatch.value().Update(lod);
-//    } else {
-//        for (int i = 0; i < subdivisions.size(); i++) {
-//            subdivisions[i].Update(camera);
-//        }
-//    }
 }
 
 void TerrainQuadtree::Render(Camera camera){
@@ -114,7 +109,7 @@ void TerrainQuadtree::merge(){
     int childSplitLevel = subdivisions[0].splitLevel;
     subdivisions = std::vector<TerrainQuadtree>();
     
-    terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, childSplitLevel-1, TerrainPatchAnimation::Downscale);
+    terrainPatch = TerrainPatch(nodeX, nodeY, nodeWidth, direction, childSplitLevel-1);
 }
 
 bool TerrainQuadtree::isVisible(const Camera& camera) const {

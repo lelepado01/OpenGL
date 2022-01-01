@@ -16,6 +16,7 @@
 #include "../mesh/TerrainMesh.h"
 #include "utils/MeshHeightHandler.h"
 #include "utils/TerrainUtils.h"
+#include "utils/GeomorphHandler.h"
 
 
 class TerrainPatch {
@@ -27,8 +28,7 @@ private:
     int correctVerticesPerSide; 
     
     TerrainFaceDirection direction;
-    TerrainPatchAnimation transition;
-    TerrainPopHandler terrainPopHandler;
+    GeomorphHandler geomorphHandler;
 
     TerrainMesh meshOfPatch;
     
@@ -44,14 +44,17 @@ private:
     glm::vec3 computeVertexPosition(float x, float z) const;
     glm::vec3 computeVertexPosition(float x, float z, int lod) const;
     
+    bool geomorphingIsEnabled() const;
+    bool pointIsOnBorder(const int x, const int y) const; 
+    
 public:
-    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD, TerrainPatchAnimation transition);
+    TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD);
     TerrainPatch(const TerrainPatch& terrainPatch);
     TerrainPatch(TerrainPatch&& terrainPatch);
     ~TerrainPatch();
     TerrainPatch& operator=(const TerrainPatch& terrainPatch);
     
-    void Update(int lod); 
+    void Update(); 
     void Render();
     
     long GetVertexNumber() const { return meshOfPatch.GetVertexNumber(); };
