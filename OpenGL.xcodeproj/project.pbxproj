@@ -129,6 +129,8 @@
 		B6AC1462276B817C0025B4B1 /* GrassModelShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = GrassModelShader.fs; sourceTree = "<group>"; };
 		B6BAD23C276D0A4800E26667 /* UniformBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UniformBuffer.cpp; sourceTree = "<group>"; };
 		B6BAD23D276D0A4800E26667 /* UniformBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UniformBuffer.h; sourceTree = "<group>"; };
+		B6BC0BE72780577000C56349 /* MathUtils.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = MathUtils.glsl; sourceTree = "<group>"; };
+		B6BC0BE92780585000C56349 /* TerrainUtils.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = TerrainUtils.glsl; sourceTree = "<group>"; };
 		B6BFF5D226F8EDC6002ECA4B /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BFF5DE26F8EDD4002ECA4B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B6BFF5E026F8EDF9002ECA4B /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.4/lib/libglfw.dylib; sourceTree = "<group>"; };
@@ -228,16 +230,15 @@
 		B617D9712734273B004FE945 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B6BC0BE8278057A200C56349 /* utils */,
 				B62955372758E09300AA6836 /* SimpleAtmosphere.fsh */,
 				B62955382758E09300AA6836 /* SimpleAtmosphere.vsh */,
-				B61FAB3F27369A7800D6DD56 /* Common.glsl */,
 				B617D9722734273B004FE945 /* TerrainMeshShader.vs */,
 				B617D98127342FFD004FE945 /* TerrainMeshShader.fs */,
 				B62816F1275FB02A00F0998A /* TreeModelShader.vs */,
 				B62816F2275FB03E00F0998A /* TreeModelShader.fs */,
 				B6AC1461276B816E0025B4B1 /* GrassModelShader.vs */,
 				B6AC1462276B817C0025B4B1 /* GrassModelShader.fs */,
-				B611263F277E644D0072871D /* NoiseUtils.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -377,6 +378,17 @@
 				B6AC145F276B7FD80025B4B1 /* GrassHandler.h */,
 			);
 			path = grass;
+			sourceTree = "<group>";
+		};
+		B6BC0BE8278057A200C56349 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				B611263F277E644D0072871D /* NoiseUtils.glsl */,
+				B6BC0BE72780577000C56349 /* MathUtils.glsl */,
+				B61FAB3F27369A7800D6DD56 /* Common.glsl */,
+				B6BC0BE92780585000C56349 /* TerrainUtils.glsl */,
+			);
+			path = utils;
 			sourceTree = "<group>";
 		};
 		B6BFF5C926F8EDC6002ECA4B = {
