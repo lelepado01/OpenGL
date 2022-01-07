@@ -14,15 +14,23 @@ GeomorphHandler::GeomorphHandler(){
 
 void GeomorphHandler::Reset(){
     isBeingAnimated = true;
+    isDelayed = true;
+    
     timeOfBuildCall = Time::GetMillisecondsFromEpoch();
     incrementalTimeHeightMultiplier = 0.0f;
 }
 
 void GeomorphHandler::Update(){
     long timeNow = Time::GetMillisecondsFromEpoch();
-    if (timeNow - timeOfBuildCall >= transitionTimeInMilliseconds){
+    
+    if (isDelayed && timeNow - timeOfBuildCall >= timeDelay){
+        isDelayed = false;
+        timeOfBuildCall = timeNow;
+    }
+    
+    if (!isDelayed && timeNow - timeOfBuildCall >= transitionTimeInMilliseconds){
         isBeingAnimated = false;
-    } else {
+    } else if (!isDelayed) {
         incrementalTimeHeightMultiplier = ((float)(timeNow - timeOfBuildCall)) / transitionTimeInMilliseconds;
 //            std::cout << incrementalTimeHeightMultiplier << "\n";
 

@@ -14,9 +14,13 @@
 class GeomorphHandler {
 private:
     bool isBeingAnimated;
+    bool isDelayed;  
+    
     float incrementalTimeHeightMultiplier;
     long timeOfBuildCall;
+    
     const long transitionTimeInMilliseconds = 1000;
+    const long timeDelay = 2000; 
     
 public:
     GeomorphHandler();

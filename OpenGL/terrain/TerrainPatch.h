@@ -25,7 +25,6 @@ private:
     int levelOfDetail;
 
     float distanceBetweenVertices;
-    int correctVerticesPerSide; 
     
     TerrainFaceDirection direction;
     GeomorphHandler geomorphHandler;
@@ -42,10 +41,9 @@ private:
     void calculateIndices();
 
     glm::vec3 computeVertexPosition(float x, float z) const;
-    glm::vec3 computeVertexPosition(float x, float z, int lod) const;
+    glm::vec3 computeOldVertexPosition(int x, int z) const;
     
     bool geomorphingIsEnabled() const;
-    bool pointIsOnBorder(const int x, const int y) const; 
     
 public:
     TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, int LOD);

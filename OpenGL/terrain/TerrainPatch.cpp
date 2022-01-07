@@ -14,7 +14,6 @@ TerrainPatch::TerrainPatch(int x, int z, int width, TerrainFaceDirection dir, in
     this->width = width;
     this->levelOfDetail = LOD;
     this->distanceBetweenVertices = (float)width / QuadtreeSettings::VerticesPerPatchSide;
-    this->correctVerticesPerSide = QuadtreeSettings::VerticesPerPatchSide + 2;
     
     this->direction = dir;
         
@@ -47,7 +46,6 @@ void TerrainPatch::copyData(const TerrainPatch& terrainPatch){
         this->width = terrainPatch.width;
         this->levelOfDetail = terrainPatch.levelOfDetail;
         this->distanceBetweenVertices = terrainPatch.distanceBetweenVertices;
-        this->correctVerticesPerSide = terrainPatch.correctVerticesPerSide;
         
         this->direction = terrainPatch.direction;
         
@@ -93,59 +91,36 @@ glm::vec3 TerrainPatch::computeVertexPosition(float x, float z) const {
     return vertex;
 }
 
-glm::vec3 TerrainPatch::computeVertexPosition(float x, float z, int lod) const {
-    float globalX = x * distanceBetweenVertices + globalPositionX;
-    float globalZ = z * distanceBetweenVertices + globalPositionZ;
-
-    glm::vec3 vertex = glm::vec3(globalX, globalPositionY, globalZ);
-    vertex = axisRotationMatrix * vertex;
-    vertex = PointCubeToSphere(vertex);
-    vertex += MeshHeightHandler::GetHeight(vertex.x ,vertex.y, vertex.z, lod) * glm::normalize(vertex);
-    
-    return vertex;
+glm::vec3 TerrainPatch::computeOldVertexPosition(int x, int z) const {
+    if (z % 2 == 0 && x % 2 != 0){
+        glm::vec3 v1 = computeVertexPosition(x, z + 1);
+        glm::vec3 v2 = computeVertexPosition(x, z - 1);
+        return (v1 + v2) / 2.0f;
+    } else if(z % 2 != 0 && x % 2 == 0) {
+        glm::vec3 v1 = computeVertexPosition(x + 1, z);
+        glm::vec3 v2 = computeVertexPosition(x - 1, z);
+        return (v1 + v2) / 2.0f;
+    } else {
+        glm::vec3 v1 = computeVertexPosition(x + 1, z + 1);
+        glm::vec3 v2 = computeVertexPosition(x - 1, z - 1);
+        return (v1 + v2) / 2.0f;
+    }
 }
 
 bool TerrainPatch::geomorphingIsEnabled() const {
     return levelOfDetail > QuadtreeSettings::MaxSubdivisions-3;
 }
 
-bool TerrainPatch::pointIsOnBorder(const int x, const int y) const {
-    return x == 0 || y == 0 || x == correctVerticesPerSide || y == correctVerticesPerSide;
-}
-
 void TerrainPatch::calculateVertices(){
-    for (float z = 0; z <= correctVerticesPerSide; z++) {
-        for (float x = 0; x <= correctVerticesPerSide; x++) {
-            
-            float offsettedX = x - 1;
-            float offsettedZ = z - 1;
+    for (float z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
+        for (float x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
             
             TerrainVertex v = {};
-            v.position = computeVertexPosition(offsettedX, offsettedZ);
-            if (!geomorphingIsEnabled() || pointIsOnBorder(x, z)) {
+            v.position = computeVertexPosition(x, z);
+            if (geomorphingIsEnabled() && ((int)x % 2 != 0 || (int)z % 2 != 0)) {
+                v.deltaPosition = v.position - computeOldVertexPosition(x, z);
+            }  else {
                 v.deltaPosition = glm::vec3();
-            } else {
-                if ((int)offsettedX % 2 == 0 && (int)offsettedZ % 2 == 0) {
-                    v.deltaPosition = v.position - computeVertexPosition(offsettedX, offsettedZ, levelOfDetail-1);
-                } else {
-                    if ((int)offsettedZ % 2 == 0 && (int)offsettedX % 2 != 0){
-                        glm::vec3 v1 = computeVertexPosition(offsettedX, offsettedZ + 1, levelOfDetail-1);
-                        glm::vec3 v2 = computeVertexPosition(offsettedX, offsettedZ - 1, levelOfDetail-1);
-                        v.deltaPosition = v.position - (v1 + v2) / 2.0f;
-                    } else if((int)offsettedZ % 2 != 0 && (int)offsettedX % 2 == 0) {
-                        glm::vec3 v1 = computeVertexPosition(offsettedX + 1, offsettedZ, levelOfDetail-1);
-                        glm::vec3 v2 = computeVertexPosition(offsettedX - 1, offsettedZ, levelOfDetail-1);
-                        v.deltaPosition = v.position - (v1 + v2) / 2.0f;
-                    } else {
-                        glm::vec3 v1 = computeVertexPosition(offsettedX + 1, offsettedZ + 1, levelOfDetail-1);
-                        glm::vec3 v2 = computeVertexPosition(offsettedX - 1, offsettedZ - 1, levelOfDetail-1);
-                        v.deltaPosition = v.position - (v1 + v2) / 2.0f;
-                    }
-//                    glm::vec3 v1 = computeVertexPosition(offsettedX, offsettedZ + 1, levelOfDetail-1);
-//                    glm::vec3 v2 = computeVertexPosition(offsettedX - 1, offsettedZ, levelOfDetail-1);
-//
-//                    v.deltaPosition = v.position - (v1 + v2) / 2.0f;
-                }
             }
             
             meshOfPatch.AddVertex(v);
@@ -156,18 +131,18 @@ void TerrainPatch::calculateVertices(){
 
 void TerrainPatch::calculateIndices(){
     int vertexIndex = 0;
-    for (int z = 0; z <= correctVerticesPerSide; z++) {
-        for (int x = 0; x <= correctVerticesPerSide; x++) {
-            if (x < correctVerticesPerSide && z < correctVerticesPerSide){
+    for (int z = 0; z <= QuadtreeSettings::VerticesPerPatchSide; z++) {
+        for (int x = 0; x <= QuadtreeSettings::VerticesPerPatchSide; x++) {
+            if (x < QuadtreeSettings::VerticesPerPatchSide && z < QuadtreeSettings::VerticesPerPatchSide){
                 if (TerrainFace::IsBackFace(direction)){
                     
-                    meshOfPatch.AddTriangleIndices(vertexIndex+1, vertexIndex + correctVerticesPerSide + 1, vertexIndex);
-                    meshOfPatch.AddTriangleIndices(vertexIndex + correctVerticesPerSide + 2, vertexIndex + correctVerticesPerSide + 1, vertexIndex + 1);
+                    meshOfPatch.AddTriangleIndices(vertexIndex+1, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1, vertexIndex);
+                    meshOfPatch.AddTriangleIndices(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1, vertexIndex + 1);
                 
                 } else {
                     
-                    meshOfPatch.AddTriangleIndices(vertexIndex, vertexIndex + correctVerticesPerSide + 1, vertexIndex+1);
-                    meshOfPatch.AddTriangleIndices(vertexIndex + 1, vertexIndex + correctVerticesPerSide + 1, vertexIndex + correctVerticesPerSide + 2);
+                    meshOfPatch.AddTriangleIndices(vertexIndex, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1, vertexIndex+1);
+                    meshOfPatch.AddTriangleIndices(vertexIndex + 1, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2);
                     
                 }
                 vertexIndex++;
