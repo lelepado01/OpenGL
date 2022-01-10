@@ -37,6 +37,8 @@
 		B6E023EC276A06E30007BC9C /* ForestHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E023EA276A06E30007BC9C /* ForestHandler.cpp */; };
 		B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ED0F682746CB4900459069 /* Time.cpp */; };
 		B6F13526273EE44D00DF29E4 /* MeshHeightHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F13524273EE44D00DF29E4 /* MeshHeightHandler.cpp */; };
+		B6F5F3FF278844FF00E501CB /* IcosphereTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F5F3FD278844FF00E501CB /* IcosphereTerrain.cpp */; };
+		B6F5F402278853D700E501CB /* TriangleFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F5F400278853D700E501CB /* TriangleFace.cpp */; };
 		B6FDF28D2735A27200DEBCB9 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6FDF28B2735A27200DEBCB9 /* Camera.cpp */; };
 /* End PBXBuildFile section */
 
@@ -147,6 +149,12 @@
 		B6ED0F692746CB4900459069 /* Time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Time.h; sourceTree = "<group>"; };
 		B6F13524273EE44D00DF29E4 /* MeshHeightHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshHeightHandler.cpp; sourceTree = "<group>"; };
 		B6F13525273EE44D00DF29E4 /* MeshHeightHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshHeightHandler.h; sourceTree = "<group>"; };
+		B6F5F3FD278844FF00E501CB /* IcosphereTerrain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IcosphereTerrain.cpp; sourceTree = "<group>"; };
+		B6F5F3FE278844FF00E501CB /* IcosphereTerrain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IcosphereTerrain.h; sourceTree = "<group>"; };
+		B6F5F400278853D700E501CB /* TriangleFace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TriangleFace.cpp; sourceTree = "<group>"; };
+		B6F5F401278853D700E501CB /* TriangleFace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriangleFace.h; sourceTree = "<group>"; };
+		B6F5F40327885F6E00E501CB /* SimpleVertexShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimpleVertexShader.glsl; sourceTree = "<group>"; };
+		B6F5F40427885F7E00E501CB /* SimpleFragmentShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimpleFragmentShader.glsl; sourceTree = "<group>"; };
 		B6FDF28B2735A27200DEBCB9 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		B6FDF28C2735A27200DEBCB9 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -242,6 +250,8 @@
 				B62816F2275FB03E00F0998A /* TreeModelShader.fs */,
 				B6AC1461276B816E0025B4B1 /* GrassModelShader.vs */,
 				B6AC1462276B817C0025B4B1 /* GrassModelShader.fs */,
+				B6F5F40327885F6E00E501CB /* SimpleVertexShader.glsl */,
+				B6F5F40427885F7E00E501CB /* SimpleFragmentShader.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -416,6 +426,7 @@
 		B6BFF5D426F8EDC6002ECA4B /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				B6F5F3FC278844EE00E501CB /* icosphere */,
 				B6AC145D276B7FCC0025B4B1 /* grass */,
 				B6E023E9276A06910007BC9C /* forest */,
 				B62816EB275FA45700F0998A /* terrain */,
@@ -455,6 +466,17 @@
 				B6E023EB276A06E30007BC9C /* ForestHandler.h */,
 			);
 			path = forest;
+			sourceTree = "<group>";
+		};
+		B6F5F3FC278844EE00E501CB /* icosphere */ = {
+			isa = PBXGroup;
+			children = (
+				B6F5F3FD278844FF00E501CB /* IcosphereTerrain.cpp */,
+				B6F5F3FE278844FF00E501CB /* IcosphereTerrain.h */,
+				B6F5F400278853D700E501CB /* TriangleFace.cpp */,
+				B6F5F401278853D700E501CB /* TriangleFace.h */,
+			);
+			path = icosphere;
 			sourceTree = "<group>";
 		};
 		B6FDF28A2735A26500DEBCB9 /* camera */ = {
@@ -542,6 +564,7 @@
 				B66E113627492FB400E7E9F4 /* TerrainQuadtree.cpp in Sources */,
 				B6ED0F6A2746CB4900459069 /* Time.cpp in Sources */,
 				B617D97D2734273B004FE945 /* Texture.cpp in Sources */,
+				B6F5F3FF278844FF00E501CB /* IcosphereTerrain.cpp in Sources */,
 				B617D97C2734273B004FE945 /* VertexBuffer.cpp in Sources */,
 				B66E1139274933BE00E7E9F4 /* TerrainPatch.cpp in Sources */,
 				B617D9742734273B004FE945 /* VertexArray.cpp in Sources */,
@@ -550,6 +573,7 @@
 				B617D97F2734273B004FE945 /* Shader.cpp in Sources */,
 				B66E113E27496A9F00E7E9F4 /* ActiveShaders.cpp in Sources */,
 				B617D9762734273B004FE945 /* IndexBuffer.cpp in Sources */,
+				B6F5F402278853D700E501CB /* TriangleFace.cpp in Sources */,
 				B6AC1460276B7FD80025B4B1 /* GrassHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

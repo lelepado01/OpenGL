@@ -136,13 +136,21 @@ void TerrainPatch::calculateIndices(){
             if (x < QuadtreeSettings::VerticesPerPatchSide && z < QuadtreeSettings::VerticesPerPatchSide){
                 if (TerrainFace::IsBackFace(direction)){
                     
-                    meshOfPatch.AddTriangleIndices(vertexIndex+1, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1, vertexIndex);
-                    meshOfPatch.AddTriangleIndices(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1, vertexIndex + 1);
+                    meshOfPatch.AddTriangleIndices(vertexIndex+1,
+                                                   vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1,
+                                                   vertexIndex);
+                    meshOfPatch.AddTriangleIndices(vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2,
+                                                   vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1,
+                                                   vertexIndex + 1);
                 
                 } else {
                     
-                    meshOfPatch.AddTriangleIndices(vertexIndex, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1, vertexIndex+1);
-                    meshOfPatch.AddTriangleIndices(vertexIndex + 1, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1, vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2);
+                    meshOfPatch.AddTriangleIndices(vertexIndex,
+                                                   vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1,
+                                                   vertexIndex+1);
+                    meshOfPatch.AddTriangleIndices(vertexIndex + 1,
+                                                   vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 1,
+                                                   vertexIndex + QuadtreeSettings::VerticesPerPatchSide + 2);
                     
                 }
                 vertexIndex++;

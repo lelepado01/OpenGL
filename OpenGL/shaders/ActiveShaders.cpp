@@ -9,11 +9,14 @@
 
 #include "ActiveShaders.h"
 
+Shader* ActiveShaders::SimpleShader;
 Shader* ActiveShaders::TerrainShader;
 Shader* ActiveShaders::TreeModelShader;
 Shader* ActiveShaders::GrassModelShader;
 
 void ActiveShaders::Init(){
+    SimpleShader = new Shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/SimpleVertexShader.glsl",
+                              "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/SimpleFragmentShader.glsl"); 
     TerrainShader = new Shader("/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/TerrainMeshShader.vs",
                                "/Users/gabrielepadovani/Desktop/Code/C++/OpenGL/OpenGL/res/shaders/TerrainMeshShader.fs");
     

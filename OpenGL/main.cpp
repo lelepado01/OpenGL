@@ -13,6 +13,7 @@
 #include "forest/ForestHandler.h"
 #include "grass/GrassHandler.h"
 #include "buffers/UniformBuffer.h"
+#include "icosphere/IcosphereTerrain.h"
 
 int main( void ) {
     
@@ -21,12 +22,14 @@ int main( void ) {
     MeshHeightHandler::Init();
     LODHandler::Init();
     
-    ForestHandler forest;
+//    ForestHandler forest;
 //    GrassHandler::Init();
     
-    Camera camera(0, 5000, 0);
+    Camera camera(0, 100, 0);
     
-    PlanetaryMesh terrain;
+//    PlanetaryMesh terrain;
+    IcosphereTerrain terrain;
+//    Planet terrain;
     
     Material material = {};
     material.color = glm::vec3(1,1,1);
@@ -45,6 +48,7 @@ int main( void ) {
     unsigned int bufferSize = sizeof(glm::mat4x4) * 3 + sizeof(Light) + sizeof(float);
     uniformBuffer.BindUniformBlock(*ActiveShaders::TerrainShader, "SharedResources", 0, bufferSize);
     uniformBuffer.BindUniformBlock(*ActiveShaders::TreeModelShader, "SharedResources", 0, bufferSize);
+    uniformBuffer.BindUniformBlock(*ActiveShaders::SimpleShader, "SharedResources", 0, bufferSize);
 
     OpenGLEngine::ImguiInit();
 
@@ -71,18 +75,21 @@ int main( void ) {
         ActiveShaders::TerrainShader->Bind();
         ActiveShaders::TerrainShader->SetUniformMaterial("u_Material", material);
         ActiveShaders::TerrainShader->SetUniform3f("u_cameraPos", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-                    
+        
+//        terrain.Update();
+//        terrain.Draw();
+        
         terrain.Update(camera);
         terrain.Render(camera);
 
-        forest.Update(camera);
-        forest.Render();
+//        forest.Update(camera);
+//        forest.Render();
         
 //        GrassHandler::Update(camera);
 //        GrassHandler::Render();
         
         ImGui::Text("%.1f FPS)", ImGui::GetIO().Framerate);
-        ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));
+//        ImGui::Text("%.1ld Vertices Displayed)", terrain.GetVertexNumber(camera));
         ImGui::Checkbox("Debug Mode", OpenGLEngine::DebugMode());
 
         OpenGLEngine::ImguiDraw();

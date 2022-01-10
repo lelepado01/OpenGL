@@ -14,6 +14,7 @@
 
 class ActiveShaders {
 public:
+    static Shader* SimpleShader;
     static Shader* TerrainShader;
     static Shader* TreeModelShader;
     static Shader* GrassModelShader;
